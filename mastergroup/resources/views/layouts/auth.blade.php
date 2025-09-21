@@ -4,22 +4,14 @@
   <meta charset="utf-8">
   <title>@yield('title', $title ?? 'Auth')</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {{-- Подключи свой css --}}
+  <link rel="stylesheet" href="{{ asset('css/main.css') }}?v={{ filemtime(public_path('css/main.css')) }}">
+  <link rel="stylesheet" href="{{ asset('css/auth/base.css') }}?v={{ filemtime(public_path('css/auth/base.css')) }}">
+  @stack('page-styles')
+
 </head>
 <body class="auth">
-  <header class="auth-header">
-    <a href="/" class="logo">MasterGroup</a>
-  </header>
-
   <main class="auth-container">
-    @include('partials.alerts')
     @yield('content')
   </main>
-
-  <footer class="auth-footer">
-    <small>&copy; {{ date('Y') }} MasterGroup</small>
-  </footer>
-
-  {{-- Подключи свой js --}}
 </body>
 </html>

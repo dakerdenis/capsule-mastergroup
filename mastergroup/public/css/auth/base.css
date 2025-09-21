@@ -1,0 +1,53 @@
+.auth_page-container {
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+
+}
+.auth_page-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+/******FORM BLOCK*******/
+.auth__form {
+}
+.auth__form-back {
+}
+.auth__form-container {
+}
+.auth__form-logo {
+}
+.auth__form-name {
+}
+.auth__form-lined {
+}
+.auth-line {
+}
+.auth__form-desc {
+}
+.auth__form-form {
+}
+.form-block {
+}
+.form-forgot {
+}
+.form-button {
+}
+.auth__form-register {
+}
+
+/******AUTH_CAR BLOCK**********/
+.auth__car {
+}
+.auth__car-container {
+}
+.auth__car-block {
+}
+.auth__car-mainmessage {
+}
+.auth__car-text {
+}
+.auth__car-image {
+}
