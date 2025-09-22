@@ -1,0 +1,141 @@
+.auth__form-name {
+    margin-top: 30px;
+}
+.auth__form-lined {
+    margin-top: 8px;
+}
+.registraion__options__container {
+    margin-top: 180px;
+    width: 756px;
+    height: 269px;
+
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: space-between;
+}
+.regitration__option {
+    height: 269px;
+    width: 357px;
+    padding: 22px;
+    background-color: #fff2f221;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.registration_name {
+    background-color: #34c81e;
+    height: 37px;
+    width: 265px;
+    border-radius: 36px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 400;
+
+    font-size: 14px;
+
+    line-height: 122%;
+    letter-spacing: 0%;
+    text-align: center;
+}
+.registration_image {
+}
+.registration_text {
+    font-weight: 400;
+
+    font-size: 20px;
+
+    line-height: 32.97px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #fff;
+}
+.registration__next {
+    margin-top: 70px;
+}
+
+.registration__next a {
+    width: 287px;
+    height: 52px;
+    border-radius: 36px;
+    background: linear-gradient(98.88deg, #055a00 -2.99%, #710000 102.28%);
+    border: 1px solid #000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 15px;
+
+    line-height: 20px;
+    letter-spacing: 0%;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+}
+@media only screen and (max-width: 1680px) {
+    .registraion__options__container {
+        margin-top: 90px;
+    }
+}
+@media only screen and (max-width: 1460px) {
+    .registraion__options__container {
+        width: 680px;
+    }
+    .regitration__option {
+        width: 330px;
+        height: 260px;
+    }
+    .registration_text {
+        font-size: 17px;
+    }
+}
+
+@media only screen and (max-width: 1380px) {
+    .auth__car-image {
+        height: 482px;
+        width: 661px;
+    }
+}
+@media only screen and (max-width: 1000px) {
+    .registraion__options__container {
+        flex-direction: column;
+        width: 100%;
+        height: initial;
+    }
+    .regitration__option {
+        margin-bottom: 20px;
+        width: 100%;
+    }
+    .auth__form-name h2 {
+        font-size: 24px;
+        line-height: 31px;
+    }
+    .auth__form-name {
+        margin-top: 17px;
+    }
+    .registraion__options__container {
+        margin-top: 15px;
+    }
+    .registration_name {
+        width: 100%;
+    }
+    .registration_image {
+    }
+    .registration_text {
+        font-size: 14px;
+    }
+    .regitration__option {
+        height: 232px;
+    }
+    .registration__next {
+        margin-top: 15px;
+    }
+}
