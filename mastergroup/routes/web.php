@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('auth.login');
-    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login'); // лимит
+    Route::post('/login', [AuthController::class, 'login'])->name('auth.login.submit')->middleware('throttle:login'); // лимит
     Route::get('/register', [RegisterController::class, 'choose'])->name('auth.register');
     Route::get('/register/user', [RegisterController::class, 'showUser'])->name('auth.register.user');
     Route::get('/register/company', [RegisterController::class, 'showCompany'])->name('auth.register.company');

@@ -13,50 +13,58 @@
                     <img src="{{ asset('images/auth/back_.png') }}" alt="Capsuleppf Back">
                 </div>
                 <div class="auth__form-container">
-                    <!--- logo with link to /--->
-                    <a class="auth__form-logo">
-                        <img src="{{ asset('images/common/capsule_logo-white.png') }}" alt="Capsuleppf Logo">
-                    </a>
+                    <div class="auth__form__wrapper">
+                        <!--- logo with link to /--->
+                        <a href="#" class="auth__form-logo">
+                            <img src="{{ asset('images/common/capsule_logo-white.png') }}" alt="Capsuleppf Logo">
+                        </a>
 
-                    <!---form block with text and buttons---->
-                    <div class="auth__form-name">
-                        <h2>
-                            Welcome to Mastegroup Portal
-                        </h2>
-                        <p>Masters marketpace. Use bonuses - get gifts.</p>
-                        <!-----Lined text----->
-                        <div class="auth__form-lined">
-                            <div class="auth-line"></div>
-                            <div class="auth__form-desc">
-                                enter our credentials
+                        <!---form block with text and buttons---->
+                        <div class="auth__form-name">
+                            <h2>
+                                Welcome to Mastegroup Portal
+                            </h2>
+                            <p>Masters marketpace. Use bonuses - get gifts.</p>
+                            <!-----Lined text----->
+                            <div class="auth__form-lined">
+                                <div class="auth-line"></div>
+                                <div class="auth__form-desc">
+                                    enter your credentials
+                                </div>
+                                <div class="auth-line"></div>
                             </div>
-                            <div class="auth-line"></div>
                         </div>
-                    </div>
-                    <!-----form and input fields----->
-                    <form action="" class="auth__form-form">
-                        <div class="form-block">
-                            <input type="text">
-                        </div>
-                        <div class="form-block">
-                            <input type="password">
-                        </div>
+                        <!-----form and input fields----->
+                        <form action="" class="auth__form-form" id="loginForm" novalidate>
+                            <div class="form-block" id="emailBlock">
+                                <input id="email" type="email" placeholder="Login (e-mail)" autocomplete="username">
+                            </div>
 
-                        <div class="form-forgot">
-                            <a href="#">Forgot password ?</a>
-                        </div>
-                        <div class="form-button">
-                            <button>
-                                <p>LOG IN</p>
-                            </button>
-                        </div>
-                    </form>
-                    <!--------->
+                            <div class="form-block form-block--with-eye" id="passBlock">
+                                <input id="password" type="password" placeholder="Password"
+                                    autocomplete="current-password">
+                                <button type="button" class="input-eye" aria-label="Show password" aria-pressed="false">
+                                    <span class="eye-icon" aria-hidden="true"></span>
+                                </button>
+                            </div>
 
-                    <!----link to registration---->
-                    <div class="auth__form-register">
-                        <p>Have no regostration ?</p>
-                        <a href="#">Register</a>
+                            <div class="form-forgot">
+                                <a href="#">Forgot password ?</a>
+                            </div>
+                            <div class="form-button">
+                                <button type="submit">
+                                    <p>LOG IN</p>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!--------->
+
+                        <!----link to registration---->
+                        <div class="auth__form-register">
+                            <p>Have no registration ?</p>
+                            <a href="#">Register</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,7 +76,7 @@
                     <div class="auth__car-block">
                         <!---text witbh greeen background ---->
                         <div class="auth__car-mainmessage">
-                            <img src="" alt="">
+                            <img src="{{ asset('images/auth/class.png') }}" alt="Class Capsuleppf">
 
                             <p>New bonus program for partners</p>
                         </div>
@@ -85,10 +93,69 @@
 
                     <!---car image--->
                     <div class="auth__car-image">
-                        <img src="" alt="">
+                        <img src="{{ asset('images/auth/car.png') }}" alt="Capsuleppf Back">
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('loginForm');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const emailBlk = document.getElementById('emailBlock');
+            const passBlk = document.getElementById('passBlock');
+            const eyeBtn = passBlk.querySelector('.input-eye');
+
+            // Показ/скрытие пароля
+            eyeBtn.addEventListener('click', () => {
+                const isShown = password.type === 'text';
+                password.type = isShown ? 'password' : 'text';
+                eyeBtn.classList.toggle('is-on', !isShown);
+                eyeBtn.setAttribute('aria-pressed', String(!isShown));
+            });
+
+            // Флаг: начал ли пользователь попытку отправки
+            let triedSubmit = false;
+
+            const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            function validateAll() {
+                // правила валидности
+                const emailVal = email.value.trim();
+                const passVal = password.value;
+
+                const emailOk = emailVal === '' ? false : emailRe.test(
+                emailVal); // пустой email — считаем невалидным на сабмите
+                const passOk = !(emailVal !== '' && passVal ===
+                ''); // если email есть, пароль не должен быть пустым
+
+                // Подсветка только после попытки сабмита
+                if (triedSubmit) {
+                    emailBlk.classList.toggle('has-error', !emailOk);
+                    passBlk.classList.toggle('has-error', !passOk);
+                }
+
+                return emailOk && passOk;
+            }
+
+            // При вводе пересчёт делаем ТОЛЬКО если уже была попытка отправить
+            function maybeRevalidate() {
+                if (triedSubmit) validateAll();
+            }
+
+            email.addEventListener('input', maybeRevalidate);
+            password.addEventListener('input', maybeRevalidate);
+
+            form.addEventListener('submit', (e) => {
+                triedSubmit = true; // с этого момента можно подсвечивать в инпутах
+                const ok = validateAll();
+                if (!ok) e.preventDefault(); // блокируем отправку только если не прошло
+            });
+        });
+    </script>
+
+
 @endsection

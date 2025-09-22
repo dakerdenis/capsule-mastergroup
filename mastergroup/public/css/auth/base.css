@@ -1,8 +1,8 @@
 .auth_page-container {
     width: 100%;
     height: 100vh;
-    min-height: 600px;
-
+    min-height: 750px;
+    overflow: hidden;
 }
 .auth_page-wrapper {
     width: 100%;
@@ -12,42 +12,410 @@
 }
 /******FORM BLOCK*******/
 .auth__form {
+    width: 54%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
 }
 .auth__form-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+}
+.auth__form-back img {
+    width: 100%;
 }
 .auth__form-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.auth__form__wrapper {
+    width: 100%;
+    height: 100%;
+    padding-top: 38px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .auth__form-logo {
+    width: 338px;
+    height: 113px;
+}
+.auth__form-logo img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
 }
 .auth__form-name {
+    margin-top: 160px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.auth__form-name h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+
+    font-size: 36px;
+    color: #fff;
+    line-height: 44px;
+    letter-spacing: 0%;
+}
+.auth__form-name p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+
+    font-size: 17px;
+
+    line-height: 29.16px;
+    letter-spacing: 0%;
+    color: #fff;
+    text-align: center;
 }
 .auth__form-lined {
+    margin-top: 30px;
+    width: 419px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .auth-line {
+    width: 130px;
+    height: 1px;
+    background: #dbdbdb;
 }
 .auth__form-desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 13px;
+
+    line-height: 14.5px;
+    letter-spacing: 0%;
+    color: #fff;
 }
+
 .auth__form-form {
+    width: 395px;
+    margin-top: 40px;
 }
 .form-block {
+    width: 100%;
+    height: 73px;
+
+    background-color: #fbfbfb;
+
+    margin-bottom: 18px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+.form-block input {
+    width: 100%;
+    height: 100%;
+    border-bottom: 3.5px solid #34c81e;
+    padding-left: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+
+    font-size: 14px;
+
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    vertical-align: middle;
+
+    color: #1f1f1f;
 }
 .form-forgot {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+
+    font-size: 17px;
+
+    line-height: 100%;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+    color: #d9d9d9;
+}
+.form-forgot a {
+    color: #d9d9d9;
 }
 .form-button {
+    margin-top: 35px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-button button {
+    width: 287px;
+    height: 52px;
+
+    border-radius: 36px;
+    border-width: 1px;
+    border: 1px solid #000;
+
+    background: linear-gradient(98.88deg, #055a00 -2.99%, #710000 102.28%);
+}
+
+.form-button p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 15px;
+
+    line-height: 20px;
+    letter-spacing: 0%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
 }
 .auth__form-register {
+    width: 348px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+.auth__form-register p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 18px;
+
+    line-height: 100%;
+    letter-spacing: 0px;
+    color: #d9d9d9;
+}
+.auth__form-register a {
+    color: #34c81e;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 18px;
+    text-decoration: underline;
+}
+
+.form-block--with-eye .input-eye {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+}
+.input-eye:focus-visible {
+    outline: 2px solid #6aa9ff;
+    outline-offset: 2px;
+}
+
+/* сюда поставь свою иконку */
+.eye-icon {
+    display: block;
+    width: 22px;
+    height: 22px;
+}
+/* пример, если будешь использовать background-image */
+.eye-icon {
+    background: url('../../images/auth/pass.svg') center/contain no-repeat;
+}
+/* .input-eye.is-on .eye-icon { background-image: url('/images/icons/eye-off.svg'); } */
+
+/* КРАСНАЯ нижняя граница при ошибке */
+.form-block.has-error input {
+    border-bottom-color: #e53935 !important;
+}
+
+/* опционально — при фокусе вернуть зелёный, если без ошибок */
+.form-block:not(.has-error) input:focus {
+    border-bottom-color: #34c81e;
 }
 
 /******AUTH_CAR BLOCK**********/
 .auth__car {
+    width: calc(46%);
+    height: 100%;
+    background-image: url('../../images/auth/auto_back.jpg');
+    background-size: cover;
+    box-shadow: 31px 49px 54.8px 0px #0000003d inset;
 }
 .auth__car-container {
+    width: 100%;
+    height: 100%;
+    padding-top: 60px;
+    padding-left: 70px;
+    padding-right: 70px;
+    position: relative;
 }
 .auth__car-block {
+    width: 100%;
+    max-width: 658px;
+    height: 261px;
+    background-color: #fff2f221;
+    border-radius: 10px;
+    padding: 51px 40px 0px 40px;
 }
 .auth__car-mainmessage {
+    width: 381px;
+    height: 54px;
+    background-color: #34c81e;
+    border-radius: 36px;
+    display: flex;
+    align-items: center;
+    padding: 0px 20px;
+    font-family: 'Inter', sans-serif;
+
+    font-weight: 400;
+
+    font-size: 14px;
+
+    line-height: 122%;
+    letter-spacing: 0%;
 }
 .auth__car-text {
+    margin-top: 20px;
+}
+.auth__car-text p {
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+
+    font-size: 20px;
+
+    letter-spacing: 0px;
+}
+.auth__car-text p:first-child {
+    line-height: 30px;
+}
+.auth__car-text p:last-child {
+    margin-top: 17px;
+    font-style: italic;
+}
+.auth__car-mainmessage img {
+    width: 26px;
+    height: 26px;
+    margin-right: 10px;
 }
 .auth__car-image {
+    position: absolute;
+    bottom: -30px;
+    height: 668px;
+    width: 937px;
+
+    overflow: hidden;
+    right: 0;
+}
+.auth__car-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+@media only screen and (max-width: 1670px) {
+    .auth__form-name {
+        margin-top: 100px;
+    }
+    .auth__car-image {
+        height: 575px;
+        width: 800px;
+    }
+    .auth__car-block {
+        padding: 28px 40px 0px 40px;
+        height: 268px;
+    }
+}
+
+@media only screen and (max-width: 1460px) {
+    .auth__car-image {
+        height: 553px;
+        width: 741px;
+    }
+    .auth__form-name {
+        margin-top: 60px;
+    }
+}
+@media only screen and (max-width: 1380px) {
+    .auth__car-block {
+        padding: 28px 26px 0px 26px;
+    }
+    .auth__car-text p {
+        font-size: 17px;
+    }
+    .auth__form-name {
+        margin-top: 40px;
+    }
+    .auth__form-logo {
+        height: 85px;
+    }
+}
+@media only screen and (max-width: 1000px) {
+    .auth__car {
+        display: none;
+        visibility: hidden;
+    }
+    .auth__form {
+        width: 100%;
+    }
+
+    .auth__form-logo {
+        width: 320px;
+    }
+    .auth__form-name h2 {
+        text-align: center;
+        font-size: 30px;
+    }
+    .auth__form__wrapper {
+        width: 90%;
+        margin: 0 auto;
+    }
+    .auth__form-name {
+        width: 100%;
+    }
+    .auth__form-lined {
+        width: 100%;
+        overflow: hidden;
+    }
+    .auth-line {
+        width: 85px;
+    }
+    .auth__form-form {
+        width: 100%;
+        margin-top: 15px;
+    }
+    .auth__form-register {
+        width: 100%;
+    }
+    .auth__form-desc {
+        font-size: 11px;
+    }
+    .form-block input {
+        font-size: 12px;
+    }
+    .form-block {
+        height: 55px;
+    }
+    .form-forgot {
+        margin-top: 25px;
+        font-size: 14px;
+    }
+    .form-button {
+        margin-top: 30px;
+    }
+    .auth__form-register {
+        margin-top: 30px;
+    }
 }
