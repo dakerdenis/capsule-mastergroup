@@ -159,4 +159,7 @@ box-shadow: -6px 10px 16.7px 2px #FBFBFB4D;
     .registration__next {
         margin-top: 15px;
     }
+        .auth__form-logo {
+            height: 75px;
+        }
 }

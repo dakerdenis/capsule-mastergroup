@@ -26,7 +26,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/register/company', [RegisterController::class, 'showCompany'])->name('auth.register.company');
     Route::post('/register', [RegisterController::class, 'store'])->name('auth.register.store');
 
-    Route::get('/password/forgot', [PasswordController::class, 'forgot'])->name('password.request');
+    Route::get('/password/forgot', [PasswordController::class, 'forgot'])->name('password.forgot');
     Route::post('/password/email', [PasswordController::class, 'sendLink'])->name('password.email')->middleware('throttle:password-email');
     Route::get('/password/reset/{token}', [PasswordController::class, 'reset'])->name('password.reset');
     Route::post('/password/reset', [PasswordController::class, 'update'])->name('password.update');

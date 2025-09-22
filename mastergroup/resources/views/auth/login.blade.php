@@ -15,7 +15,7 @@
                 <div class="auth__form-container">
                     <div class="auth__form__wrapper">
                         <!--- logo with link to /--->
-                        <a href="#" class="auth__form-logo">
+                        <a href="{{ route('home') }}" class="auth__form-logo">
                             <img src="{{ asset('images/common/capsule_logo-white.png') }}" alt="Capsuleppf Logo">
                         </a>
 
@@ -49,7 +49,7 @@
                             </div>
 
                             <div class="form-forgot">
-                                <a href="#">Forgot password ?</a>
+                                <a href="{{ route('password.forgot') }}">Forgot password ?</a>
                             </div>
                             <div class="form-button">
                                 <button type="submit">
@@ -63,7 +63,7 @@
                         <!----link to registration---->
                         <div class="auth__form-register">
                             <p>Have no registration ?</p>
-                            <a href="#">Register</a>
+                            <a href="{{ route('auth.register') }}">Register</a>
                         </div>
                     </div>
                 </div>

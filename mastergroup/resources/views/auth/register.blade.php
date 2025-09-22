@@ -15,7 +15,7 @@
                 <div class="auth__form-container">
                     <div class="auth__form__wrapper">
                         <!--- logo with link to /--->
-                        <a href="#" class="auth__form-logo">
+                        <a href="{{ route('home') }}" class="auth__form-logo">
                             <img src="{{ asset('images/common/capsule_logo-white.png') }}" alt="Capsuleppf Logo">
                         </a>
 
