@@ -36,12 +36,9 @@
                         </div>
                         <!-----Registration Options----->
                         <div class="registraion__options__container">
-                            <!--REGISTER AS USER----->
-                            <div class="regitration__option">
-                                <div class="registration_name">
-                                    Register as an Individual
-                                </div>
-
+                            <!-- REGISTER AS USER -->
+                            <div class="regitration__option" data-route="{{ route('auth.register.user') }}">
+                                <div class="registration_name">Register as an Individual</div>
                                 <div class="registration_image">
                                     <img src="{{ asset('images/auth/reg-user.svg') }}" alt="Capsuleppf Back">
                                 </div>
@@ -49,11 +46,10 @@
                                     Your registration request has been accepted and sent to the administrator for review.
                                 </div>
                             </div>
-                            <!--REGISTER AS COMPANY----->
-                            <div class="regitration__option">
-                                <div class="registration_name">
-                                    Register as a Company
-                                </div>
+
+                            <!-- REGISTER AS COMPANY -->
+                            <div class="regitration__option" data-route="{{ route('auth.register.company') }}">
+                                <div class="registration_name">Register as a Company</div>
                                 <div class="registration_image">
                                     <img src="{{ asset('images/auth/reg-company.svg') }}" alt="Capsuleppf Back">
                                 </div>
@@ -63,12 +59,11 @@
                             </div>
                         </div>
 
-                        <!---REGISTRATION NEXT---->
+                        <!-- REGISTRATION NEXT -->
                         <div class="registration__next">
-                            <a href="#">
-                                NEXT
-                            </a>
+                            <a id="regNext" href="#" aria-disabled="true" class="is-disabled">NEXT</a>
                         </div>
+
 
                     </div>
                 </div>
@@ -107,57 +102,46 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('loginForm');
-            const email = document.getElementById('email');
-            const password = document.getElementById('password');
-            const emailBlk = document.getElementById('emailBlock');
-            const passBlk = document.getElementById('passBlock');
-            const eyeBtn = passBlk.querySelector('.input-eye');
+            const options = Array.from(document.querySelectorAll('.regitration__option'));
+            const nextLink = document.getElementById('regNext');
 
-            // Показ/скрытие пароля
-            eyeBtn.addEventListener('click', () => {
-                const isShown = password.type === 'text';
-                password.type = isShown ? 'password' : 'text';
-                eyeBtn.classList.toggle('is-on', !isShown);
-                eyeBtn.setAttribute('aria-pressed', String(!isShown));
+            let selectedHref = null;
+
+            function setActive(option) {
+                // снять выделение со всех
+                options.forEach(o => o.classList.remove('is-selected'));
+
+                // поставить выделение на выбранную
+                option.classList.add('is-selected');
+
+                // прочитать маршрут из data-route
+                selectedHref = option.getAttribute('data-route') || '#';
+
+                // активировать NEXT
+                nextLink.href = selectedHref;
+                nextLink.classList.remove('is-disabled');
+                nextLink.removeAttribute('aria-disabled');
+            }
+
+            // клики по карточкам
+            options.forEach(o => {
+                o.addEventListener('click', () => setActive(o));
+
+                // немного доступности с клавы
+                o.tabIndex = 0;
+                o.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setActive(o);
+                    }
+                });
             });
 
-            // Флаг: начал ли пользователь попытку отправки
-            let triedSubmit = false;
-
-            const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            function validateAll() {
-                // правила валидности
-                const emailVal = email.value.trim();
-                const passVal = password.value;
-
-                const emailOk = emailVal === '' ? false : emailRe.test(
-                    emailVal); // пустой email — считаем невалидным на сабмите
-                const passOk = !(emailVal !== '' && passVal ===
-                    ''); // если email есть, пароль не должен быть пустым
-
-                // Подсветка только после попытки сабмита
-                if (triedSubmit) {
-                    emailBlk.classList.toggle('has-error', !emailOk);
-                    passBlk.classList.toggle('has-error', !passOk);
+            // защита: если NEXT неактивна — не даём переходить
+            nextLink.addEventListener('click', (e) => {
+                if (nextLink.classList.contains('is-disabled')) {
+                    e.preventDefault();
                 }
-
-                return emailOk && passOk;
-            }
-
-            // При вводе пересчёт делаем ТОЛЬКО если уже была попытка отправить
-            function maybeRevalidate() {
-                if (triedSubmit) validateAll();
-            }
-
-            email.addEventListener('input', maybeRevalidate);
-            password.addEventListener('input', maybeRevalidate);
-
-            form.addEventListener('submit', (e) => {
-                triedSubmit = true; // с этого момента можно подсвечивать в инпутах
-                const ok = validateAll();
-                if (!ok) e.preventDefault(); // блокируем отправку только если не прошло
             });
         });
     </script>

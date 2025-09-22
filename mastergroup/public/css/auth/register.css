@@ -80,6 +80,27 @@
     text-transform: uppercase;
     font-family: 'Inter', sans-serif;
 }
+
+
+
+/* NEXT по умолчанию не кликается */
+.registration__next .is-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Выбранная карточка */
+.regitration__option.is-selected {
+backdrop-filter: blur(100px);
+
+box-shadow: -6px 10px 16.7px 2px #FBFBFB4D;
+
+}
+
+
+
+
+
 @media only screen and (max-width: 1680px) {
     .registraion__options__container {
         margin-top: 90px;
