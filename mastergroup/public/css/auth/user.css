@@ -68,7 +68,7 @@
     margin-top: 10px;
 }
 .register_user-form {
-    margin-top: 60px;
+    margin-top: 40px;
 
     font-family: 'Inter', sans-serif;
 }
@@ -466,4 +466,27 @@
 
 .step.is-hidden { display: none; }
 .form_next.is-disabled { pointer-events:none; opacity:.5; }
+.auth_page-wrapper{
+  overflow: hidden;
+}
 
+section{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.register_user-input2{
+  margin-bottom: 19px;
+}
+.form_submit{
+  width: 287px;
+  height: 52px;
+  border-radius: 36px;
+  border: 1px solid #000;
+  background: linear-gradient(98.88deg, #055A00 -2.99%, #710000 102.28%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

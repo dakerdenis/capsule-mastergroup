@@ -139,16 +139,25 @@
                                 {{-- STEP 2 (скрыт по умолчанию) --}}
                                 <section class="step is-hidden" data-step="2">
                                     <!-- здесь пиши «другие поля» для второго этапа -->
-                                    <div class="register_user-input"><input type="text" name="address"
-                                            placeholder="Address *"></div>
-                                    <div class="register_user-input"><input type="text" name="city"
-                                            placeholder="City *"></div>
-                                    <div class="register_user-input"><input type="tel" name="phone"
-                                            placeholder="Phone *"></div>
+                                    <div class="register_user-input register_user-input2"><input type="text" name="work"
+                                            placeholder="Place of work"></div>
+                                    <div class="register_user-input register_user-input2"><input type="text" name="email"
+                                            placeholder="Login (e-mail) *"></div>
+                                    <div class="register_user-input register_user-input2"><input type="tel" name="phone"
+                                            placeholder="Phone number *"></div>
+                                    <div class="register_user-input register_user-input2"><input type="tel" name="country"
+                                            placeholder="Country *"></div>
+                                    <div class="register_user-input register_user-input2"><input type="tel" name="password"
+                                            placeholder="Password *"></div>
+                                    <div class="register_user-input register_user-input2"><input type="tel" name="password"
+                                            placeholder="Repeat password *"></div>
+                                    <div class="register_checkbox">
+                                        <label for="agree">I confirm my consent to the processing of personal data, and that I have read and agree to the terms and conditions.</label>
+                                        <input type="checkbox" name="agree" id="agree">
+                                    </div>
 
                                     <div class="form__controll">
-                                        <button type="button" class="form_back">Back</button>
-                                        <button type="submit" class="form_submit">CREATE ACCOUNT</button>
+                                        <button type="submit" class="form_submit">register</button>
                                     </div>
                                 </section>
                             </form>
