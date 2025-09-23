@@ -1,4 +1,3 @@
-// public/js/ui/fileUpload.js
 (function (w) {
   function bind(block) {
     const input      = block.querySelector('.file-input');
@@ -23,6 +22,8 @@
       dropZone.style.borderColor = '#34c81e';
       if (e.dataTransfer.files.length) {
         input.files = e.dataTransfer.files;
+        // ВАЖНО: уведомим слушателей, что инпут изменился
+        input.dispatchEvent(new Event('change', { bubbles: true }));
         showPreview(input.files[0]);
       }
     });
@@ -38,6 +39,10 @@
         previewImg.src = ev.target.result;
         preview.hidden = false;
         dropZone.style.display = 'none';
+
+        // ВАЖНО: помечаем блок как "заполнен" и диспатчим событие для внешних валидаторов
+        block.classList.add('has-file');
+        block.dispatchEvent(new CustomEvent('fileupload:change', { bubbles: true }));
       };
       reader.readAsDataURL(file);
     }
@@ -47,6 +52,12 @@
       preview.hidden = true;
       previewImg.src = '';
       dropZone.style.display = 'block';
+
+      // снять пометку и уведомить
+      block.classList.remove('has-file');
+      block.dispatchEvent(new CustomEvent('fileupload:change', { bubbles: true }));
+      // на всякий случай дернём change и у инпута
+      input.dispatchEvent(new Event('change', { bubbles: true }));
     });
   }
 

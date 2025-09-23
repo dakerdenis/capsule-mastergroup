@@ -1,6 +1,7 @@
 .auth-line {
     width: 106px;
 }
+
 .file-upload {
     width: 395px;
     height: 110px;
@@ -61,25 +62,31 @@
     cursor: pointer;
     line-height: 20px;
 }
+
 .auth__form-name {
     margin-top: 29px;
 }
+
 .auth__form-lined {
     margin-top: 10px;
 }
+
 .register_user-form {
     margin-top: 40px;
 
     font-family: 'Inter', sans-serif;
 }
+
 .register_user-form form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .file-icon {
     margin-bottom: 8px;
 }
+
 .file-text {
     margin-top: 10px;
 
@@ -98,6 +105,7 @@
     overflow: hidden;
     border-radius: 8px;
 }
+
 .register_user-input input {
     width: 100%;
     height: 100%;
@@ -199,10 +207,12 @@
 .field__control--date::-webkit-inner-spin-button {
     display: none;
 }
+
 .field__control--date::-webkit-calendar-picker-indicator {
     opacity: 0.8;
     cursor: pointer;
 }
+
 /* === Datepicker popup === */
 .dp {
     position: absolute;
@@ -216,12 +226,14 @@
     padding: 8px;
     user-select: none;
 }
+
 .dp-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 6px;
 }
+
 .dp-nav-btn {
     width: 28px;
     height: 28px;
@@ -230,17 +242,21 @@
     background: #f6f6f6;
     cursor: pointer;
 }
+
 .dp-nav-btn:hover {
     background: rgba(52, 200, 30, 0.12);
 }
+
 .dp-month {
     font: 600 14px/1 'Inter', sans-serif;
 }
+
 .dp-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 4px;
 }
+
 .dp-weekday,
 .dp-day {
     text-align: center;
@@ -248,31 +264,39 @@
     height: 28px;
     border-radius: 6px;
 }
+
 .dp-weekday {
     opacity: 0.6;
 }
+
 .dp-day {
     cursor: pointer;
 }
+
 .dp-day:hover {
     background: rgba(52, 200, 30, 0.12);
 }
+
 .dp-day.is-today {
     outline: 2px solid rgba(52, 200, 30, 0.35);
 }
+
 .dp-day.is-out {
     opacity: 0.35;
 }
+
 .dp-day.is-selected {
     background: #34c81e;
     color: #fff;
 }
+
 .dp-footer {
     margin-top: 6px;
     display: flex;
     justify-content: flex-end;
     gap: 6px;
 }
+
 .dp-quick {
     border: 0;
     background: transparent;
@@ -282,6 +306,7 @@
     padding: 6px 8px;
     border-radius: 6px;
 }
+
 .dp-quick:hover {
     background: rgba(52, 200, 30, 0.12);
 }
@@ -292,16 +317,19 @@
     width: 100%;
     height: 100%;
 }
+
 /***********SEKECT*******************/
 /* SELECT: стилизация стрелки */
 .field--select {
     position: relative;
 }
+
 .field__control--select {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    padding-right: 36px; /* место под стрелку */
+    padding-right: 36px;
+    /* место под стрелку */
 }
 
 /* Псевдо-стрелка (можешь заменить на свою иконку через background-image) */
@@ -312,17 +340,16 @@
     width: 18px;
     height: 18px;
     pointer-events: none;
-    mask: radial-gradient(circle 10px at 50% 75%, #0000 98%, #000) bottom/100%
-            50% no-repeat,
+    mask: radial-gradient(circle 10px at 50% 75%, #0000 98%, #000) bottom/100% 50% no-repeat,
         linear-gradient(#000 0 0) center/100% 2px no-repeat;
-    background: #1f1f1f; /* цвет стрелки */
+    background: #1f1f1f;
+    /* цвет стрелки */
     opacity: 0.6;
     transition: opacity 0.2s ease, background-color 0.2s ease;
 }
 
 /* Плитка контейнер уже есть — добавим внутренние отступы */
-.register_user-gender {
-}
+.register_user-gender {}
 
 /* Базовый стиль блока */
 .field--cselect {
@@ -336,7 +363,8 @@
     position: absolute;
     inset: 0;
     opacity: 0;
-    pointer-events: none; /* участвует в сабмите */
+    pointer-events: none;
+    /* участвует в сабмите */
 }
 
 /* Кнопка-поле (видимая часть селекта) */
@@ -371,12 +399,12 @@
     height: 18px;
     flex: 0 0 18px;
     opacity: 0.7;
-    mask: radial-gradient(circle 10px at 50% 75%, #0000 98%, #000) bottom/100%
-            50% no-repeat,
+    mask: radial-gradient(circle 10px at 50% 75%, #0000 98%, #000) bottom/100% 50% no-repeat,
         linear-gradient(#000 0 0) center/100% 2px no-repeat;
     background: #1f1f1f;
     transition: transform 0.15s ease, background 0.2s, opacity 0.2s;
 }
+
 .field--cselect:has(.cselect-list:not([hidden])) .cselect-arrow {
     transform: rotate(180deg);
     background: #34c81e;
@@ -408,6 +436,7 @@
     cursor: pointer;
     color: #1f1f1f;
 }
+
 .cselect-list .is-option:hover,
 .cselect-list .is-option[aria-selected='true'],
 .cselect-list .is-option.is-active {
@@ -428,6 +457,16 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.form__controll2 {
+    margin-top: 15px;
+    width: 474px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .form__controll a {
     height: 52px;
     width: 157px;
@@ -446,6 +485,7 @@
     justify-content: center;
     color: #fff;
 }
+
 .form_next {
     width: 287px;
     height: 52px;
@@ -464,29 +504,71 @@
     color: #fff;
 }
 
-.step.is-hidden { display: none; }
-.form_next.is-disabled { pointer-events:none; opacity:.5; }
-.auth_page-wrapper{
-  overflow: hidden;
+.step.is-hidden {
+    display: none;
 }
 
-section{
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.form_next.is-disabled {
+    pointer-events: none;
+    opacity: .5;
+}
+
+.auth_page-wrapper {}
+
+section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
 }
-.register_user-input2{
-  margin-bottom: 19px;
+
+.register_user-input2 {
+    margin-bottom: 19px;
 }
-.form_submit{
-  width: 287px;
-  height: 52px;
-  border-radius: 36px;
-  border: 1px solid #000;
-  background: linear-gradient(98.88deg, #055A00 -2.99%, #710000 102.28%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+.form_submit {
+    width: 287px;
+    height: 52px;
+    border-radius: 36px;
+    border: 1px solid #000;
+    background: linear-gradient(98.88deg, #055A00 -2.99%, #710000 102.28%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 15px;
+
+    line-height: 20px;
+    letter-spacing: 0%;
+    text-align: center;
+    text-transform: uppercase;
+
 }
+
+.register_checkbox {
+    width: 555px;
+    height: 44px;
+}
+
+
+
+.register_checkbox label {
+    color: #fff;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.auth__car-image {
+    bottom: 15px;
+}
+
+.form_submit.is-disabled {
+    pointer-events: none;
+    opacity: .5;
+  }
+  

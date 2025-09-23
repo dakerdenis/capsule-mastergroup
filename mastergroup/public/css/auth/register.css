@@ -23,6 +23,7 @@
     align-items: center;
     flex-direction: column;
     justify-content: space-between;
+    cursor: pointer;
 }
 .registration_name {
     background-color: #34c81e;
