@@ -1,0 +1,71 @@
+// public/js/ui/cselect.js
+(function (w) {
+  function initCustomSelect(root) {
+    const native  = root.querySelector('.cselect-native');
+    const toggle  = root.querySelector('.cselect-toggle');
+    const list    = root.querySelector('.cselect-list');
+    const valueEl = root.querySelector('.cselect-value');
+    const items   = Array.from(root.querySelectorAll('.is-option'));
+    if (!native || !toggle || !list || !valueEl || !items.length) return;
+
+    if (native.value) {
+      const item = items.find(i => i.dataset.value === native.value);
+      if (item) { valueEl.textContent = item.textContent; item.setAttribute('aria-selected','true'); }
+    }
+
+    const open  = () => { list.hidden = false; toggle.setAttribute('aria-expanded','true'); };
+    const close = () => { list.hidden = true;  toggle.setAttribute('aria-expanded','false'); items.forEach(i=>i.classList.remove('is-active')); };
+
+    toggle.addEventListener('click', () => list.hidden ? open() : close());
+
+    items.forEach((item, idx) => {
+      item.addEventListener('click', () => selectItem(item));
+      item.addEventListener('mousemove', () => setActive(idx));
+    });
+
+    function selectItem(item) {
+      items.forEach(i => i.removeAttribute('aria-selected'));
+      item.setAttribute('aria-selected','true');
+      valueEl.textContent = item.textContent;
+      native.value = item.dataset.value;
+      native.dispatchEvent(new Event('change', { bubbles: true }));
+      close();
+    }
+
+    let activeIndex = -1;
+    function setActive(i) {
+      items.forEach(it => it.classList.remove('is-active'));
+      activeIndex = i;
+      if (items[i]) items[i].classList.add('is-active');
+    }
+
+    toggle.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault(); open(); list.focus(); setActive(0);
+      }
+    });
+
+    list.addEventListener('keydown', e => {
+      if (e.key === 'Escape')    { e.preventDefault(); close(); toggle.focus(); }
+      if (e.key === 'ArrowDown') { e.preventDefault(); setActive(Math.min(activeIndex+1, items.length-1)); ensureVisible(); }
+      if (e.key === 'ArrowUp')   { e.preventDefault(); setActive(Math.max(activeIndex-1, 0)); ensureVisible(); }
+      if (e.key === 'Enter')     { e.preventDefault(); if (items[activeIndex]) selectItem(items[activeIndex]); }
+    });
+
+    function ensureVisible() {
+      const act = items[activeIndex]; if (!act) return;
+      const r = act.getBoundingClientRect(), R = list.getBoundingClientRect();
+      if (r.bottom > R.bottom) list.scrollTop += (r.bottom - R.bottom);
+      if (r.top < R.top)       list.scrollTop -= (R.top - r.top);
+    }
+
+    // закрытие кликом вне
+    document.addEventListener('click', (e) => {
+      if (!root.contains(e.target)) close();
+    });
+  }
+
+  w.initCustomSelects = function (root = document) {
+    root.querySelectorAll('[data-cselect]').forEach(initCustomSelect);
+  };
+})(window);

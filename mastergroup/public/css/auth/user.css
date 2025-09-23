@@ -2,61 +2,468 @@
     width: 106px;
 }
 .file-upload {
-  width: 395px;
-  height: 110px;
-    border-bottom: 3px solid #34C81E;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  color: #1f1f1f;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  background-color: #fff;
-  margin-bottom: 20px;
+    width: 395px;
+    height: 110px;
+    border-bottom: 3px solid #34c81e;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #1f1f1f;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    background-color: #fff;
+    margin-bottom: 20px;
 }
 
 .file-dropzone {
-  text-align: center;
-  color: #1f1f1f;
+    text-align: center;
+    color: #1f1f1f;
 }
 
 .file-dropzone .choose {
-  color: #34c81e;
-  font-weight: 600;
-  cursor: pointer;
+    color: #055A00;
+    text-decoration: underline;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .file-preview {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .file-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 8px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
 }
 
 .file-remove {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  background: rgba(0,0,0,0.6);
-  border: none;
-  color: #fff;
-  font-size: 16px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  cursor: pointer;
-  line-height: 20px;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    line-height: 20px;
 }
+.auth__form-name {
+    margin-top: 29px;
+}
+.auth__form-lined {
+    margin-top: 10px;
+}
+.register_user-form {
+    margin-top: 60px;
+
+    font-family: 'Inter', sans-serif;
+}
+.register_user-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.file-icon {
+    margin-bottom: 8px;
+}
+.file-text {
+    margin-top: 10px;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    color: #055A00;
+    line-height: 150%;
+    letter-spacing: 4%;
+}
+
+.register_user-input {
+    width: 395px;
+    height: 74px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+.register_user-input input {
+    width: 100%;
+    height: 100%;
+    border-bottom: 3px solid #34c81e;
+    padding-left: 20px;
+
+    font-weight: 400;
+
+    font-size: 14px;
+
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    vertical-align: middle;
+    color: #1f1f1f;
+}
+
+.register_user-inputs {
+    margin-top: 19px;
+    margin-bottom: 19px;
+    height: 74px;
+    width: 395px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.register_user-birth {
+    width: 190px;
+    height: 74px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.register_user-gender {
+    width: 190px;
+    height: 74px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+/* Общая плитка (у тебя уже есть размеры/радиус) */
+.register_user-birth,
+.register_user-gender {
+    background: #fff;
+    border-radius: 8px;
+    /* внутренние отступы, чтобы поместилась метка и контрол */
+    box-sizing: border-box;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Подсветка плитки при фокусе любого элемента внутри */
+.register_user-birth:focus-within,
+.register_user-gender:focus-within {
+    border-color: #34c81e;
+    box-shadow: 0 0 0 3px rgba(52, 200, 30, 0.12);
+}
+
+/* Поле */
+.field {
+    height: 100%;
+    width: 100%;
+}
+
+/* Метка */
+.field__label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    color: #1f1f1f;
+    opacity: 0.85;
+    margin-bottom: 6px;
+}
+
+/* Контрол */
+.field__control {
+    width: 100%;
+    height: 100%;
+    border-bottom: 3px solid #34c81e;
+    border-radius: 6px;
+    padding: 0 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #1f1f1f;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease,
+        background-color 0.2s ease;
+    background: #fff;
+}
+
+/* Фокус на самом инпуте/селекте */
+.field__control:focus {
+    border-color: #34c81e;
+    box-shadow: 0 0 0 3px rgba(52, 200, 30, 0.12);
+}
+
+/* DATE: убрать лишние иконки в разных браузерах (опционально) */
+.field__control--date::-webkit-clear-button,
+.field__control--date::-webkit-inner-spin-button {
+    display: none;
+}
+.field__control--date::-webkit-calendar-picker-indicator {
+    opacity: 0.8;
+    cursor: pointer;
+}
+/* === Datepicker popup === */
+.dp {
+    position: absolute;
+    z-index: 20;
+    width: 260px;
+    background: #fff;
+    color: #1f1f1f;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    user-select: none;
+}
+.dp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+.dp-nav-btn {
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 6px;
+    background: #f6f6f6;
+    cursor: pointer;
+}
+.dp-nav-btn:hover {
+    background: rgba(52, 200, 30, 0.12);
+}
+.dp-month {
+    font: 600 14px/1 'Inter', sans-serif;
+}
+.dp-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+.dp-weekday,
+.dp-day {
+    text-align: center;
+    font: 12px/28px 'Inter', sans-serif;
+    height: 28px;
+    border-radius: 6px;
+}
+.dp-weekday {
+    opacity: 0.6;
+}
+.dp-day {
+    cursor: pointer;
+}
+.dp-day:hover {
+    background: rgba(52, 200, 30, 0.12);
+}
+.dp-day.is-today {
+    outline: 2px solid rgba(52, 200, 30, 0.35);
+}
+.dp-day.is-out {
+    opacity: 0.35;
+}
+.dp-day.is-selected {
+    background: #34c81e;
+    color: #fff;
+}
+.dp-footer {
+    margin-top: 6px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+}
+.dp-quick {
+    border: 0;
+    background: transparent;
+    color: #1f1f1f;
+    opacity: 0.8;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+}
+.dp-quick:hover {
+    background: rgba(52, 200, 30, 0.12);
+}
+
+/* позиционирование попапа относительно инпута */
+.dp-anchor {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+/***********SEKECT*******************/
+/* SELECT: стилизация стрелки */
+.field--select {
+    position: relative;
+}
+.field__control--select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 36px; /* место под стрелку */
+}
+
+/* Псевдо-стрелка (можешь заменить на свою иконку через background-image) */
+.select__arrow {
+    position: absolute;
+    right: 10px;
+    bottom: 12px;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    mask: radial-gradient(circle 10px at 50% 75%, #0000 98%, #000) bottom/100%
+            50% no-repeat,
+        linear-gradient(#000 0 0) center/100% 2px no-repeat;
+    background: #1f1f1f; /* цвет стрелки */
+    opacity: 0.6;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+/* Плитка контейнер уже есть — добавим внутренние отступы */
+.register_user-gender {
+}
+
+/* Базовый стиль блока */
+.field--cselect {
+    position: relative;
+    height: 100%;
+    grid-template-rows: auto 1fr;
+}
+
+/* Скрываем нативный select, но оставляем в DOM */
+.cselect-native {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none; /* участвует в сабмите */
+}
+
+/* Кнопка-поле (видимая часть селекта) */
+.cselect-toggle {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 12px;
+    background: #fff;
+    color: #1f1f1f;
+    font: 14px/1.2 'Inter', sans-serif;
+    border-bottom: 3px solid #34c81e;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Фокус и актив */
+.cselect-toggle:focus-visible,
+.field--cselect:has(.cselect-list:not([hidden])) .cselect-toggle {
+    border-color: #34c81e;
+    box-shadow: 0 0 0 3px rgba(52, 200, 30, 0.12);
+}
+
+/* Стрелка */
+.cselect-arrow {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    opacity: 0.7;
+    mask: radial-gradient(circle 10px at 50% 75%, #0000 98%, #000) bottom/100%
+            50% no-repeat,
+        linear-gradient(#000 0 0) center/100% 2px no-repeat;
+    background: #1f1f1f;
+    transition: transform 0.15s ease, background 0.2s, opacity 0.2s;
+}
+.field--cselect:has(.cselect-list:not([hidden])) .cselect-arrow {
+    transform: rotate(180deg);
+    background: #34c81e;
+    opacity: 1;
+}
+
+/* Выпадающий список */
+.cselect-list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% - 4px);
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: 6px;
+    margin: 0;
+    list-style: none;
+    z-index: 10;
+    max-height: 220px;
+    overflow: auto;
+}
+
+/* Элемент списка */
+.cselect-list .is-option {
+    padding: 10px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #1f1f1f;
+}
+.cselect-list .is-option:hover,
+.cselect-list .is-option[aria-selected='true'],
+.cselect-list .is-option.is-active {
+    background: rgba(52, 200, 30, 0.12);
+}
+
+/* Ошибка — если используешь классы ошибок */
+.register_user-gender.has-error .cselect-toggle {
+    border-color: #e53935;
+    box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.12);
+}
+
+.form__controll {
+    margin-top: 60px;
+    width: 474px;
+    height: 52px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.form__controll a {
+    height: 52px;
+    width: 157px;
+    border-radius: 36px;
+    border: 1px solid #fff;
+
+    font-weight: 400;
+
+    font-size: 15px;
+
+    line-height: 20px;
+    letter-spacing: 0%;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+.form_next {
+    width: 287px;
+    height: 52px;
+    border: 1px solid #000;
+    background: linear-gradient(98.88deg, #055a00 -2.99%, #710000 102.28%);
+    border-radius: 36px;
+
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 15px;
+
+    line-height: 20px;
+    letter-spacing: 0%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.step.is-hidden { display: none; }
+.form_next.is-disabled { pointer-events:none; opacity:.5; }
+

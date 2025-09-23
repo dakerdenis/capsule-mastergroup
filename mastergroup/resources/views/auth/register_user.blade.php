@@ -3,6 +3,7 @@
 @section('title', $title ?? 'Create account')
 @push('page-styles')
     <link rel="stylesheet" href="{{ asset('css/auth/user.css') }}?v={{ filemtime(public_path('css/auth/user.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/pickaday.css') }}">
 @endpush
 @section('content')
     <div class="auth_page-container">
@@ -37,46 +38,119 @@
                         </div>
 
                         <div class="register_user-form">
-                            <form action="">
-                                <!-- FIRST BLOCK -->
-                                <div class="register_user-element">
-                                    <div class="file-upload">
-                                        <input type="file" class="file-input" accept="image/*" hidden>
-                                        <div class="file-dropzone">
-                                            <div class="file-icon">📄</div>
-                                            <p>Identity card <span class="req">*</span></p>
-                                            <p class="file-text">
-                                                Drag and Drop file here or <span class="choose">Choose file</span>
-                                            </p>
-                                        </div>
-                                        <div class="file-preview" hidden>
-                                            <img class="preview-img" src="" alt="Preview">
-                                            <button type="button" class="file-remove">✕</button>
+                            <form id="regForm" action="">
+                                <section class="step" data-step="1">
+                                    <!-- FIRST BLOCK -->
+                                    <div class="register_user-element">
+                                        <div class="file-upload">
+                                            <input type="file" class="file-input" accept="image/*" hidden>
+                                            <div class="file-dropzone">
+                                                <div class="file-icon">
+                                                    <img src="{{ asset('images/auth/doc.png') }}" alt="">
+
+                                                </div>
+                                                <p>Identity card <span class="req">*</span></p>
+                                                <p class="file-text">
+                                                    Drag and Drop file here or <span class="choose">Choose file</span>
+                                                </p>
+                                            </div>
+                                            <div class="file-preview" hidden>
+                                                <img class="preview-img" src="" alt="Preview">
+                                                <button type="button" class="file-remove">✕</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- SECOND BLOCK -->
-                                <div class="register_user-element">
-                                    <div class="file-upload">
-                                        <input type="file" class="file-input" accept="image/*" hidden>
-                                        <div class="file-dropzone">
-                                            <div class="file-icon">📄</div>
-                                            <p>Profile photo *<span class="req">*</span></p>
-                                            <p class="file-text">
-                                                Drag and Drop file here or <span class="choose">Choose file</span>
-                                            </p>
-                                        </div>
-                                        <div class="file-preview" hidden>
-                                            <img class="preview-img" src="" alt="Preview">
-                                            <button type="button" class="file-remove">✕</button>
+                                    <!-- SECOND BLOCK -->
+                                    <div class="register_user-element">
+                                        <div class="file-upload">
+                                            <input type="file" class="file-input" accept="image/*" hidden>
+                                            <div class="file-dropzone">
+                                                <div class="file-icon"><img src="{{ asset('images/auth/doc.png') }}"
+                                                        alt=""></div>
+                                                <p>Profile photo <span class="req">*</span></p>
+                                                <p class="file-text">
+                                                    Drag and Drop file here or <span class="choose">Choose file</span>
+                                                </p>
+                                            </div>
+                                            <div class="file-preview" hidden>
+                                                <img class="preview-img" src="" alt="Preview">
+                                                <button type="button" class="file-remove">✕</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="register_user-input">
-                                    <input type="text">
-                                </div>
+                                    <div class="register_user-input">
+                                        <input type="text" placeholder="Name and Surname *">
+                                    </div>
+
+
+                                    <div class="register_user-inputs">
+                                        <div class="register_user-birth">
+                                            <div class="field">
+                                                <input type="text" class="field__control field__control--date"
+                                                    name="birthdate" placeholder="MM/DD/YYYY" required lang="en"
+                                                    data-datepicker inputmode="numeric">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="register_user-gender">
+                                            <div class="field field--cselect" data-cselect>
+
+                                                <!-- Нативный select: скрыт, но участвует в сабмите -->
+                                                <select name="gender" class="cselect-native" required>
+                                                    <option value="" selected disabled>Gender*</option>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+
+                                                <!-- Кнопка-отображение -->
+                                                <button type="button" class="cselect-toggle" aria-haspopup="listbox"
+                                                    aria-expanded="false">
+                                                    <span class="cselect-value">Gender*</span>
+                                                    <span class="cselect-arrow" aria-hidden="true"></span>
+                                                </button>
+
+                                                <!-- Выпадающий список -->
+                                                <ul class="cselect-list" role="listbox" tabindex="-1" hidden>
+                                                    <li role="option" data-value="male" class="is-option">Male</li>
+                                                    <li role="option" data-value="female" class="is-option">Female</li>
+                                                    <li role="option" data-value="other" class="is-option">Other</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="register_user-input">
+                                        <input type="text" placeholder="Instagram account">
+                                    </div>
+
+
+                                    <div class="form__controll">
+                                        <a href="{{ route('auth.register') }}">Back</a>
+                                        <button type="button" class="form_next is-disabled"
+                                            aria-disabled="true">NEXT</button>
+                                    </div>
+                                </section>
+
+                                {{-- STEP 2 (скрыт по умолчанию) --}}
+                                <section class="step is-hidden" data-step="2">
+                                    <!-- здесь пиши «другие поля» для второго этапа -->
+                                    <div class="register_user-input"><input type="text" name="address"
+                                            placeholder="Address *"></div>
+                                    <div class="register_user-input"><input type="text" name="city"
+                                            placeholder="City *"></div>
+                                    <div class="register_user-input"><input type="tel" name="phone"
+                                            placeholder="Phone *"></div>
+
+                                    <div class="form__controll">
+                                        <button type="button" class="form_back">Back</button>
+                                        <button type="submit" class="form_submit">CREATE ACCOUNT</button>
+                                    </div>
+                                </section>
                             </form>
                         </div>
 
@@ -116,73 +190,61 @@
             </div>
         </div>
     </div>
+    @push('page-scripts')
+        <script
+            src="{{ asset('js/register/ui/fileUpload.js') }}?v={{ filemtime(public_path('js/register/ui/fileUpload.js')) }}">
+        </script>
+        <script src="{{ asset('js/register/ui/cselect.js') }}?v={{ filemtime(public_path('js/register/ui/cselect.js')) }}">
+        </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".file-upload").forEach(block => {
-    const input = block.querySelector(".file-input");
-    const dropZone = block.querySelector(".file-dropzone");
-    const preview = block.querySelector(".file-preview");
-    const previewImg = block.querySelector(".preview-img");
-    const removeBtn = block.querySelector(".file-remove");
 
-    // клик по Choose file
-    dropZone.addEventListener("click", (e) => {
-      if (e.target.classList.contains("choose") || e.target.closest(".file-dropzone")) {
-        input.click();
-      }
-    });
+        <script src="{{ asset('js/pickaday.js') }}?v={{ filemtime(public_path('js/pickaday.js')) }}"></script>
+        <script
+            src="{{ asset('js/register/registeruser.js') }}?v={{ filemtime(public_path('js/register/registeruser.js')) }}">
+        </script>
+    @endpush
 
-    // drag over
-    dropZone.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      dropZone.style.borderColor = "#0a0";
-    });
 
-    dropZone.addEventListener("dragleave", () => {
-      dropZone.style.borderColor = "#34c81e";
-    });
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const birthInput = document.querySelector('input[name="birthdate"]');
+            if (!birthInput) return;
 
-    // drop
-    dropZone.addEventListener("drop", (e) => {
-      e.preventDefault();
-      dropZone.style.borderColor = "#34c81e";
-      if (e.dataTransfer.files.length) {
-        input.files = e.dataTransfer.files;
-        showPreview(input.files[0]);
-      }
-    });
+            // оборачиваем для аккуратного позиционирования
+            let anchor = birthInput.closest('.dp-anchor');
+            if (!anchor) {
+                anchor = document.createElement('div');
+                anchor.className = 'dp-anchor';
+                birthInput.parentNode.insertBefore(anchor, birthInput);
+                anchor.appendChild(birthInput);
+            }
 
-    // выбор файла через input
-    input.addEventListener("change", () => {
-      if (input.files.length) {
-        showPreview(input.files[0]);
-      }
-    });
-
-    // показать превью
-    function showPreview(file) {
-      if (!file.type.startsWith("image/")) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        previewImg.src = e.target.result;
-        preview.hidden = false;
-        dropZone.style.display = "none";
-      };
-      reader.readAsDataURL(file);
-    }
-
-    // удалить файл
-    removeBtn.addEventListener("click", () => {
-      input.value = "";
-      preview.hidden = true;
-      previewImg.src = "";
-      dropZone.style.display = "block";
-    });
-  });
-});
-</script>
-
+            new Pikaday({
+                field: birthInput,
+                format: 'MM/DD/YYYY', // всегда англ. формат
+                yearRange: [1950, 2004], // выбери свой диапазон
+                firstDay: 0, // Sunday
+                container: anchor, // чтобы всплывал под инпутом в твоём блоке
+                bound: true, // позиционируется относительно field
+                toString: (date) => {
+                    const mm = String(date.getMonth() + 1).padStart(2, '0');
+                    const dd = String(date.getDate()).padStart(2, '0');
+                    const yy = date.getFullYear();
+                    return `${mm}/${dd}/${yy}`;
+                },
+                parse: (str) => {
+                    const m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec((str || '').trim());
+                    if (!m) return null;
+                    const mm = +m[1],
+                        dd = +m[2],
+                        yy = +m[3];
+                    const d = new Date(yy, mm - 1, dd);
+                    return (d.getFullYear() === yy && d.getMonth() === mm - 1 && d.getDate() === dd) ?
+                        d : null;
+                }
+            });
+        });
+    </script>
 
 
 
