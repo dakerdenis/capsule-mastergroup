@@ -552,16 +552,26 @@ section {
 .register_checkbox {
     width: 555px;
     height: 44px;
+    display: flex;
+    justify-content: space-between;
+
+}
+.register_checkbox input {
+    display: block;
+    height: 19px;
+    width: 19px;
+
 }
 
 
-
 .register_checkbox label {
-    color: #fff;
+    color: #8C8C8C;
     font-weight: 400;
     font-size: 18px;
     line-height: 100%;
     letter-spacing: 0%;
+    width: 505px;
+    height: 44px;
 }
 .auth__car-image {
     bottom: 15px;
@@ -572,3 +582,38 @@ section {
     opacity: .5;
   }
   
+.register_user-input3{
+    overflow: initial;
+}
+
+@media only screen and (max-width: 1680px) {
+    .auth__form-logo {
+        width: 293px;
+    height: 66px;
+    }
+.auth__form-name{
+    margin-top: 10px;
+}
+.auth__form-name h2 {
+    font-size: 33px;
+    line-height: 33px;
+
+}
+.file-upload{
+    height: 90px;
+    margin-bottom: 12px;
+}
+.file-text{
+    font-size:14px;
+    margin-top: 5px;
+}
+.register_user-inputs{
+    margin: 12px 0px;
+}
+.form__controll {
+    margin-top: 25px;
+}
+.register_user-form {
+    margin-top: 25px;
+}
+}

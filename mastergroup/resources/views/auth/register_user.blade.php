@@ -154,7 +154,7 @@
                                     </div>
                                   
                                     <!-- Country (красивый кастомный селект, как gender) -->
-                                    <div class="register_user-input register_user-input2" id="countryBlk">
+                                    <div class="register_user-input register_user-input2 register_user-input3" id="countryBlk">
                                       <div class="field field--cselect" data-cselect>
                                         <select name="country" class="cselect-native" required>
                                           <option value="" selected disabled>Country *</option>

@@ -1,33 +1,44 @@
-// public/js/ui/cselect.js
+/* =========================================================
+   public/js/register/ui/cselect.js
+   Кастомный Select (ARIA-friendly)
+   Особенности:
+   - Привязка ОДИН раз на корень [data-cselect] (флаг data-cselect-bound)
+   - Можно вызывать initCustomSelects(document|root) сколько угодно раз
+   ========================================================= */
+
 (function (w) {
   function initCustomSelect(root) {
+    if (!root || root.dataset.cselectBound === '1') return;
+
     const native  = root.querySelector('.cselect-native');
     const toggle  = root.querySelector('.cselect-toggle');
     const list    = root.querySelector('.cselect-list');
     const valueEl = root.querySelector('.cselect-value');
     const items   = Array.from(root.querySelectorAll('.is-option'));
-    if (!native || !toggle || !list || !valueEl || !items.length) return;
-
-    if (native.value) {
-      const item = items.find(i => i.dataset.value === native.value);
-      if (item) { valueEl.textContent = item.textContent; item.setAttribute('aria-selected','true'); }
+    if (!native || !toggle || !list || !valueEl || !items.length) {
+      root.dataset.cselectBound = '1'; // чтобы больше не пытаться
+      return;
     }
 
-    const open  = () => { list.hidden = false; toggle.setAttribute('aria-expanded','true'); };
+    // Начальное значение
+    if (native.value) {
+      const item = items.find(i => i.dataset.value === native.value);
+      if (item) {
+        valueEl.textContent = item.textContent;
+        item.setAttribute('aria-selected', 'true');
+      }
+    } else {
+      valueEl.textContent = valueEl.textContent || (items[0]?.textContent || '');
+    }
+
+    const open  = () => { list.hidden = false; toggle.setAttribute('aria-expanded','true'); list.focus(); };
     const close = () => { list.hidden = true;  toggle.setAttribute('aria-expanded','false'); items.forEach(i=>i.classList.remove('is-active')); };
-
-    toggle.addEventListener('click', () => list.hidden ? open() : close());
-
-    items.forEach((item, idx) => {
-      item.addEventListener('click', () => selectItem(item));
-      item.addEventListener('mousemove', () => setActive(idx));
-    });
 
     function selectItem(item) {
       items.forEach(i => i.removeAttribute('aria-selected'));
       item.setAttribute('aria-selected','true');
       valueEl.textContent = item.textContent;
-      native.value = item.dataset.value;
+      native.value = item.dataset.value || '';
       native.dispatchEvent(new Event('change', { bubbles: true }));
       close();
     }
@@ -39,12 +50,30 @@
       if (items[i]) items[i].classList.add('is-active');
     }
 
-    toggle.addEventListener('keydown', e => {
-      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault(); open(); list.focus(); setActive(0);
-      }
+    // Открытие/закрытие
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      list.hidden ? open() : close();
     });
 
+    // Поддержка Enter/Space для открытия
+    toggle.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault(); open(); setActive(0);
+      }
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+    });
+
+    // Выбор пунктов
+    items.forEach((item, idx) => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        selectItem(item);
+      });
+      item.addEventListener('mousemove', () => setActive(idx));
+    });
+
+    // Клавиатура в списке
     list.addEventListener('keydown', e => {
       if (e.key === 'Escape')    { e.preventDefault(); close(); toggle.focus(); }
       if (e.key === 'ArrowDown') { e.preventDefault(); setActive(Math.min(activeIndex+1, items.length-1)); ensureVisible(); }
@@ -59,10 +88,13 @@
       if (r.top < R.top)       list.scrollTop -= (R.top - r.top);
     }
 
-    // закрытие кликом вне
+    // Закрытие кликом вне
     document.addEventListener('click', (e) => {
       if (!root.contains(e.target)) close();
     });
+
+    // Проставляем флаг, чтобы не биндить повторно
+    root.dataset.cselectBound = '1';
   }
 
   w.initCustomSelects = function (root = document) {
