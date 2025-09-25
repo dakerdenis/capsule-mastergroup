@@ -38,12 +38,14 @@
                         </div>
 
                         <div class="register_user-form">
-                            <form id="regForm" action="">
+                            <form id="regForm" action="{{ route('auth.register.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="client_type" value="individual"> <!-- или company во второй форме -->
                                 <section class="step" data-step="1">
                                     <!-- FIRST BLOCK -->
                                     <div class="register_user-element">
                                         <div class="file-upload">
-                                            <input type="file" class="file-input" accept="image/*" hidden>
+                                            <input type="file" class="file-input" accept="image/*" hidden name="identity_photo">
                                             <div class="file-dropzone">
                                                 <div class="file-icon">
                                                     <img src="{{ asset('images/auth/doc.png') }}" alt="">
@@ -64,7 +66,7 @@
                                     <!-- SECOND BLOCK -->
                                     <div class="register_user-element">
                                         <div class="file-upload">
-                                            <input type="file" class="file-input" accept="image/*" hidden>
+                                            <input type="file" class="file-input" accept="image/*" hidden name="profile_photo">
                                             <div class="file-dropzone">
                                                 <div class="file-icon"><img src="{{ asset('images/auth/doc.png') }}"
                                                         alt=""></div>
@@ -81,7 +83,7 @@
                                     </div>
 
                                     <div class="register_user-input">
-                                        <input type="text" placeholder="Name and Surname *">
+                                        <input type="text" placeholder="Name and Surname *" name="full_name">
                                     </div>
 
 
@@ -89,7 +91,7 @@
                                         <div class="register_user-birth">
                                             <div class="field">
                                                 <input type="text" class="field__control field__control--date"
-                                                    name="birthdate" placeholder="MM/DD/YYYY" required lang="en"
+                                                    name="birth_date" placeholder="MM/DD/YYYY" required lang="en"
                                                     data-datepicker inputmode="numeric">
                                             </div>
                                         </div>
@@ -125,7 +127,7 @@
                                     </div>
 
                                     <div class="register_user-input">
-                                        <input type="text" placeholder="Instagram account">
+                                        <input type="text" name="instagram" placeholder="Instagram account">
                                     </div>
 
 
@@ -140,7 +142,7 @@
                                 <section class="step is-hidden" data-step="2">
                                     <!-- Work (необязательно — убери, если не нужно) -->
                                     <div class="register_user-input register_user-input2">
-                                      <input type="text" name="work" placeholder="Place of work">
+                                      <input type="text" name="workplace" placeholder="Place of work">
                                     </div>
                                   
                                     <!-- Email -->
@@ -248,6 +250,18 @@
                             <p>Earn bonuses for every product you purchase. Exchange your bonuses for useful gifts to use
                                 with your product. </p>
                             <p>No extra charges!</p>
+                            @if ($errors->any())
+  <ul class="form-errors">
+    @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+@endif
+
+@if (session('status'))
+  <div class="form-status">{{ session('status') }}</div>
+@endif
+
                         </div>
 
                     </div>

@@ -39,15 +39,35 @@
                         </div>
 
                         <div class="register_user-form">
-                            <form id="regForm" action="">
+                            <form id="regForm" action="{{ route('auth.register.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="client_type" value="company"> <!-- или company во второй форме -->
                                 <section class="step" data-step="1">
                                     <!-- FIRST BLOCK -->
+                                    <div class="register_user-element">
+                                        <div class="file-upload">
+                                            <input type="file" class="file-input" accept="image/*" hidden name="company_logo">
+                                            <div class="file-dropzone">
+                                                <div class="file-icon">
+                                                    <img src="{{ asset('images/auth/doc.png') }}" alt="">
 
+                                                </div>
+                                                <p>Company Logo <span class="req">*</span></p>
+                                                <p class="file-text">
+                                                    Drag and Drop file here or <span class="choose">Choose file</span>
+                                                </p>
+                                            </div>
+                                            <div class="file-preview" hidden>
+                                                <img class="preview-img" src="" alt="Preview">
+                                                <button type="button" class="file-remove">✕</button>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <!-- SECOND BLOCK -->
                                     <div class="register_user-element">
                                         <div class="file-upload">
-                                            <input type="file" class="file-input" accept="image/*" hidden>
+                                            <input type="file" class="file-input" accept="image/*" hidden >
                                             <div class="file-dropzone">
                                                 <div class="file-icon"><img src="{{ asset('images/auth/doc.png') }}"
                                                         alt=""></div>
@@ -64,7 +84,7 @@
                                     </div>
 
                                     <div class="register_user-input">
-                                        <input type="text" placeholder="Name and Surname *">
+                                        <input type="text" placeholder="Name and Surname *" name="full_name">
                                     </div>
 
 
@@ -72,7 +92,7 @@
                                         <div class="register_user-birth">
                                             <div class="field">
                                                 <input type="text" class="field__control field__control--date"
-                                                    name="birthdate" placeholder="MM/DD/YYYY" required lang="en"
+                                                    name="birth_date" placeholder="MM/DD/YYYY" required lang="en"
                                                     data-datepicker inputmode="numeric">
                                             </div>
                                         </div>
@@ -109,7 +129,7 @@
                                     <div class="register_user-input register_user-input2"><input type="tel"
                                         name="phone" placeholder="Phone number *"></div>
                                     <div class="register_user-input">
-                                        <input type="text" placeholder="Instagram account">
+                                        <input type="text" placeholder="Instagram account" name="instagram">
                                     </div>
 
 
@@ -127,12 +147,64 @@
                                             name="work" placeholder="Place of work"></div>
                                     <div class="register_user-input register_user-input2"><input type="text"
                                             name="email" placeholder="Login (e-mail) *"></div>
-                                    <div class="register_user-input register_user-input2"><input type="tel"
-                                            name="country" placeholder="Country *"></div>
-                                    <div class="register_user-input register_user-input2"><input type="tel"
-                                            name="password" placeholder="Password *"></div>
-                                    <div class="register_user-input register_user-input2"><input type="tel"
-                                            name="password" placeholder="Repeat password *"></div>
+                                    <!-- Country (красивый кастомный селект, как gender) -->
+                                    <div class="register_user-input register_user-input2 register_user-input3" id="countryBlk">
+                                      <div class="field field--cselect" data-cselect>
+                                        <select name="country" class="cselect-native" required>
+                                          <option value="" selected disabled>Country *</option>
+                                          <option value="AZ">Azerbaijan</option>
+                                          <option value="US">United States</option>
+                                          <option value="GB">United Kingdom</option>
+                                          <option value="DE">Germany</option>
+                                          <option value="FR">France</option>
+                                          <option value="TR">Türkiye</option>
+                                          <option value="RU">Russia</option>
+                                          <option value="UA">Ukraine</option>
+                                          <option value="KZ">Kazakhstan</option>
+                                          <option value="PL">Poland</option>
+                                          <!-- добавишь свои страны по списку -->
+                                        </select>
+                                  
+                                        <button type="button" class="cselect-toggle" aria-haspopup="listbox" aria-expanded="false">
+                                          <span class="cselect-value">Country *</span>
+                                          <span class="cselect-arrow" aria-hidden="true"></span>
+                                        </button>
+                                  
+                                        <ul class="cselect-list" role="listbox" tabindex="-1" hidden>
+                                          <li class="is-option" role="option" data-value="AZ">Azerbaijan</li>
+                                          <li class="is-option" role="option" data-value="US">United States</li>
+                                          <li class="is-option" role="option" data-value="GB">United Kingdom</li>
+                                          <li class="is-option" role="option" data-value="DE">Germany</li>
+                                          <li class="is-option" role="option" data-value="FR">France</li>
+                                          <li class="is-option" role="option" data-value="TR">Türkiye</li>
+                                          <li class="is-option" role="option" data-value="RU">Russia</li>
+                                          <li class="is-option" role="option" data-value="UA">Ukraine</li>
+                                          <li class="is-option" role="option" data-value="KZ">Kazakhstan</li>
+                                          <li class="is-option" role="option" data-value="PL">Poland</li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                    <!-- Password -->
+                                    <div class="register_user-input register_user-input2" id="pass1Blk">
+                                      <div class="form-block form-block--with-eye">
+                                        <input id="regPassword" type="password" name="password" placeholder="Password *" required autocomplete="new-password">
+                                        <button type="button" class="input-eye" aria-label="Show password" aria-pressed="false">
+                                          <span class="eye-icon" aria-hidden="true"></span>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  
+                                    <!-- Repeat password -->
+                                    <div class="register_user-input register_user-input2" id="pass2Blk">
+                                      <div class="form-block form-block--with-eye">
+                                        <input id="regPassword2" type="password" name="password_confirmation" placeholder="Repeat password *" required autocomplete="new-password">
+                                        <button type="button" class="input-eye" aria-label="Show password" aria-pressed="false">
+                                          <span class="eye-icon" aria-hidden="true"></span>
+                                        </button>
+                                      </div>
+                                    </div>
+
+
                                     <div class="register_checkbox">
 
                                         <input type="checkbox" name="agree" id="agree">
@@ -170,6 +242,18 @@
                             <p>Earn bonuses for every product you purchase. Exchange your bonuses for useful gifts to use
                                 with your product. </p>
                             <p>No extra charges!</p>
+                            @if ($errors->any())
+  <ul class="form-errors">
+    @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+@endif
+
+@if (session('status'))
+  <div class="form-status">{{ session('status') }}</div>
+@endif
+
                         </div>
 
                     </div>

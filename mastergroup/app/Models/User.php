@@ -2,51 +2,51 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Enums\ClientType;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
-// 1) импортируем контракт и трейт
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Illuminate\Auth\MustVerifyEmail;
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, MustVerifyEmail;
+    use Notifiable, MustVerifyEmail;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'name',
+        'full_name',
         'email',
         'password',
+        'client_type',
+        'birth_date',
+        'gender',
+        'country',
+        'phone',
+        'profile_photo_path',
+        'identity_photo_path',
+        'company_logo_path',
+        'workplace',
+        'instagram',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'email_verified_at'   => 'datetime',
+            'password'            => 'hashed',
+            'birth_date'          => 'date',
+            // если используешь enum PHP 8.1+
+            'client_type'         => ClientType::class,
         ];
+    }
+
+    // Удобные геттеры/помощники
+    public function isIndividual(): bool
+    {
+        return (string) $this->client_type === 'individual';
+    }
+
+    public function isCompany(): bool
+    {
+        return (string) $this->client_type === 'company';
     }
 }
