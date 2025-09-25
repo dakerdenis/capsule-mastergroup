@@ -292,7 +292,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const birthInput = document.querySelector('input[name="birthdate"]');
+            const birthInput = document.querySelector('input[name="birth_date"]');
             if (!birthInput) return;
 
             // оборачиваем для аккуратного позиционирования

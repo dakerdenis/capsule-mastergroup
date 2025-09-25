@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Поля шага 1
   const uploadBlocks = qsa('.file-upload', step1); // 2 блока
   const nameInput    = qs('input[placeholder="Name and Surname *"]', step1);
-  const birthInput   = qs('input[name="birthdate"]', step1);
+  const birthInput   = qs('input[name="birth_date"]', step1);
   const genderSelect = qs('select[name="gender"]', step1);
   const instaInput   = qs('input[placeholder="Instagram account"]', step1); // опционально
 

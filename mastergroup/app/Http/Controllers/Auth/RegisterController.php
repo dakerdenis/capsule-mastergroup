@@ -71,6 +71,7 @@ class RegisterController extends Controller
             : null;
 
         $user = User::create([
+            'name'                => $data['full_name'],   // ← добавь эту строку
             'client_type'         => $clientType,
             'full_name'           => $data['full_name'],
             'birth_date'          => $data['birth_date'],
