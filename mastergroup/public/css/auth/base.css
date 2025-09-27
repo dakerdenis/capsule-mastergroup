@@ -266,10 +266,13 @@
 .auth__car-block {
     width: 100%;
     max-width: 658px;
-    height: 261px;
+
     background-color: #fff2f221;
     border-radius: 10px;
-    padding: 51px 40px 0px 40px;
+    padding: 51px 40px 30px 40px;
+}
+.is-success{
+    box-shadow: 2px 2px 54px #34c81e70;
 }
 .auth__car-mainmessage {
     width: 381px;

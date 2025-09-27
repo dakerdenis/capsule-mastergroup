@@ -29,10 +29,10 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Fortify::loginView(fn() => view('auth.login'));
-        Fortify::registerView(fn() => view('auth.register'));
-        Fortify::requestPasswordResetLinkView(fn() => view('auth.passwords.forgot'));
-        Fortify::resetPasswordView(fn ($request) => view('auth.passwords.reset', ['token' => $request->route('token'), 'email' => $request->email]));
+     //   Fortify::loginView(fn() => view('auth.login'));
+     //   Fortify::registerView(fn() => view('auth.register'));
+     //   Fortify::requestPasswordResetLinkView(fn() => view('auth.passwords.forgot'));
+     //   Fortify::resetPasswordView(fn ($request) => view('auth.passwords.reset', ['token' => $request->route('token'), 'email' => $request->email]));
     
         // Кастомные экшены
         $this->app->singleton(CreateNewUser::class);

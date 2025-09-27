@@ -19,17 +19,21 @@ class AuthController extends Controller
     {
         if (Auth::guard('web')->attempt($request->credentials(), $request->remember())) {
             $request->session()->regenerate();
-
             $user = Auth::guard('web')->user();
-
-            // IDE-лайнтфрендли: сначала проверяем интерфейс
-            if ($user instanceof MustVerifyEmailContract && ! $user->hasVerifiedEmail()) {
-                return redirect()->route('verification.notice')
-                    ->with('status', 'Please verify your email address.');
+        
+            if ($user->status !== 'approved') {
+                Auth::guard('web')->logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return back()
+                    ->withInput($request->only('email', 'remember'))
+                    ->withErrors(['email' => 'Your account is not approved yet.']);
             }
-
+            
+        
             return redirect()->intended(route('account.dashboard'));
         }
+        
 
         return back()
             ->withInput($request->only('email', 'remember'))

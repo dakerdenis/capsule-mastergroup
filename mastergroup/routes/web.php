@@ -11,12 +11,27 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Http\Request;
+use Illuminate\Cache\RateLimiting\Limit;
+
+// Админ-логин: 5 попыток/час по IP и по паре email+IP
+RateLimiter::for('admin-login', function (Request $request) {
+    $ip = $request->ip();
+    $email = (string) $request->input('email');
+
+    return [
+        Limit::perHour(5)->by('ip:'.sha1($ip)),
+        Limit::perHour(5)->by('combo:'.sha1(strtolower($email).'|'.$ip)),
+    ];
+});
 
 Route::get('/', function () {
     return Auth::check()
         ? redirect()->route('account.dashboard')
         : redirect()->route('auth.login');
 })->name('home');
+
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('auth.login');
@@ -33,7 +48,7 @@ Route::middleware('guest')->group(function () {
 });
 
 // Защищённые разделы (требуют login и verified email)
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
     Route::get('/account', [AccountController::class, 'dashboard'])->name('account.dashboard');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -45,7 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('guest:admin')->group(function () {
         Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
-        Route::post('/login', [AdminAuthController::class, 'login'])->middleware('throttle:login-admin');
+        Route::post('/login', [AdminAuthController::class, 'login'])->middleware('throttle:admin-login');
     });
 
     Route::middleware('auth:admin')->group(function () {

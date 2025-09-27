@@ -5,49 +5,32 @@ namespace App\Models;
 use App\Enums\ClientType;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
-use Illuminate\Auth\MustVerifyEmail;
 
-class User extends Authenticatable implements MustVerifyEmailContract
+class User extends Authenticatable
 {
-    use Notifiable, MustVerifyEmail;
+    use Notifiable;
 
     protected $fillable = [
-        'name',
-        'full_name',
-        'email',
-        'password',
-        'client_type',
-        'birth_date',
-        'gender',
-        'country',
-        'phone',
-        'profile_photo_path',
-        'identity_photo_path',
-        'company_logo_path',
-        'workplace',
-        'instagram',
+        'name','full_name','email','password','client_type','birth_date','gender','country','phone',
+        'profile_photo_path','identity_photo_path','company_logo_path','workplace','instagram',
+        'status','approved_at','rejected_reason',
     ];
 
     protected function casts(): array
     {
         return [
-            'email_verified_at'   => 'datetime',
-            'password'            => 'hashed',
-            'birth_date'          => 'date',
-            // если используешь enum PHP 8.1+
-            'client_type'         => ClientType::class,
+            'email_verified_at' => 'datetime',
+            'password'          => 'hashed',
+            'birth_date'        => 'date',
+            'approved_at'       => 'datetime',
+            'client_type'       => \App\Enums\ClientType::class,
         ];
     }
 
-    // Удобные геттеры/помощники
-    public function isIndividual(): bool
-    {
-        return (string) $this->client_type === 'individual';
-    }
+    public function isApproved(): bool { return $this->status === 'approved'; }
+    public function isPending(): bool  { return $this->status === 'pending'; }
+    public function isRejected(): bool { return $this->status === 'rejected'; }
 
-    public function isCompany(): bool
-    {
-        return (string) $this->client_type === 'company';
-    }
+    public function isIndividual(): bool { return (string) $this->client_type === 'individual'; }
+    public function isCompany(): bool    { return (string) $this->client_type === 'company'; }
 }

@@ -73,22 +73,41 @@
             <div class="auth__car">
                 <div class="auth__car-container">
                     <!---ERRORS AND TEXT BLOCK---->
-                    <div class="auth__car-block">
-                        <!---text witbh greeen background ---->
+                    @php
+                        // включится, если из контроллера придёт любой из этих flash-ключей
+                        $regOK =
+                            session('registration_success') ||
+                            session('status') === 'registered' ||
+                            session('success') === 'registered';
+                    @endphp
+
+                    <div class="auth__car-block {{ $regOK ? 'is-success' : '' }}">
+                        <!---text with green background ---->
                         <div class="auth__car-mainmessage">
                             <img src="{{ asset('images/auth/class.png') }}" alt="Class Capsuleppf">
-
-                            <p>New bonus program for partners</p>
+                            <p>
+                                @if ($regOK)
+                                    Your registration request has been accepted!
+                                @else
+                                    New bonus program for partners
+                                @endif
+                            </p>
                         </div>
 
-                        <!------->
                         <div class="auth__car-text">
-                            <p>Earn bonuses for every product you purchase. Exchange your bonuses for useful gifts to use
-                                with your product. </p>
-                            <p>No extra charges!</p>
+                            @if ($regOK)
+                                <p>Your registration request has been accepted and sent to the administrator for review.</p>
+                                <p style="    font-size: 19px;
+    line-height: 27px;">Once your registration is confirmed, you will receive a notification via email.</p>
+                            @else
+                                <p>Earn bonuses for every product you purchase. Exchange your bonuses for useful gifts to
+                                    use
+                                    with your product.</p>
+                                <p>No extra charges!</p>
+                            @endif
                         </div>
-
                     </div>
+
                     <!-------->
 
                     <!---car image--->
@@ -128,9 +147,9 @@
                 const passVal = password.value;
 
                 const emailOk = emailVal === '' ? false : emailRe.test(
-                emailVal); // пустой email — считаем невалидным на сабмите
+                    emailVal); // пустой email — считаем невалидным на сабмите
                 const passOk = !(emailVal !== '' && passVal ===
-                ''); // если email есть, пароль не должен быть пустым
+                    ''); // если email есть, пароль не должен быть пустым
 
                 // Подсветка только после попытки сабмита
                 if (triedSubmit) {

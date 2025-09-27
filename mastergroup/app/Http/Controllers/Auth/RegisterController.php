@@ -29,32 +29,32 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $clientType = $request->input('client_type');
-        if (!in_array($clientType, ['individual','company'], true)) {
+        if (!in_array($clientType, ['individual', 'company'], true)) {
             abort(422, 'Invalid client type.');
         }
 
         $common = [
-            'client_type' => ['required','in:individual,company'],
-            'full_name'   => ['required','string','max:255'],
-            'birth_date'  => ['required','date'],
-            'gender'      => ['required','in:male,female,other'],
-            'country'     => ['required','string','max:100'],
-            'phone'       => ['required','string','max:50'],
-            'email'       => ['required','email','max:255','unique:users,email'],
-            'password'    => ['required','string','min:8','confirmed'],
-            'instagram'   => ['nullable','string','max:255'],
+            'client_type' => ['required', 'in:individual,company'],
+            'full_name'   => ['required', 'string', 'max:255'],
+            'birth_date'  => ['required', 'date'],
+            'gender'      => ['required', 'in:male,female,other'],
+            'country'     => ['required', 'string', 'max:100'],
+            'phone'       => ['required', 'string', 'max:50'],
+            'email'       => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password'    => ['required', 'string', 'min:8', 'confirmed'],
+            'instagram'   => ['nullable', 'string', 'max:255'],
         ];
 
         $forIndividual = [
-            'workplace'       => ['required','string','max:255'],
-            'identity_photo'  => ['required','image','mimes:jpg,jpeg,png,webp','max:2048'],
-            'profile_photo'   => ['required','image','mimes:jpg,jpeg,png,webp','max:2048'],
+            'workplace'       => ['required', 'string', 'max:255'],
+            'identity_photo'  => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'profile_photo'   => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
 
         $forCompany = [
-            'workplace'     => ['nullable','string','max:255'],
-            'profile_photo' => ['required','image','mimes:jpg,jpeg,png,webp','max:2048'],
-            'company_logo'  => ['required','image','mimes:jpg,jpeg,png,webp','max:2048'],
+            'workplace'     => ['nullable', 'string', 'max:255'],
+            'profile_photo' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'company_logo'  => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
 
         $data = $request->validate(array_merge(
@@ -71,7 +71,7 @@ class RegisterController extends Controller
             : null;
 
         $user = User::create([
-            'name'                => $data['full_name'],   // ← добавь эту строку
+            'name'                => $data['full_name'],
             'client_type'         => $clientType,
             'full_name'           => $data['full_name'],
             'birth_date'          => $data['birth_date'],
@@ -85,11 +85,12 @@ class RegisterController extends Controller
             'company_logo_path'   => $logoPath,
             'workplace'           => $data['workplace'] ?? null,
             'instagram'           => $data['instagram'] ?? null,
+            'status'              => 'pending',
         ]);
 
-        event(new Registered($user));
-        Auth::login($user);
-
-        return redirect()->route('verification.notice')->with('status', 'Please verify your email address.');
+        // App/Http/Controllers/Auth/RegisterController.php (без логики, только флеш-ключ под твой UI)
+        return redirect()->route('auth.login')
+            ->with('registration_success', true)
+            ->with('status', 'Your registration is submitted. You will receive an email and SMS after admin approval.');
     }
 }
