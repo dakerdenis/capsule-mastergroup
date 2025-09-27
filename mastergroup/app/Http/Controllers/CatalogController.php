@@ -1,10 +1,13 @@
 <?php
 
+// app/Http/Controllers/CatalogController.php
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 
 class CatalogController extends Controller
 {
-    //
+    public function index()
+    {
+        return view('catalog.index', ['title' => 'Catalogue']);
+    }
 }
