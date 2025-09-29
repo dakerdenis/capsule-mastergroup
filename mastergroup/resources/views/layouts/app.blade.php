@@ -20,7 +20,7 @@
 
         <nav class="nav">
             <a class="nav__link {{ request()->routeIs('account.dashboard') ? 'is-active' : '' }}"
-               href="{{ route('account.dashboard') }}">Homepage</a>
+               href="{{ route('account.dashboard') }}">HomepagAe</a>
 
             <a class="nav__link {{ request()->routeIs('catalog.*') ? 'is-active' : '' }}"
                href="{{ route('catalog.index') }}">Catalogue</a>

@@ -35,28 +35,30 @@
                             </div>
                         </div>
                         <!-----form and input fields----->
-                        <form action="" class="auth__form-form" id="loginForm" novalidate>
-                            <div class="form-block" id="emailBlock">
-                                <input id="email" type="email" placeholder="Login (e-mail)" autocomplete="username">
-                            </div>
+{{-- LOGIN FORM (без изменений логики, только чтоб отправлялось) --}}
+<form action="{{ route('auth.login.submit') }}" method="POST" class="auth__form-form" id="loginForm" novalidate>
+    @csrf
+    <div class="form-block" id="emailBlock">
+        <input id="email" name="email" type="email" placeholder="Login (e-mail)" autocomplete="username" value="{{ old('email') }}">
+    </div>
 
-                            <div class="form-block form-block--with-eye" id="passBlock">
-                                <input id="password" type="password" placeholder="Password"
-                                    autocomplete="current-password">
-                                <button type="button" class="input-eye" aria-label="Show password" aria-pressed="false">
-                                    <span class="eye-icon" aria-hidden="true"></span>
-                                </button>
-                            </div>
+    <div class="form-block form-block--with-eye" id="passBlock">
+        <input id="password" name="password" type="password" placeholder="Password" autocomplete="current-password">
+        <button type="button" class="input-eye" aria-label="Show password" aria-pressed="false">
+            <span class="eye-icon" aria-hidden="true"></span>
+        </button>
+    </div>
 
-                            <div class="form-forgot">
-                                <a href="{{ route('password.forgot') }}">Forgot password ?</a>
-                            </div>
-                            <div class="form-button">
-                                <button type="submit">
-                                    <p>LOG IN</p>
-                                </button>
-                            </div>
-                        </form>
+    <div class="form-forgot">
+        <a href="{{ route('password.forgot') }}">Forgot password ?</a>
+    </div>
+    <div class="form-button">
+        <button type="submit">
+            <p>LOG IN</p>
+        </button>
+    </div>
+</form>
+
 
                         <!--------->
 

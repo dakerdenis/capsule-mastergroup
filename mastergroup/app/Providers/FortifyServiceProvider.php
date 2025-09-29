@@ -11,30 +11,30 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
-use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
+    public function register(): void {}
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot()
     {
-     //   Fortify::loginView(fn() => view('auth.login'));
-     //   Fortify::registerView(fn() => view('auth.register'));
-     //   Fortify::requestPasswordResetLinkView(fn() => view('auth.passwords.forgot'));
-     //   Fortify::resetPasswordView(fn ($request) => view('auth.passwords.reset', ['token' => $request->route('token'), 'email' => $request->email]));
-    
-        // Кастомные экшены
+        // лимитер для USER-логина (используется в middleware 'throttle:login')
+        RateLimiter::for('login', function (Request $request) {
+            $ip = $request->ip();
+            $email = (string) $request->input('email');
+
+            return [
+                Limit::perMinute(5)->by('ip:'.sha1($ip)),
+                Limit::perMinute(5)->by('combo:'.sha1(Str::lower($email).'|'.$ip)),
+            ];
+        });
+
+        // лимитер для отправки письма восстановления (используется 'throttle:password-email')
+        RateLimiter::for('password-email', function (Request $request) {
+            return [ Limit::perMinute(3)->by('ip:'.sha1($request->ip())) ];
+        });
+
+        // твои бины Fortify (оставляем как было)
         $this->app->singleton(CreateNewUser::class);
         $this->app->singleton(ResetUserPassword::class);
         $this->app->singleton(UpdateUserPassword::class);

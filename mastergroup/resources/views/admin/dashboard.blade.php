@@ -1,8 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.admin')
+@section('title', $title ?? 'Admin Dashboard')
+@section('page_title', 'Dashboard')
 
 @section('content')
-<div class="container">
-    <h1>{{ $title ?? 'Admin Dashboard' }}</h1>
-    <p>You are logged in as admin.</p>
-</div>
+    <p>Welcome to admin area.</p>
 @endsection
