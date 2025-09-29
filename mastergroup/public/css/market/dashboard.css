@@ -1,6 +1,6 @@
 .dashboard_wrapper {
     width: 100%;
-    height: 100%;
+
     padding: 45px 22px 45px 37px;
     display: flex;
     justify-content: space-between;
@@ -10,10 +10,12 @@
     width: calc(100% - 310px);
     height: 100%;
 }
+
 .dashboard__desc {
     padding: 30px;
     width: 100%;
 }
+
 .dashboard__desc h3 {
     font-weight: 600;
 
@@ -23,6 +25,7 @@
     letter-spacing: 0%;
     margin-bottom: 34px;
 }
+
 .dashboard__desc p {
     font-weight: 400;
 
@@ -62,9 +65,11 @@
     display: flex;
     justify-content: space-between;
 }
+
 .footer__request {
     width: 613px;
 }
+
 .footer__request-question {
     font-weight: 700;
     font-style: Bold;
@@ -72,15 +77,18 @@
     line-height: 28px;
     letter-spacing: 0.5px;
 }
+
 .footer__request-form {
     width: 100%;
 }
-.footer__request-form form{
+
+.footer__request-form form {
     display: flex;
     align-items: center;
 
     margin-top: 24px;
 }
+
 .footer__request-form input {
     width: 354px;
     height: 54px;
@@ -117,6 +125,7 @@
     width: 198px;
     color: #fff;
 }
+
 .footer__contact {
     width: 347px;
     height: 90px;
@@ -124,11 +133,13 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
 .footer__contact-element {
     width: 100%;
     display: flex;
     align-items: center;
 }
+
 .footer__contact-element span {
     width: 88px;
 
@@ -139,6 +150,7 @@
     line-height: 100%;
     letter-spacing: 0%;
 }
+
 .footer__contact-element p {
     font-weight: 400;
 
@@ -147,3 +159,35 @@
     line-height: 100%;
     letter-spacing: 0%;
 }
+
+@media only screen and (max-width: 1670px) {
+    .dashboard__advertisement {
+        display: none;
+        visibility: hidden;
+    }
+    .dashboard__content{
+        width: 100%;
+    }
+    .dashboard__catalog{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 1480px) {
+    .catalog__element {
+        width: 231px;
+        height: 285px;
+    }
+    .dashboard__catalog{
+        justify-content: space-evenly;
+    }
+}
+@media only screen and (max-width: 1380px) {
+    .dashboard_wrapper{
+        padding: 20px;
+    }
+    .dashboard__desc{
+        padding: 10px;
+    }
+}
+

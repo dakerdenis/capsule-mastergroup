@@ -223,7 +223,7 @@ h6 {
     left: 0;
     bottom: 0;
     width: 322px;
-    height: 530px;
+    height: 421px;
 }
 .sidebar_car img {
     width: 100%;
@@ -305,5 +305,77 @@ h6 {
 
 
 
+@media only screen and (max-width: 1670px) {
+    .topbar{
+        height: 100px;
+        padding: 0px 44px 0px 22px;
+    }
+    .topbar__bonuses {
+        margin-left: 33px;
+    }
+    .main{
+        width: calc(100% - 290px);
+        height: calc(100% - 100px);
+    }
+    .sidebar{
+        width: 290px;
+        height: calc(100% - 100px);
+    }
+    .sidebar_car{
+        width: 222px;
+        height: 348px;
+    }
+    .sidebar__footer {
+        font-size: 14px;
+        left: 156px;
+    }
 
 
+    .topbar__profile-image{
+        width: 60px;
+        height: 60px;
+    }
+    .topbar__profile{
+        height: 60px;
+    }.topbar__bonuses{
+        font-size: 25px;
+    }
+}
+
+@media only screen and (max-width: 1380px) {
+    .topbar{
+        height: 80px;
+        padding: 0px 44px 0px 10px;
+    }
+    .main{
+        height: calc(100% - 80px);
+        width: calc(100%  - 230px);
+    }
+    .sidebar {
+        width: 230px;
+        height: calc(100% - 80px);
+    }
+    .nav {
+        margin-left: 30px;
+        margin-top: 30px;
+
+    }
+    .nav__link{
+        font-size: 18px;
+    }
+
+    .sidebar_car {
+        width: 167px;
+        height: 263px;
+    }
+    .topbar__bonuses{
+        margin-left: 45px;
+    }
+    .brand {
+        width: 178px;
+    }
+    .sidebar__footer {
+        font-size: 13px;
+        left: 115px;
+    }
+}
