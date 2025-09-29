@@ -43,7 +43,7 @@ Route::middleware('guest')->group(function () {
 // ====== Авторизованные ======
 Route::middleware('auth')->group(function () {
     Route::get('/', [AccountController::class, 'dashboard'])->name('home');               // "/" только после логина
-    Route::get('/account', [AccountController::class, 'dashboard'])->name('account.dashboard');
+    Route::get('/account', [AccountController::class, 'account'])->name('account');
     Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');

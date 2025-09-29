@@ -8,6 +8,9 @@ class AccountController extends Controller
 {
     public function dashboard()
     {
-        return view('account.dashboard', ['title' => 'Homepage']);
+        return view('home.dashboard', ['title' => 'Homepage']);
+    }
+    public function account(){
+        return view('account.dashboard', ['title'=>'Account']);
     }
 }
