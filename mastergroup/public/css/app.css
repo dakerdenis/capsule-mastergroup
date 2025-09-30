@@ -302,6 +302,90 @@ h6 {
     overflow-y: scroll;
 }
 
+/* ==== MOBILE OFFCANVAS + STICKY TOPBAR (<=768px) ==== */
+
+/* Фиксируем topbar сверху всегда */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: none; /* не меняю стиль, просто закрепляю */
+}
+
+/* Кнопка бургера — по умолчанию скрыта (для десктопа) */
+.burger-btn {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid #ffffff;
+    background: rgba(0,0,0,0);
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+.burger-btn span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #fff;
+}
+
+/* Мобильный аккаунт в меню — скрыт на десктопе */
+.mobile-menu__account {
+    display: none;
+    padding: 16px 22px 8px 22px;
+    gap: 12px;
+    align-items: center;
+}
+.mobile-menu__account .topbar__profile-image {
+    width: 56px;
+    height: 56px;
+}
+.mobile-menu__account .btn--logout {
+    border: 1px solid #ffffff;
+    height: 36px;
+    border-radius: 36px;
+    background: transparent;
+    color: #fff;
+    padding: 0 16px;
+    margin-left: auto;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+/* Оверлей для оффканваса */
+.offcanvas-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.35);
+    z-index: 998;
+}
+/* === New burger base (desktop: hidden) === */
+.three.col { display: none; align-items: center; }
+.hamburger { width: 32px; height: 28px; position: relative; cursor: pointer; }
+.hamburger .line{
+  position: absolute; left: 0; right: 0; margin: 0 auto;
+  display: block; height: 3px; width: 100%;
+  background:#fff; border-radius: 2px;
+  transition: transform .3s ease-in-out, width .3s ease-in-out, opacity .3s ease-in-out;
+}
+.hamburger .line:nth-child(1){ top: 0; }
+.hamburger .line:nth-child(2){ top: 12.5px; }
+.hamburger .line:nth-child(3){ bottom: 0; }
+
+/* active animation from your spec */
+#hamburger-6.is-active{
+  transition: all 0.3s ease-in-out;
+  transition-delay: 0.6s;
+  transform: rotate(45deg);
+}
+#hamburger-6.is-activa .line:nth-child(2){ width: 0px; }
+#hamburger-6.is-activa .line:nth-child(1),
+#hamburger-6.is-activa .line:nth-child(3){ transition-delay: 0.3s; }
+#hamburger-6.is-activa .line:nth-child(1){ transform: translateY(12px); }
+#hamburger-6.is-activa .line:nth-child(3){ transform: translateY(-13px) rotate(90deg); }
 
 
 
@@ -378,4 +462,134 @@ h6 {
         font-size: 13px;
         left: 115px;
     }
+        .topbar__profile-image {
+            width: 50px;
+            height: 50px;
+        }
+        .topbar__profile {
+            width: 180px;
+        }
+        .topbar__bonuses{
+            font-size: 19.5px;
+        }
+        .topbar__bonuses img{
+            width: 17px;
+            height: 17px;
+
+        }
+        .topbar__profile button{
+            font-size: 13px;
+        }
+        .topbar__profile form {
+            width: 93px;
+    height: 28px;
+        }
+
+}
+
+
+
+/* ===== Телефоны ===== */
+@media (max-width: 768px) {
+  .three.col { display: inline-flex; }
+    /* Уменьшаем высоту шапки */
+    .topbar {
+        height: 60px;
+        padding: 0 12px 0 16px;
+    }
+
+    /* Прячем логотип полностью */
+    .brand {
+        display: none !important;
+    }
+
+    /* Блок бонусов остаётся; чуть уменьшаем */
+    .topbar__bonuses {
+        margin-left: 0;
+        font-size: 18px;
+        height: auto;
+        gap: 8px;
+    }
+    .topbar__bonuses img {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* На телефонах вместо logout показываем бургер */
+    .topbar__profile {
+        display: none !important;
+    }
+    .burger-btn {
+        display: inline-flex;
+    }
+
+    /* Основной контент занимает всю ширину (сайдбар уезжает в оффканвас) */
+    .main {
+        width: 100% !important;
+        height: calc(100% - 60px) !important;
+        border-top-left-radius: 0px;
+    }
+
+    /* Сайдбар превращаем в оффканвас */
+    .sidebar {
+        position: fixed;
+        top: 60px; /* высота topbar на мобиле */
+        left: 0;
+        width: 100%;
+
+        height: calc(100vh - 60px);
+        background-image: url('../../images/app/app-back.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        transform: translateX(-100%);
+        transition: transform .25s ease;
+        z-index: 999;
+        overflow-y: auto;
+        padding-bottom: 24px;
+    }
+
+    /* Элементы внутри сайдбара под мобильный вид */
+    .nav {
+        margin: 18px 0 0 18px;
+        border-left: 2px solid #fff;
+        width: auto;
+        height: 200px;
+
+    }
+    .nav__link { font-size: 18px; }
+    .sidebar_car {
+        width: 244px;
+        height: 371px;
+    }/* картинку машины прячем на мобиле */
+    .sidebar__footer {
+
+        margin: 18px;
+        font-size: 12px;
+        opacity: .9;
+        left: initial;
+        right: 10px;
+    }
+
+    /* Показываем мобильный блок аккаунта внутри меню */
+    .mobile-menu__account {
+        display: flex;
+    }
+
+    /* Когда меню открыто */
+    body.menu-open .sidebar {
+        transform: translateX(0);
+    }
+    body.menu-open .offcanvas-overlay {
+        display: block;
+    }
+
+    /* Подправим общий контейнер, чтобы высота работала корректно */
+    .main__wrapper {
+        min-height: 100vh; /* без жесткого 700px на мобиле */
+        height: auto;
+    }
+
 }

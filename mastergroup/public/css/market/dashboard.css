@@ -51,13 +51,7 @@
     justify-content: space-between;
 }
 
-.catalog__element {
-    width: 279px;
-    height: 308px;
-    border-radius: 8px;
-    box-shadow: -1px 0px 10px 8px #75838e26;
-    background-color: #fbfbfb;
-}
+
 
 .dashboard__footer {
     margin-top: 75px;
@@ -165,11 +159,32 @@
         display: none;
         visibility: hidden;
     }
-    .dashboard__content{
+    .dashboard__content {
         width: 100%;
     }
-    .dashboard__catalog{
+    .dashboard__catalog {
         width: 100%;
+        justify-content: space-evenly;
+    }
+    .dashboard_wrapper {
+        padding: 30px 22px 40px 22px;
+    }
+    .dashboard__desc h3 {
+        font-weight: 600;
+        font-size: 33px;
+        line-height: 44px;
+
+        margin-bottom: 14px;
+    }
+    .dashboard__desc p {
+        font-size: 18px;
+        line-height: 28.97px;
+    }
+    .dashboard__catalog {
+        margin-top: 25px;
+    }
+    .dashboard__footer {
+        margin-top: 50px;
     }
 }
 
@@ -178,16 +193,107 @@
         width: 231px;
         height: 285px;
     }
-    .dashboard__catalog{
+    .dashboard__catalog {
         justify-content: space-evenly;
+    }
+    .dashboard__desc {
+        padding: 5px;
+    }
+    .dashboard__desc h3 {
+        font-size: 31px;
+    }
+    .dashboard__footer {
+        margin-top: 45px;
     }
 }
 @media only screen and (max-width: 1380px) {
-    .dashboard_wrapper{
+    .dashboard_wrapper {
         padding: 20px;
     }
-    .dashboard__desc{
+    .dashboard__desc {
         padding: 10px;
     }
+    .dashboard__desc {
+        font-size: 28px;
+        line-height: 28px;
+    }
+    .dashboard__desc p {
+        font-size: 17px;
+        line-height: 24px;
+    }
+    .dashboard__desc p {
+        font-size: 17px;
+        line-height: 25.97px;
+    }
+    .dashboard__desc h3 {
+        font-size: 23px;
+        line-height: 30px;
+    }
+    .dashboard__desc p {
+        font-size: 17px;
+        line-height: 23.97px;
+    }
+    .dashboard__catalog {
+        margin-top: 20px;
+    }
+    .dashboard__catalog {
+        height: 270px;
+    }
+    .dashboard__footer {
+        margin-top: 25px;
+    }
+    .footer__request-form button {
+        height: 40px;
+        width: 180px;
+        font-size: 14px;
+    }
+    .footer__contact-element span {
+        font-size: 17px;
+    }
+    .footer__contact-element p{
+        font-size: 17px;
+    }
+    .catalog__element{
+        height: 270px;
+        width: 230px;
+    }
+}
+/* ===== Телефоны ===== */
+@media (max-width: 768px) {
+    .dashboard_wrapper{
+        border-radius: 0px;
+    }
+    .dashboard__catalog{
+        height: initial;
+
+        flex-wrap: wrap;
+        align-items: center;
+        
+    }
+    .catalog__element{
+        width: 180px;
+        margin-bottom: 20px;
+    }
+    .dashboard__desc{
+        padding: 0;
+    }
+    .footer__request{
+        width: 100%;
+    }
+    .dashboard__footer{
+        flex-direction: column;
+    }
+    .footer__contact{
+        width: 100%;
+        margin-top: 35px;
+    }
+.footer__request-form form{
+    flex-direction: column;
+    align-items: initial;
+}
+.footer__request-form button{
+    margin-left: 0px;
+    margin-top: 20px;
+}
 }
 
