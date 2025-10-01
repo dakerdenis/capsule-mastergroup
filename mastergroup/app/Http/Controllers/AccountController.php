@@ -10,7 +10,12 @@ class AccountController extends Controller
     {
         return view('home.dashboard', ['title' => 'Homepage']);
     }
-    public function account(){
-        return view('account.dashboard', ['title'=>'Account']);
+    public function account() {
+        // $bonuses = Bonus::where('user_id', auth()->id())->latest()->paginate(10);
+        return view('account.dashboard', [
+            'title' => 'Account',
+            // 'bonuses' => $bonuses,
+        ]);
     }
+    
 }

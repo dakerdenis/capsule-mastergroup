@@ -14,6 +14,7 @@ class User extends Authenticatable
         'name','full_name','email','password','client_type','birth_date','gender','country','phone',
         'profile_photo_path','identity_photo_path','company_logo_path','workplace','instagram',
         'status','approved_at','rejected_reason',
+        'cps_total',
     ];
 
     protected function casts(): array
@@ -23,7 +24,8 @@ class User extends Authenticatable
             'password'          => 'hashed',
             'birth_date'        => 'date',
             'approved_at'       => 'datetime',
-            'client_type'       => \App\Enums\ClientType::class,
+            'client_type'       => ClientType::class,
+            'cps_total'         => 'integer',
         ];
     }
 
@@ -31,6 +33,20 @@ class User extends Authenticatable
     public function isPending(): bool  { return $this->status === 'pending'; }
     public function isRejected(): bool { return $this->status === 'rejected'; }
 
-    public function isIndividual(): bool { return (string) $this->client_type === 'individual'; }
-    public function isCompany(): bool    { return (string) $this->client_type === 'company'; }
+    // ✅ сравниваем с enum
+    public function isIndividual(): bool
+    {
+        return $this->client_type === ClientType::INDIVIDUAL;
+    }
+
+    public function isCompany(): bool
+    {
+        return $this->client_type === ClientType::COMPANY;
+    }
+
+    // (опционально) если где-то нужно получить строковое значение:
+    public function clientTypeValue(): ?string
+    {
+        return $this->client_type?->value; // вернёт 'individual' | 'company' | null
+    }
 }
