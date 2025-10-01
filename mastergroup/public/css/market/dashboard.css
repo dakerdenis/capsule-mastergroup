@@ -290,10 +290,7 @@
         align-items: center;
         
     }
-    .catalog__element{
-        width: 180px;
-        margin-bottom: 20px;
-    }
+
     .dashboard__desc{
         padding: 0;
     }
@@ -314,6 +311,9 @@
 .footer__request-form button{
     margin-left: 0px;
     margin-top: 20px;
+}
+.footer__request-form input{
+    width: 100%;
 }
 }
 
