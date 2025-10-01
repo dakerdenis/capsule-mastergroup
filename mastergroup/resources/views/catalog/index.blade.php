@@ -17,6 +17,7 @@
             <div class="catalog_filter__element"></div>
             <div class="catalog_filter__element"></div>
             <div class="catalog_filter__element">
+                <img src="{{ asset('images/catalog/search.svg') }}" alt="" srcset="">
                 <input type="text" placeholder="Search">
             </div>
             <div class="catalog_filter__clear">
