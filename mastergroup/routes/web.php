@@ -46,6 +46,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/account', [AccountController::class, 'account'])->name('account');
     Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    // AJAX
+    Route::get('/cart/summary', [CartController::class, 'summary'])->name('cart.summary');
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/decrement', [CartController::class, 'decrement'])->name('cart.decrement');
+    Route::post('/cart/set', [CartController::class, 'setQuantity'])->name('cart.set');
+    Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+
+
+
+
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
@@ -58,8 +68,8 @@ RateLimiter::for('admin-login', function (Request $request) {
     $email = (string) $request->input('email');
 
     return [
-        Limit::perHour(5)->by('ip:'.sha1($ip)),
-        Limit::perHour(5)->by('combo:'.sha1(strtolower($email).'|'.$ip)),
+        Limit::perHour(5)->by('ip:' . sha1($ip)),
+        Limit::perHour(5)->by('combo:' . sha1(strtolower($email) . '|' . $ip)),
     ];
 });
 
@@ -74,10 +84,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
-        Route::get('/users/{user}', [AdminUserController::class, 'show'])->name('users.show'); 
-        Route::patch('/users/{user}/status', [AdminUserController::class, 'updateStatus'])->name('users.status'); 
+        Route::get('/users/{user}', [AdminUserController::class, 'show'])->name('users.show');
+        Route::patch('/users/{user}/status', [AdminUserController::class, 'updateStatus'])->name('users.status');
 
         Route::get('/categories', [AdminCategoryController::class, 'index'])->name('categories.index');
+        Route::resource('categories', AdminCategoryController::class)->except(['show']);
+        Route::post('categories/reorder', [AdminCategoryController::class, 'reorder'])->name('categories.reorder');
+
         Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');
         Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
 

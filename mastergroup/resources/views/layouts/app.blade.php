@@ -23,7 +23,7 @@
                 </div>
                 <div class="topbar__bonuses">
                     <span class="muted">CPS Bonuses:</span>
-                    <p>{{ auth()->user()->bonuses ?? 0 }}</p>
+                    <p>{{ auth()->user()->cps_total ?? 0 }}</p>
                     <img src="{{ asset('images/app/bonus-info.svg') }}" alt="">
                 </div>
             </div>

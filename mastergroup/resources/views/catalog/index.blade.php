@@ -29,384 +29,371 @@
 
 
         <div class="catalog__content">
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
 
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
 
+                            <!----element------>
+                <div class="catalog__element">
+                    <div class="catalog__element__wrapper">
+                        <div class="catalog__element__bin">
+                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!----element------>
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
+                        <div class="catalog__element__image">
 
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
-
+                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
+                        <div class="catalog__element__name">
+                            <p>Name of the product sadfsf sdfvsd sdfcds </p>
+                        </div>
+                        <div class="catalog__element__type">
+                            Black - UT894 X7
+                        </div>
+                        <div class="catalog__element__amount-price">
+                            <div class="catalog__element-amount">
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
+                            </div>
+                            <div class="catalog__element-price">
+                                48.00 AZN
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!----element------>
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
-
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
-
+                <!----element------>
+                                <!----element------>
+                <div class="catalog__element">
+                    <div class="catalog__element__wrapper">
+                        <div class="catalog__element__bin">
+                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!----element------>
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
+                        <div class="catalog__element__image">
 
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
-
+                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
+                        <div class="catalog__element__name">
+                            <p>Name of the product sadfsf sdfvsd sdfcds </p>
+                        </div>
+                        <div class="catalog__element__type">
+                            Black - UT894 X7
+                        </div>
+                        <div class="catalog__element__amount-price">
+                            <div class="catalog__element-amount">
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
+                            </div>
+                            <div class="catalog__element-price">
+                                48.00 AZN
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!----element------>
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
-
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
-
+                <!----element------>
+                                <!----element------>
+                <div class="catalog__element">
+                    <div class="catalog__element__wrapper">
+                        <div class="catalog__element__bin">
+                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!----element------>
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
+                        <div class="catalog__element__image">
 
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
-
+                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
+                        <div class="catalog__element__name">
+                            <p>Name of the product sadfsf sdfvsd sdfcds </p>
+                        </div>
+                        <div class="catalog__element__type">
+                            Black - UT894 X7
+                        </div>
+                        <div class="catalog__element__amount-price">
+                            <div class="catalog__element-amount">
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
+                            </div>
+                            <div class="catalog__element-price">
+                                48.00 AZN
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!----element------>
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
-
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
-
+                <!----element------>
+                                <!----element------>
+                <div class="catalog__element">
+                    <div class="catalog__element__wrapper">
+                        <div class="catalog__element__bin">
+                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!----element------>
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
+                        <div class="catalog__element__image">
 
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
-
+                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
+                        <div class="catalog__element__name">
+                            <p>Name of the product sadfsf sdfvsd sdfcds </p>
+                        </div>
+                        <div class="catalog__element__type">
+                            Black - UT894 X7
+                        </div>
+                        <div class="catalog__element__amount-price">
+                            <div class="catalog__element-amount">
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
+                            </div>
+                            <div class="catalog__element-price">
+                                48.00 AZN
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!----element------>
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
-
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
-
+                <!----element------>
+                                <!----element------>
+                <div class="catalog__element">
+                    <div class="catalog__element__wrapper">
+                        <div class="catalog__element__bin">
+                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!----element------>
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
+                        <div class="catalog__element__image">
 
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
-
+                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
+                        <div class="catalog__element__name">
+                            <p>Name of the product sadfsf sdfvsd sdfcds </p>
+                        </div>
+                        <div class="catalog__element__type">
+                            Black - UT894 X7
+                        </div>
+                        <div class="catalog__element__amount-price">
+                            <div class="catalog__element-amount">
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
+                            </div>
+                            <div class="catalog__element-price">
+                                48.00 AZN
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!----element------>
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
-
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
-
+                <!----element------>
+                                <!----element------>
+                <div class="catalog__element">
+                    <div class="catalog__element__wrapper">
+                        <div class="catalog__element__bin">
+                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!----element------>
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
+                        <div class="catalog__element__image">
 
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
-
+                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
+                        <div class="catalog__element__name">
+                            <p>Name of the product sadfsf sdfvsd sdfcds </p>
+                        </div>
+                        <div class="catalog__element__type">
+                            Black - UT894 X7
+                        </div>
+                        <div class="catalog__element__amount-price">
+                            <div class="catalog__element-amount">
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
+                            </div>
+                            <div class="catalog__element-price">
+                                48.00 AZN
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!----element------>
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
-
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
-
+                <!----element------>
+                                <!----element------>
+                <div class="catalog__element">
+                    <div class="catalog__element__wrapper">
+                        <div class="catalog__element__bin">
+                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!----element------>
-            <!----element------>
-            <div class="catalog__element">
-                <div class="catalog__element__wrapper">
-                    <div class="catalog__element__bin">
-                        <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__image">
+                        <div class="catalog__element__image">
 
-                        <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                    </div>
-                    <div class="catalog__element__name">
-                        <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                    </div>
-                    <div class="catalog__element__type">
-                        Black - UT894 X7
-                    </div>
-                    <div class="catalog__element__amount-price">
-                        <div class="catalog__element-amount">
-
+                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
                         </div>
-                        <div class="catalog__element-price">
-                            48.00 AZN
+                        <div class="catalog__element__name">
+                            <p>Name of the product sadfsf sdfvsd sdfcds </p>
+                        </div>
+                        <div class="catalog__element__type">
+                            Black - UT894 X7
+                        </div>
+                        <div class="catalog__element__amount-price">
+                            <div class="catalog__element-amount">
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
+                            </div>
+                            <div class="catalog__element-price">
+                                48.00 AZN
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!----element------>
+                <!----element------>
+                                <!----element------>
+                <div class="catalog__element">
+                    <div class="catalog__element__wrapper">
+                        <div class="catalog__element__bin">
+                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
+                        </div>
+                        <div class="catalog__element__image">
+
+                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="catalog__element__name">
+                            <p>Name of the product sadfsf sdfvsd sdfcds </p>
+                        </div>
+                        <div class="catalog__element__type">
+                            Black - UT894 X7
+                        </div>
+                        <div class="catalog__element__amount-price">
+                            <div class="catalog__element-amount">
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
+                            </div>
+                            <div class="catalog__element-price">
+                                48.00 AZN
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!----element------>
+                                <!----element------>
+                <div class="catalog__element">
+                    <div class="catalog__element__wrapper">
+                        <div class="catalog__element__bin">
+                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
+                        </div>
+                        <div class="catalog__element__image">
+
+                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="catalog__element__name">
+                            <p>Name of the product sadfsf sdfvsd sdfcds </p>
+                        </div>
+                        <div class="catalog__element__type">
+                            Black - UT894 X7
+                        </div>
+                        <div class="catalog__element__amount-price">
+                            <div class="catalog__element-amount">
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
+                            </div>
+                            <div class="catalog__element-price">
+                                48.00 AZN
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!----element------>
+                                <!----element------>
+                <div class="catalog__element">
+                    <div class="catalog__element__wrapper">
+                        <div class="catalog__element__bin">
+                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
+                        </div>
+                        <div class="catalog__element__image">
+
+                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="catalog__element__name">
+                            <p>Name of the product sadfsf sdfvsd sdfcds </p>
+                        </div>
+                        <div class="catalog__element__type">
+                            Black - UT894 X7
+                        </div>
+                        <div class="catalog__element__amount-price">
+                            <div class="catalog__element-amount">
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
+                            </div>
+                            <div class="catalog__element-price">
+                                48.00 AZN
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!----element------>
+                                <!----element------>
+                <div class="catalog__element">
+                    <div class="catalog__element__wrapper">
+                        <div class="catalog__element__bin">
+                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
+                        </div>
+                        <div class="catalog__element__image">
+
+                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="catalog__element__name">
+                            <p>Name of the product sadfsf sdfvsd sdfcds </p>
+                        </div>
+                        <div class="catalog__element__type">
+                            Black - UT894 X7
+                        </div>
+                        <div class="catalog__element__amount-price">
+                            <div class="catalog__element-amount">
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
+                            </div>
+                            <div class="catalog__element-price">
+                                48.00 AZN
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!----element------>
         </div>
     </div>
 @endsection

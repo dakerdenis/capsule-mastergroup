@@ -6,9 +6,9 @@
 
 .account__info {
     margin-left: 50px;
-    margin-right: 80px;
+
     height: 100%;
-    width: 525px;
+    width: 480px;
 
 }
 
@@ -21,7 +21,7 @@
     line-height: 100%;
     letter-spacing: 0%;
     color: #000;
-    margin-bottom: 47px;
+    margin-bottom: 40px;
 }
 
 .acoount__info-container {
@@ -44,7 +44,7 @@
     border-radius: 120px;
     overflow: hidden;
     border: 3px solid #D9D9D980;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .account__profile-foto img {
@@ -108,8 +108,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 15px;
 }
+
 
 .account__profile-password button {
     background: linear-gradient(98.88deg, #055A00 -2.99%, #710000 102.28%);
@@ -133,10 +134,32 @@
     border-radius: 36px;
 
 }
+.account__profile-changedata{
+    margin-top: 20px;
+}
+.account__profile-changedata  button{
+    background-color: rgba(0, 0, 0, 0);
+
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+
+    line-height: 100%;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: underline;
+    text-decoration-style: solid;
+
+
+    color: #34C81E;
+
+}
+
 
 /*********************/
 .account__bonuses_collection {
-    width: 890px;
+    width: 870px;
 }
 
 .account__bonuses-desc_collect {
@@ -182,6 +205,7 @@
     color: var(--Labels---Vibrant---Controls-Primary, #404040);
 
 }
+
 /***************/
 /***************/
 /***************/
@@ -225,12 +249,15 @@
 .account_bonuses-table .code {
     min-width: 120px;
 }
+
 .account_bonuses-table .date {
     min-width: 120px;
 }
+
 .account_bonuses-table .amount {
     min-width: 80px;
 }
+
 .account_bonuses-table .status {
     text-align: right;
     color: #333;
@@ -243,11 +270,27 @@
     align-items: center;
     padding: 12px;
 }
+
+.account_bonuses-navigation button {
+    background-color: rgba(0, 0, 0, 0);
+    color: #8C8C8C;
+
+    font-weight: 800;
+
+    font-size: 12px;
+
+    line-height: 18px;
+    letter-spacing: 0%;
+    text-align: center;
+
+}
+
 .account_bonuses-element .status {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
+
 .account_bonuses-element .status p {
     width: 92px;
     height: 24px;
@@ -257,7 +300,8 @@
     align-items: center;
     justify-content: center;
 }
-thead .status{
+
+thead .status {
     padding-right: 57px;
 }
 
@@ -269,17 +313,40 @@ thead .status{
     line-height: 18px;
     font-weight: 700;
 }
-.badge--approved { background: #e8f9f0; color: #0f7a4a; border: 1px solid #b8eed5; }
-.badge--pending  { background: #fff8e6; color: #8a5b00; border: 1px solid #ffe2a3; }
-.badge--rejected { background: #fdeaea; color: #a32020; border: 1px solid #f6bcbc; }
-.account__bonuses-balance { margin: 8px 0 16px; }
-.account__bonuses-balance .muted { color: #6b7280; margin-right: 6px; }
 
-.account__placeofwork{
+.badge--approved {
+    background: #e8f9f0;
+    color: #0f7a4a;
+    border: 1px solid #b8eed5;
+}
+
+.badge--pending {
+    background: #fff8e6;
+    color: #8a5b00;
+    border: 1px solid #ffe2a3;
+}
+
+.badge--rejected {
+    background: #fdeaea;
+    color: #a32020;
+    border: 1px solid #f6bcbc;
+}
+
+.account__bonuses-balance {
+    margin: 8px 0 16px;
+}
+
+.account__bonuses-balance .muted {
+    color: #6b7280;
+    margin-right: 6px;
+}
+
+.account__placeofwork {
     width: 100%;
 }
+
 @media only screen and (max-width: 1600px) {
-    .account__info{
+    .account__info {
         margin-left: 0px;
         margin-right: 40px;
     }

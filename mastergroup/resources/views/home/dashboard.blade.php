@@ -45,7 +45,13 @@
                         </div>
                         <div class="catalog__element__amount-price">
                             <div class="catalog__element-amount">
-
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
                             </div>
                             <div class="catalog__element-price">
                                 48.00 AZN
@@ -72,7 +78,13 @@
                         </div>
                         <div class="catalog__element__amount-price">
                             <div class="catalog__element-amount">
-
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
                             </div>
                             <div class="catalog__element-price">
                                 48.00 AZN
@@ -99,7 +111,13 @@
                         </div>
                         <div class="catalog__element__amount-price">
                             <div class="catalog__element-amount">
-
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
                             </div>
                             <div class="catalog__element-price">
                                 48.00 AZN
@@ -126,7 +144,13 @@
                         </div>
                         <div class="catalog__element__amount-price">
                             <div class="catalog__element-amount">
-
+                                <button>
+                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
+                                </button>                                
+                                <span>0</span>
+                                <button>
+                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
+                                </button>
                             </div>
                             <div class="catalog__element-price">
                                 48.00 AZN

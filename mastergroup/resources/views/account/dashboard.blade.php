@@ -107,6 +107,9 @@
                 <div class="account__profile-password">
                     <button type="button">CHANGE PASSWORD</button>
                 </div>
+                <div class="account__profile-changedata">
+                    <button>Change data</button>
+                </div>
             </div>
         </div>
     </div>
@@ -115,11 +118,6 @@
     <div class="account__bonuses_collection">
         <div class="account__bonuses-desc_collect">
             <p>Bonuses collection history</p>
-            <div class="account__bonuses-balance">
-                <span class="muted">Total CPS:</span>
-                <strong>{{ $cpsTotal }}</strong>
-            </div>
-
             <form action="#">
                 <input type="text" placeholder="Enter the product code">
                 <button type="button">REQUEST CPS</button>
