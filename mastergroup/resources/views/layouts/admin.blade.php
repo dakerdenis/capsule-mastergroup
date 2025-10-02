@@ -5,6 +5,7 @@
   <title>@yield('title','Admin')</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+  @stack('page-styles')
 </head>
 <body class="admin">
 <div class="admin-shell" data-admin-shell>

@@ -4,196 +4,253 @@
 @section('page_title', 'Create category')
 
 @push('page-styles')
-<style>
-/* ==== CATEGORY FORM (вписывается в твой тёмный UI) ==== */
-.cat-form{
-  display:block;
-}
-.cat-form .admin-content{
-  padding:20px;
-}
 
-.form-grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:14px 16px;
-}
-@media (max-width: 900px){
-  .form-grid{ grid-template-columns:1fr }
-}
-
-/* поля */
-.form-label{
-  display:flex; align-items:center; gap:8px;
-  font-weight:600; color:var(--muted); margin-bottom:6px;
-}
-.form-control, .form-select, .form-textarea{
-  width:100%;
-  background:linear-gradient(180deg, rgba(21,25,35,.85), rgba(27,33,48,.85));
-  border:1px solid var(--border);
-  border-radius:10px; padding:10px 12px;
-  color:var(--text);
-  transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
-}
-.form-control::placeholder, .form-textarea::placeholder{ color:#6c7687 }
-.form-control:focus, .form-select:focus, .form-textarea:focus{
-  outline:none; border-color:rgba(91,140,255,.55);
-  box-shadow:0 0 0 3px rgba(91,140,255,.12);
-  background:linear-gradient(180deg, rgba(27,33,48,.95), rgba(21,25,35,.95));
-}
-.form-help{ color:var(--muted); font-size:12px; margin-top:6px }
-.form-error{ color:var(--danger); font-size:12px; margin-top:6px }
-
-/* тумблер Active */
-.switch{
-  --h:34px;
-  position:relative; display:inline-flex; align-items:center; gap:10px; min-height:var(--h);
-}
-.switch input{ display:none }
-.switch .track{
-  width:56px; height:var(--h);
-  background:rgba(255,255,255,.06);
-  border:1px solid var(--border);
-  border-radius:999px; position:relative;
-  transition:.18s ease background, .18s ease border-color;
-}
-.switch .thumb{
-  position:absolute; top:3px; left:3px;
-  width:28px; height:28px; border-radius:50%;
-  background:#fff; box-shadow:var(--shadow);
-  transform:translateX(0); transition:transform .2s ease;
-}
-.switch input:checked + .track{
-  background:linear-gradient(180deg, rgba(91,140,255,.35), rgba(91,140,255,.25));
-  border-color:rgba(91,140,255,.55);
-}
-.switch input:checked + .track .thumb{
-  transform:translateX(22px);
-}
-
-/* кнопки */
-.btn-row{ display:flex; gap:10px; margin-top:16px }
-.btn-primary{
-  background:linear-gradient(180deg, rgba(91,140,255,.9), rgba(91,140,255,.75));
-  border:1px solid rgba(91,140,255,.55); color:#fff;
-  height:38px; padding:0 14px; border-radius:10px; cursor:pointer;
-}
-.btn-secondary{
-  background:transparent; border:1px solid var(--border); color:var(--text);
-  height:38px; padding:0 14px; border-radius:10px; cursor:pointer;
-}
-.btn-primary:hover{ filter:brightness(1.05) }
-.btn-secondary:hover{ background:rgba(255,255,255,.05) }
-
-/* маленькие детали */
-.input-with-counter{ position:relative }
-.input-counter{
-  position:absolute; right:10px; bottom:-18px; font-size:12px; color:var(--muted);
-}
-.badge-tip{
-  display:inline-block; padding:2px 8px; border-radius:999px;
-  background:rgba(37,194,160,.12); color:#7ae7d3; border:1px solid rgba(37,194,160,.25);
-  font-size:12px; vertical-align:middle;
-}
-</style>
 @endpush
 
+
 @section('content')
-    <div class="cat-form">
-        <form action="{{ route('admin.categories.store') }}" method="POST" class="admin-content">
-            @csrf
+<style>
+/* ==== DARK FORM THEME ==== */
+.cat-form .admin-content {
+  padding: 24px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(25, 29, 41, 0.95), rgba(15, 17, 25, 0.95));
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.45);
+  color: #e1e6f2;
+}
 
-            {{-- сетка формы: переиспользуем твой partial --}}
-            <div class="form-grid">
-                {{-- name --}}
-                <div>
-                    <label class="form-label">Name *</label>
-                    <div class="input-with-counter">
-                        <input type="text" name="name" value="{{ old('name') }}" class="form-control" id="cat-name" placeholder="e.g. Body Parts" required>
-                        <span class="input-counter" id="name-count">0</span>
-                    </div>
-                    <div class="form-help">Чёткое название раздела, 1–3 слова.</div>
-                    @error('name') <div class="form-error">{{ $message }}</div> @enderror
-                </div>
+/* grid */
+.cat-form .form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+@media(max-width:1024px) {
+  .cat-form .form-grid { grid-template-columns:1fr; }
+}
 
-                {{-- slug --}}
-                <div>
-                    <label class="form-label">Slug <span class="badge-tip">optional</span></label>
-                    <input type="text" name="slug" value="{{ old('slug') }}" class="form-control" id="cat-slug" placeholder="auto-generated">
-                    <div class="form-help">Если оставить пустым — сгенерируется из названия.</div>
-                    @error('slug') <div class="form-error">{{ $message }}</div> @enderror
-                </div>
+/* fields */
+.cat-form .field { display:flex; flex-direction:column; gap:8px; }
+.cat-form .label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #cfd9ef;
+  letter-spacing: .3px;
+}
+.cat-form .hint {
+  font-size: 12px;
+  color: #8a94ad;
+}
+.cat-form .error {
+  font-size: 13px;
+  font-weight: 500;
+  color: #ff6b6b;
+}
+.cat-form .top-hint {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #9fa9c5;
+}
 
-                {{-- parent --}}
-                <div>
-                    <label class="form-label">Parent</label>
-                    <select name="parent_id" class="form-select">
-                        <option value="">— Root —</option>
-                        @foreach($all as $opt)
-                            <option value="{{ $opt->id }}" @selected(old('parent_id', request('parent_id')) == $opt->id)>{{ $opt->name }}</option>
-                        @endforeach
-                    </select>
-                    <div class="form-help">Оставь Root, если это корневая категория.</div>
-                    @error('parent_id') <div class="form-error">{{ $message }}</div> @enderror
-                </div>
+/* inputs, selects, textarea */
+.cat-form .input,
+.cat-form .select,
+.cat-form .textarea {
+  background: #1c212e;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #f0f3fb;
+  transition: border-color .2s, background .2s;
+}
+.cat-form .input::placeholder,
+.cat-form .textarea::placeholder {
+  color: #6f7a96;
+}
+.cat-form .input:focus,
+.cat-form .select:focus,
+.cat-form .textarea:focus {
+  outline: none;
+  border-color: #4b8dff;
+  background: #202534;
+}
 
-                {{-- active --}}
-                <div style="display:flex; align-items:flex-end">
-                    <label class="switch">
-                        <input type="hidden" name="is_active" value="0">
-                        <input type="checkbox" name="is_active" value="1" id="is_active" {{ old('is_active', true) ? 'checked' : '' }}>
-                        <span class="track"><span class="thumb"></span></span>
-                        <span style="color:var(--muted)">Active</span>
-                    </label>
-                </div>
+/* counter */
+.cat-form .counter {
+  font-size: 12px;
+  color: #7e89a6;
+  margin-top: 2px;
+}
 
-                {{-- description (на всю ширину) --}}
-                <div style="grid-column:1/-1">
-                    <label class="form-label">Description</label>
-                    <textarea name="description" rows="4" class="form-textarea" placeholder="Optional short description…">{{ old('description') }}</textarea>
-                    @error('description') <div class="form-error">{{ $message }}</div> @enderror
-                </div>
-            </div>
+/* switch */
+.cat-form .switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.cat-form .switch input[type="checkbox"] {
+  display:none;
+}
+.cat-form .switch .track {
+  width: 40px; height: 20px;
+  background: #333a4f;
+  border-radius: 20px;
+  position: relative;
+  transition: background .2s;
+}
+.cat-form .switch .thumb {
+  width: 16px; height: 16px;
+  background: #ccd4e8;
+  border-radius: 50%;
+  position: absolute; top:2px; left:2px;
+  transition: all .25s;
+}
+.cat-form .switch input:checked + .track .thumb {
+  left: 22px; background: #4b8dff;
+}
+.cat-form .switch input:checked + .track {
+  background: #2c5be8;
+}
+.cat-form .switch .txt {
+  font-size: 14px;
+  color: #b7c3df;
+}
 
-            <div class="btn-row">
-                <button class="btn-primary">Create</button>
-                <a href="{{ route('admin.categories.index') }}" class="btn-secondary">Cancel</a>
-            </div>
-        </form>
+/* textarea full row */
+.cat-form .textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* buttons */
+.cat-form .actions {
+  margin-top: 24px;
+  display:flex;
+  gap: 12px;
+}
+.cat-form .btn {
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor:pointer;
+  transition: background .2s, color .2s;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+.cat-form .btn-primary {
+  background: #4b8dff;
+  color: #fff;
+  border:none;
+}
+.cat-form .btn-primary:hover {
+  background: #3a78e0;
+}
+.cat-form .btn-secondary {
+  background: #2a2f40;
+  color: #cfd6ea;
+}
+.cat-form .btn-secondary:hover {
+  background: #353c54;
+  color: #fff;
+}
+</style>
+<div class="cat-form">
+  <form action="{{ route('admin.categories.store') }}" method="POST" class="admin-content" novalidate>
+    @csrf
+
+    <div class="top-hint">Заполни поля и нажми Create — slug можно оставить пустым, он создастся автоматически.</div>
+
+    <div class="form-grid">
+
+      {{-- Name --}}
+      <div class="field">
+        <label class="label" for="cat-name">Name *</label>
+        <input id="cat-name" type="text" name="name" value="{{ old('name') }}" class="input" placeholder="Body Parts" required>
+        <div class="counter" id="name-count">0</div>
+        @error('name') <div class="error">{{ $message }}</div> @enderror
+      </div>
+
+      {{-- Slug --}}
+      <div class="field">
+        <label class="label" for="cat-slug">Slug <span style="opacity:.75">(optional)</span></label>
+        <input id="cat-slug" type="text" name="slug" value="{{ old('slug') }}" class="input" placeholder="auto-generated">
+        <div class="hint">Если пусто — сгенерируется из названия.</div>
+        @error('slug') <div class="error">{{ $message }}</div> @enderror
+      </div>
+
+      {{-- Parent --}}
+      <div class="field">
+        <label class="label" for="cat-parent">Parent</label>
+        <select id="cat-parent" name="parent_id" class="select">
+          <option value="">— Root —</option>
+          @foreach($all as $opt)
+            <option value="{{ $opt->id }}" @selected(old('parent_id', request('parent_id')) == $opt->id)>{{ $opt->name }}</option>
+          @endforeach
+        </select>
+        <div class="hint">Оставь Root, если это корневая категория.</div>
+        @error('parent_id') <div class="error">{{ $message }}</div> @enderror
+      </div>
+
+      {{-- Active --}}
+      <div class="field" style="align-self:flex-end">
+        <label class="label">Status</label>
+        <label class="switch">
+          <input type="hidden" name="is_active" value="0">
+          <input type="checkbox" name="is_active" value="1" id="is_active" {{ old('is_active', true) ? 'checked' : '' }}>
+          <span class="track"><span class="thumb"></span></span>
+          <span class="txt">Active</span>
+        </label>
+      </div>
+
+      {{-- Description (full row) --}}
+      <div class="field" style="grid-column:1/-1">
+        <label class="label" for="cat-desc">Description</label>
+        <textarea id="cat-desc" name="description" class="textarea" placeholder="Optional short description…">{{ old('description') }}</textarea>
+        @error('description') <div class="error">{{ $message }}</div> @enderror
+      </div>
+
     </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" type="submit">Create</button>
+      <a class="btn btn-secondary" href="{{ route('admin.categories.index') }}">Cancel</a>
+    </div>
+  </form>
+</div>
 @endsection
 
 @push('page-scripts')
 <script>
-/* автогенерация slug + счётчик символов */
-(function(){
-  const nameInput = document.getElementById('cat-name');
-  const slugInput = document.getElementById('cat-slug');
-  const nameCount = document.getElementById('name-count');
+  // slugify + live counter (аккуратно, без навязчивости)
+  (function(){
+    const nameInput = document.getElementById('cat-name');
+    const slugInput = document.getElementById('cat-slug');
+    const nameCount = document.getElementById('name-count');
 
-  const slugify = (s) => s
+    const slugify = (s) => s
       .toString()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g,'') // диакритика
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g,'')
       .trim()
       .replace(/\s+/g,'-')
       .replace(/-+/g,'-')
-      .substring(0,80);
+      .slice(0,80);
 
-  function update(){
-    const v = nameInput.value || '';
-    nameCount.textContent = v.length;
-    if(!slugInput.value){ slugInput.placeholder = slugify(v); }
-  }
+    const updateCounter = () => nameCount.textContent = (nameInput.value||'').length;
 
-  nameInput.addEventListener('input', function(){
-    if(!slugInput.value){ slugInput.value = slugify(this.value); }
-    update();
-  });
-  slugInput.addEventListener('input', function(){ this.value = slugify(this.value); });
-
-  update();
-})();
+    nameInput.addEventListener('input', () => {
+      if (!slugInput.value) slugInput.value = slugify(nameInput.value);
+      updateCounter();
+    });
+    slugInput.addEventListener('input', () => slugInput.value = slugify(slugInput.value));
+    updateCounter();
+  })();
 </script>
 @endpush
