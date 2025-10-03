@@ -91,7 +91,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('categories', AdminCategoryController::class)->except(['show']);
         Route::post('categories/reorder', [AdminCategoryController::class, 'reorder'])->name('categories.reorder');
 
+        // PRODUCTS
         Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');
+        Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
+        Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
+
         Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
 
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');

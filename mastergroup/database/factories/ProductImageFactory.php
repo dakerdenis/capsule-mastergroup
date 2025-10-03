@@ -12,13 +12,10 @@ class ProductImageFactory extends Factory
 
     public function definition(): array
     {
-        // простой плейсхолдер (можно заменить позже на реальные пути загрузки)
         $w = 800; $h = 600;
-        $placeholder = "https://picsum.photos/seed/".$this->faker->uuid."/$w/$h";
-
         return [
-            'product_id' => Product::factory(), // по умолчанию создаст продукт
-            'path'       => $placeholder,
+            'product_id' => Product::factory(),
+            'path'       => "https://picsum.photos/seed/".$this->faker->uuid."/$w/$h",
             'alt'        => $this->faker->words(3, true),
             'sort_order' => 0,
             'is_primary' => false,
