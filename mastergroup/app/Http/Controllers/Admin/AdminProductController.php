@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Http\RedirectResponse;
 
 class AdminProductController extends Controller
 {
@@ -19,18 +20,24 @@ class AdminProductController extends Controller
         $q        = trim((string)$request->get('q'));
         $catId    = $request->integer('category_id');
         $type     = trim((string)$request->get('type'));
-        $sort     = in_array($request->get('sort'), ['new','price_asc','price_desc']) ? $request->get('sort') : 'new';
+        $sort     = in_array($request->get('sort'), ['new', 'price_asc', 'price_desc']) ? $request->get('sort') : 'new';
         $perPage  = (int)($request->get('per_page', 20));
         $perPage  = $perPage > 0 && $perPage <= 100 ? $perPage : 20;
 
-        $query = Product::query()
-            ->with(['category:id,name', 'images' => function($q){ $q->orderBy('sort_order'); }]);
+$query = Product::query()
+    ->with([
+        'category:id,name',
+        'primaryImage',                  // ← добавили
+        'images' => function ($q) {      // оставили для фоллбэка и кода/счётчика
+            $q->orderBy('sort_order');
+        },
+    ]);
 
         if ($q !== '') {
-            $query->where(function($w) use ($q){
-                $w->where('name','like',"%{$q}%")
-                  ->orWhere('code','like',"%{$q}%")
-                  ->orWhere('slug','like',"%{$q}%");
+            $query->where(function ($w) use ($q) {
+                $w->where('name', 'like', "%{$q}%")
+                    ->orWhere('code', 'like', "%{$q}%")
+                    ->orWhere('slug', 'like', "%{$q}%");
             });
         }
 
@@ -44,10 +51,10 @@ class AdminProductController extends Controller
         };
 
         $products   = $query->paginate($perPage)->appends($request->query());
-        $categories = Category::orderBy('name')->get(['id','name']);
+        $categories = Category::orderBy('name')->get(['id', 'name']);
         $types      = Product::query()->select('type')->distinct()->orderBy('type')->pluck('type')->filter()->values();
 
-        return view('admin.products.index', compact('products','categories','types'))
+        return view('admin.products.index', compact('products', 'categories', 'types'))
             ->with([
                 'title'   => 'Products',
                 'q'       => $q,
@@ -60,8 +67,8 @@ class AdminProductController extends Controller
 
     public function edit(Product $product)
     {
-        $product->load(['images' => fn($q)=>$q->orderBy('sort_order')]);
-        $categories = Category::orderBy('name')->get(['id','name']);
+        $product->load(['images' => fn($q) => $q->orderBy('sort_order')]);
+        $categories = Category::orderBy('name')->get(['id', 'name']);
         $types      = Product::query()->select('type')->distinct()->orderBy('type')->pluck('type')->filter()->values();
 
         return view('admin.products.edit_product', [
@@ -105,7 +112,7 @@ class AdminProductController extends Controller
                 $imgs = $product->images()->whereIn('id', $validated['delete_images'])->get();
                 foreach ($imgs as $img) {
                     // если путь локальный — удалим
-                    if (!Str::startsWith($img->path, ['http://','https://'])) {
+                    if (!Str::startsWith($img->path, ['http://', 'https://'])) {
                         Storage::disk('public')->delete($img->path);
                     }
                     $img->delete();
@@ -151,5 +158,23 @@ class AdminProductController extends Controller
         });
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated');
+    }
+
+    public function destroy(Product $product): RedirectResponse
+    {
+        // Удалим физические файлы, если они локальные
+        $product->load('images');
+        foreach ($product->images as $img) {
+            if ($img->path && !Str::startsWith($img->path, ['http://', 'https://'])) {
+                Storage::disk('public')->delete($img->path);
+            }
+        }
+
+        // В БД у product_images стоит cascadeOnDelete — записи сотрутся вместе с продуктом
+        $product->delete();
+
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'Product deleted');
     }
 }
