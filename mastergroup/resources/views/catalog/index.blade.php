@@ -75,7 +75,7 @@
                                 <button disabled><img src="{{ asset('images/catalog/plus.svg') }}" alt=""></button>
                             </div>
                             <div class="catalog__element-price">
-                                {{ number_format((float) $p->price, 2, '.', ' ') }} AZN
+                               {{ number_format((float) $p->price, 0, '.', ' ') }} CPS
                             </div>
                         </div>
                     </div>
@@ -205,10 +205,11 @@
   modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && !modal.hidden) closeModal(); });
 
-  function formatPrice(n){
-    n = Number(n||0);
-    return `CPS ${n.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2})}`;
-  }
+function formatPrice(n){
+  n = Number(n || 0);
+  return `CPS ${n.toLocaleString(undefined,{maximumFractionDigits:0})}`;
+}
+
 
   async function loadProduct(url){
     // текстовые поля пока пустые (не показываем — лоадер снизу)

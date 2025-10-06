@@ -89,7 +89,8 @@
     vertical-align: middle;
 
 }
-.catalog__element-amount button{
+
+.catalog__element-amount button {
     height: 100%;
     width: 35px;
     color: #343c44;
@@ -100,6 +101,7 @@
     justify-content: center;
 
 }
+
 .catalog__element-price {
     font-weight: 500;
     font-size: 16px;
@@ -225,6 +227,24 @@
 
     .catalog__wrapper {
         padding: 20px 10px 20px 10px;
+    }
+
+    .catalog__element__type {
+        font-size: 7px;
+    }
+
+    .catalog__element-amount {
+        width: 64px;
+        height: 24px;
+    }
+    .catalog__element__wrapper{
+        padding: 8px;
+    }
+    .catalog__element-amount span{
+        font-size: 13px;
+    }
+    .catalog__element-amount button{
+        width: 28px;
     }
 }
 
