@@ -345,9 +345,140 @@ thead .status {
     width: 100%;
 }
 
-@media only screen and (max-width: 1600px) {
+@media only screen and (max-width: 1650px) {
     .account__info {
         margin-left: 0px;
         margin-right: 40px;
     }
+    .account__profile-input{
+        height: 48px;
+    }
+    .account__profile-foto{
+        height: 140px;
+        width: 140px;
+    }
+    .account__bonuses-desc_collect input {
+        width: 290px;
+    
+    }
+}
+@media only screen and (max-width: 1480px) {
+    .account__info{
+        width: 350px;
+    }
+    .account__info-wrapper{
+        width: 100%;
+    }
+    .account__profile-birth {
+        width: 130px;
+    }
+    .account__profile-gender{
+        width: 130px;
+    }
+    .acoount__info-container {
+        padding-right: 20px;
+    }
+    .account__bonuses-desc_collect p {
+        font-size: 17px;
+    }
+}
+
+@media only screen and (max-width: 1370px) {
+    .account__profile-foto {
+        height: 100px;
+        width: 100px;
+    }
+        .account__profile-input {
+            height: 40px;
+        
+        }
+        .account__profile-input{
+            font-size: 12px;
+        }
+        .acoount__info-desc{
+            margin-bottom: 20px;
+        }
+        .account__profile-changedata {
+            margin-top: 15px;
+        }
+        .account__bonuses-desc_collect input {
+            height: 38px;
+            padding: 6.5px;
+            width: 265px;
+        }
+        .account__bonuses-desc_collect button{
+            height: 38px;
+        }
+        .account__bonuses-desc_collect{
+            height: 38px;
+        }
+}
+
+@media only screen and (max-width: 768px) {
+.account_wrapper{
+    flex-direction: column;
+    padding: 10px;
+}
+.account__info{
+    margin-right: 0;
+    width: 100%;
+}
+.acoount__info-container{
+    padding-right: 0;
+    border-right: none;
+}
+.account__profile-gender{
+    width: 47%;
+}
+.account__profile-birth{
+    width: 47%;
+}
+.account__profile-password button{
+        font-size: 13px;
+    line-height: 20px;
+    letter-spacing: 0%;
+    width: 245px;
+    height: 47px;
+}
+.account__profile-password{
+    margin-top: 5px;
+}
+    .account__profile-foto {
+        margin-bottom: 5px;
+    }
+
+
+
+.account__bonuses_collection{
+    margin-top: 30px;
+    width: 100%;
+}
+.account__bonuses-desc_collect{
+    flex-direction: column;
+}
+.account__bonuses-desc_collect form{
+    flex-direction: column;
+}
+.account__bonuses-desc_collect p{
+    width: 100%;
+    text-align: center;
+}
+    .account__bonuses-desc_collect p {
+        font-size: 21px;
+    }
+    .account__bonuses-desc_collect{
+        height: initial;
+    }
+        .account__bonuses-desc_collect form {
+            margin-top: 15px;
+            width: 100%;
+            align-items: center;
+        }
+        .account__bonuses-desc_collect input{
+            width: 100%;
+            margin-right: 0px;
+        }
+        .account__bonuses-desc_collect button{
+            margin-top: 10px;
+        }
 }

@@ -26,140 +26,61 @@
             </div>
 
             <!----DASHBOARD catalog----->
+            @php use Illuminate\Support\Str; @endphp
+
             <div class="dashboard__catalog">
-                <!----element------>
-                <div class="catalog__element">
-                    <div class="catalog__element__wrapper">
-                        <div class="catalog__element__bin">
-                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                        </div>
-                        <div class="catalog__element__image">
+                @forelse($randomProducts as $p)
+                    @php
+                        $photoPath = optional($p->primaryImage)->path ?? optional($p->images->first())->path;
+                        if ($photoPath) {
+                            $img = Str::startsWith($photoPath, ['http://', 'https://'])
+                                ? $photoPath
+                                : asset('storage/' . ltrim($photoPath, '/'));
+                        } else {
+                            $img = asset('images/catalog/catalog_placeholder.png');
+                        }
+                        $detailUrl = route('catalog.api.product', $p);
+                    @endphp
 
-                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                        </div>
-                        <div class="catalog__element__name">
-                            <p>Name of the product sadfsf sdfvsd sdfcds </p>
-                        </div>
-                        <div class="catalog__element__type">
-                            Black - UT894 X7
-                        </div>
-                        <div class="catalog__element__amount-price">
-                            <div class="catalog__element-amount">
-                                <button>
-                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
-                                </button>                                
-                                <span>0</span>
-                                <button>
-                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
-                                </button>
+                    <div class="catalog__element" data-product="{{ $detailUrl }}" data-name="{{ e($p->name) }}">
+                        <div class="catalog__element__wrapper">
+                            <div class="catalog__element__bin" title="Remove from cart"
+                                style="opacity:.4; pointer-events:none;">
+                                <img src="{{ asset('images/catalog/bin.svg') }}" alt="">
                             </div>
-                            <div class="catalog__element-price">
-                                48.00 AZN
+
+                            <div class="catalog__element__image js-open-product" style="cursor:pointer">
+                                <img src="{{ $img }}" alt="{{ $p->name }}">
+                            </div>
+
+                            <div class="catalog__element__name">
+                                <p class="js-open-product" style="cursor:pointer">{{ $p->name }}</p>
+                            </div>
+
+                            <div class="catalog__element__type">
+                                {{ $p->type ? $p->type . ' — ' : '' }}{{ $p->code }}
+                            </div>
+
+                            <div class="catalog__element__amount-price">
+                                <div class="catalog__element-amount">
+                                    <button disabled><img src="{{ asset('images/catalog/minus.svg') }}"
+                                            alt=""></button>
+                                    <span>0</span>
+                                    <button disabled><img src="{{ asset('images/catalog/plus.svg') }}"
+                                            alt=""></button>
+                                </div>
+                                <div class="catalog__element-price">
+                                    {{ number_format((float) $p->price, 0, '.', ' ') }} CPS
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!----element------>
-                <!----element------>
-                <div class="catalog__element">
-                    <div class="catalog__element__wrapper">
-                        <div class="catalog__element__bin">
-                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                        </div>
-                        <div class="catalog__element__image">
-
-                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                        </div>
-                        <div class="catalog__element__name">
-                            <p>Name of the product</p>
-                        </div>
-                        <div class="catalog__element__type">
-                            Black - UT894 X7
-                        </div>
-                        <div class="catalog__element__amount-price">
-                            <div class="catalog__element-amount">
-                                <button>
-                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
-                                </button>                                
-                                <span>0</span>
-                                <button>
-                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
-                                </button>
-                            </div>
-                            <div class="catalog__element-price">
-                                48.00 AZN
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----element------>
-                <!----element------>
-                <div class="catalog__element">
-                    <div class="catalog__element__wrapper">
-                        <div class="catalog__element__bin">
-                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                        </div>
-                        <div class="catalog__element__image">
-
-                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                        </div>
-                        <div class="catalog__element__name">
-                            <p>Name of the product</p>
-                        </div>
-                        <div class="catalog__element__type">
-                            Black - UT894 X7
-                        </div>
-                        <div class="catalog__element__amount-price">
-                            <div class="catalog__element-amount">
-                                <button>
-                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
-                                </button>                                
-                                <span>0</span>
-                                <button>
-                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
-                                </button>
-                            </div>
-                            <div class="catalog__element-price">
-                                48.00 AZN
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----element------>
-                <!----element------>
-                <div class="catalog__element">
-                    <div class="catalog__element__wrapper">
-                        <div class="catalog__element__bin">
-                            <img src="{{ asset('images/catalog/bin.svg') }}" alt="" srcset="">
-                        </div>
-                        <div class="catalog__element__image">
-
-                            <img src="{{ asset('images/catalog/catalog_placeholder.png') }}" alt="" srcset="">
-                        </div>
-                        <div class="catalog__element__name">
-                            <p>Name of the product</p>
-                        </div>
-                        <div class="catalog__element__type">
-                            Black - UT894 X7
-                        </div>
-                        <div class="catalog__element__amount-price">
-                            <div class="catalog__element-amount">
-                                <button>
-                                    <img src="{{ asset('images/catalog/minus.svg') }}" alt="" srcset="">
-                                </button>                                
-                                <span>0</span>
-                                <button>
-                                    <img src="{{ asset('images/catalog/plus.svg') }}" alt="" srcset="">
-                                </button>
-                            </div>
-                            <div class="catalog__element-price">
-                                48.00 AZN
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----element------>
+                @empty
+                    <div style="padding:12px; color:#97a2b6">No products yet.</div>
+                @endforelse
             </div>
+
+
 
             <div class="dashboard__footer">
                 <div class="footer__request">
@@ -199,4 +120,5 @@
 
         </div>
     </div>
+    @include('partials.product_modal')
 @endsection

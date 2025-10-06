@@ -132,7 +132,7 @@
                         <th class="code">PRODUCT CODE</th>
                         <th class="date">ACTIVATION DATE</th>
                         <th class="amount">CPS</th>
-                        <th class="status">STATUS</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -141,13 +141,13 @@
                         <td class="code">#242332228</td>
                         <td class="date">08/20/22</td>
                         <td class="amount">499</td>
-                        <td class="status"><p>COMPLETED</p></td>
+
                     </tr>
                     <tr class="account_bonuses-element">
                         <td class="code">#242332229</td>
                         <td class="date">08/22/22</td>
                         <td class="amount">199</td>
-                        <td class="status"><p>PENDING</p></td>
+
                     </tr>
                 </tbody>
             </table>
