@@ -309,7 +309,7 @@ h6 {
 .topbar {
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 800;
     backdrop-filter: none; /* не меняю стиль, просто закрепляю */
 }
 

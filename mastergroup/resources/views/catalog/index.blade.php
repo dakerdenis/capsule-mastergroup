@@ -3,144 +3,12 @@
 @section('page_title', 'Catalogue')
 
 @push('page-styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
+
     <link rel="stylesheet"
         href="{{ asset('css/market/catalog.css') }}?v={{ filemtime(public_path('css/market/catalog.css')) }}">
     <link rel="stylesheet"
         href="{{ asset('css/market/catalog_add.css') }}?v={{ filemtime(public_path('css/market/catalog_add.css')) }}">
-
-    <style>
-        .pm-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, .55);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 50;
-            backdrop-filter: blur(2px);
-        }
-
-        /* ← ДОБАВЬ ЭТО */
-        .pm-backdrop[hidden] {
-            display: none !important;
-        }
-
-        .pm-dialog {
-            width: min(980px, 92vw);
-            background: #0f1115;
-            color: #e9eefb;
-            border: 1px solid #252b3a;
-            border-radius: 14px;
-            box-shadow: 0 18px 60px rgba(0, 0, 0, .5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .pm-close {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            border: 1px solid #252b3a;
-            background: #141825;
-            color: #e9eefb;
-            cursor: pointer;
-            font-size: 22px;
-            line-height: 1;
-        }
-
-        .pm-body {
-            display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 16px;
-            padding: 16px
-        }
-
-        @media (max-width: 900px) {
-            .pm-body {
-                grid-template-columns: 1fr
-            }
-        }
-
-        .pm-photo {
-            border: 1px solid #252b3a;
-            border-radius: 12px;
-            background: #0b0e14;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            aspect-ratio: 4/3;
-            overflow: hidden
-        }
-
-        .pm-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain
-        }
-
-        .pm-thumbs {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-            flex-wrap: wrap
-        }
-
-        .pm-thumb {
-            width: 84px;
-            height: 64px;
-            border-radius: 8px;
-            border: 1px solid #252b3a;
-            overflow: hidden;
-            cursor: pointer
-        }
-
-        .pm-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover
-        }
-
-        .pm-thumb.is-active {
-            outline: 2px solid rgba(91, 140, 255, .7)
-        }
-
-        .pm-right h3 {
-            margin: 0 0 6px;
-            font-size: 20px
-        }
-
-        .pm-meta {
-            display: grid;
-            gap: 6px;
-            margin-bottom: 10px;
-            color: #97a2b6
-        }
-
-        .pm-price {
-            font-size: 20px;
-            font-weight: 800;
-            margin: 8px 0 10px
-        }
-
-        .pm-desc {
-            white-space: pre-wrap;
-            color: #cfd6e6;
-            line-height: 1.5;
-            max-height: 220px;
-            overflow: auto;
-            border: 1px solid #252b3a;
-            border-radius: 10px;
-            padding: 10px;
-            background: #121521
-        }
-
-        .muted {
-            color: #97a2b6
-        }
-    </style>
 @endpush
 
 
@@ -232,136 +100,188 @@
         <div class="pm-dialog">
             <button class="pm-close" type="button" aria-label="Close">&times;</button>
 
-            <div class="pm-body">
-                <div class="pm-left">
-                    <div class="pm-photo">
-                        <img id="pm-main" src="" alt="">
+<!-- LOADER: перекрывает popop__container во время загрузки -->
+<div class="popup__loader" hidden aria-live="polite" aria-busy="true">
+  <div class="spinner">
+    <div class="ring"></div>
+    <div class="txt">Loading…</div>
+  </div>
+</div>
+
+
+            <div class="popup__container">
+                <div class="popup__images">
+                    <!---main image of product----->
+                    <div class="popup__images-big">
+                        <div class="popup__image">
+                            <img src="" alt="">
+                        </div>
                     </div>
-                    <div class="pm-thumbs" id="pm-thumbs"></div>
+                    <!---additional images of product----->
+                    <div class="popup__images-small">
+                        <div class="popup__image"></div>
+                        <div class="popup__image"></div>
+                        <div class="popup__image"></div>
+                        <div class="popup__image"></div>
+                    </div>
                 </div>
 
-                <div class="pm-right">
-                    <h3 id="pm-title">Loading…</h3>
-                    <div class="pm-meta">
-                        <div><span class="muted">Code:</span> <span id="pm-code"></span></div>
-                        <div><span class="muted">Type:</span> <span id="pm-type"></span></div>
-                        <div><span class="muted">Category:</span> <span id="pm-category"></span></div>
+                <div class="popup__content">
+                    <div class="popup__name">
+                        Name of the product
+                        Name of the product
+                    </div>
+                    <div class="popup__code">
+                        Black - UT894 X7
+                    </div>
+                    <div class="popup__price-amount">
+                        <div class="popup__price">
+                            CPS 48.00
+                        </div>
+                        <div class="popup__amount">
+                            <div class="catalog__element-amount">
+                                <button disabled><img src="{{ asset('images/catalog/minus.svg') }}"
+                                        alt=""></button>
+                                <span>0</span>
+                                <button disabled><img src="{{ asset('images/catalog/plus.svg') }}" alt=""></button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="pm-price" id="pm-price"></div>
-                    <div class="pm-desc" id="pm-desc"></div>
+                    <div class="popup__desc">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi tenetur repellendus, pariatur
+                        incidunt, facilis adipisci nam dolores distinctio sunt, quas in quis nostrum vitae necessitatibus
+                        ipsum debitis! Aspernatur, quae provident!
+                    </div>
+
                 </div>
             </div>
+
         </div>
     </div>
 
 
+   
 
-    @push('page-scripts')
-        <script>
-            (function() {
-                const modal = document.getElementById('productModal');
-                const main = document.getElementById('pm-main');
-                const thumbs = document.getElementById('pm-thumbs');
+@push('page-scripts')
+<script>
+(function(){
+  const modal = document.getElementById('productModal');
 
-                const title = document.getElementById('pm-title');
-                const code = document.getElementById('pm-code');
-                const type = document.getElementById('pm-type');
-                const cat = document.getElementById('pm-category');
-                const price = document.getElementById('pm-price');
-                const desc = document.getElementById('pm-desc');
+  // твои элементы
+  const bigBox = document.querySelector('.popup__images-big .popup__image');
+  const smallBoxes = document.querySelectorAll('.popup__images-small .popup__image');
 
-                function openModal() {
-                    modal.hidden = false;
-                    document.body.style.overflow = 'hidden';
-                }
+  const nameEl = document.querySelector('.popup__name');
+  const codeEl = document.querySelector('.popup__code');
+  const priceEl = document.querySelector('.popup__price');
+  const descEl  = document.querySelector('.popup__desc');
 
-                function closeModal() {
-                    modal.hidden = true;
-                    document.body.style.overflow = '';
-                    main.src = '';
-                    thumbs.innerHTML = '';
-                }
+  // НОВОЕ: ссылки на контейнер и лоадер
+  const container = document.querySelector('.popup__container');
+  const loader    = document.querySelector('.popup__loader');
 
-                modal.querySelector('.pm-close').addEventListener('click', closeModal);
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) closeModal();
-                });
-document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && !modal.hidden) closeModal(); });
-                function formatPrice(n) {
-                    n = Number(n || 0);
-                    return n.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    }) + ' AZN';
-                }
+  function openModal(){ modal.hidden = false; document.body.style.overflow = 'hidden'; }
+  function closeModal(){
+    modal.hidden = true; document.body.style.overflow = '';
+    // очистка визуала
+    bigBox.innerHTML = '<img src="" alt="">';
+    smallBoxes.forEach(b => { b.innerHTML=''; b.style.display=''; });
+    // гарантированно спрячем лоадер и покажем контейнер на следующий открытие
+    hideLoader();
+  }
 
-                async function loadProduct(url) {
-                    // простая индикация загрузки
-                    title.textContent = 'Loading...';
-                    code.textContent = type.textContent = cat.textContent = '';
-                    price.textContent = '';
-                    desc.textContent = '';
-                    main.src = '';
-                    thumbs.innerHTML = '';
+  function showLoader(){
+    // прячем серые блоки целиком
+    container.style.display = 'none';
+    loader.hidden = false;
+  }
+  function hideLoader(){
+    loader.hidden = true;
+    container.style.display = 'flex'; // вернуть твой display
+  }
 
-                    openModal();
-                    try {
-                        const res = await fetch(url, {
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest'
-                            }
-                        });
-                        if (!res.ok) throw new Error('Failed: ' + res.status);
-                        const p = await res.json();
+  modal.querySelector('.pm-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && !modal.hidden) closeModal(); });
 
-                        title.textContent = p.name || 'Product';
-                        code.textContent = p.code || '—';
-                        type.textContent = p.type || '—';
-                        cat.textContent = p.category || '—';
-                        price.textContent = formatPrice(p.price);
-                        desc.textContent = p.description || '—';
+  function formatPrice(n){
+    n = Number(n||0);
+    return `CPS ${n.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2})}`;
+  }
 
-                        // картинки
-                        const imgs = Array.isArray(p.images) ? p.images : [];
-                        const primary = p.primary;
-                        let current = primary?.url || (imgs[0]?.url) || '';
+  async function loadProduct(url){
+    // текстовые поля пока пустые (не показываем — лоадер снизу)
+    nameEl.textContent = ''; codeEl.textContent = '';
+    priceEl.textContent = ''; descEl.textContent = '';
+    bigBox.innerHTML = '<img src="" alt="">';
+    smallBoxes.forEach(b => { b.innerHTML=''; b.style.display=''; });
 
-                        if (current) {
-                            main.src = current;
-                        }
+    openModal();
+    showLoader();
 
-                        imgs.forEach((im) => {
-                            const a = document.createElement('button');
-                            a.type = 'button';
-                            a.className = 'pm-thumb' + (im.url === current ? ' is-active' : '');
-                            a.innerHTML = `<img src="${im.url}" alt="">`;
-                            a.addEventListener('click', () => {
-                                main.src = im.url;
-                                thumbs.querySelectorAll('.pm-thumb').forEach(t => t.classList.remove(
-                                    'is-active'));
-                                a.classList.add('is-active');
-                            });
-                            thumbs.appendChild(a);
-                        });
-                    } catch (e) {
-                        title.textContent = 'Error';
-                        desc.textContent = 'Could not load product details.';
-                        console.error(e);
-                    }
-                }
+    try{
+      const res = await fetch(url, { headers:{ 'X-Requested-With':'XMLHttpRequest' } });
+      if(!res.ok) throw new Error('Failed '+res.status);
+      const p = await res.json();
 
-                // Вешаем клики на карточки
-                document.querySelectorAll('.catalog__element').forEach(card => {
-                    const url = card.getAttribute('data-product');
-                    if (!url) return;
-                    card.querySelectorAll('.js-open-product').forEach(el => {
-                        el.addEventListener('click', () => loadProduct(url));
-                    });
-                });
+      // Заполняем контент
+      nameEl.textContent  = p.name || 'Product';
+      codeEl.textContent  = (p.type ? `${p.type} — ` : '') + (p.code || '—');
+      priceEl.textContent = formatPrice(p.price);
+      descEl.textContent  = p.description || '—';
 
-            })();
-        </script>
-    @endpush
+      const imgs = Array.isArray(p.images) ? p.images : [];
+      const primary = p.primary && p.primary.url ? p.primary : (imgs[0] || null);
+
+      if(primary){
+        const a = document.createElement('a');
+        a.href = primary.url;
+        a.setAttribute('data-fancybox', `product-${p.id}`);
+        a.setAttribute('data-caption', p.name || '');
+        a.innerHTML = `<img src="${primary.url}" alt="${(p.name||'')}">`;
+        bigBox.innerHTML = '';
+        bigBox.appendChild(a);
+      }else{
+        bigBox.innerHTML = '<img src="" alt="">';
+      }
+
+      smallBoxes.forEach((box, i) => {
+        const im = imgs[i] || null;
+        if(!im){ box.style.display='none'; box.innerHTML=''; return; }
+        box.style.display='';
+        box.innerHTML =
+          `<a href="${im.url}" data-fancybox="product-${p.id}" data-caption="${(p.name||'')}">
+             <img src="${im.url}" alt="${(p.name||'')}">
+           </a>`;
+      });
+
+    }catch(err){
+      // простая ошибка
+      nameEl.textContent = 'Error';
+      descEl.textContent = 'Could not load product details.';
+      console.error(err);
+    }finally{
+      // ПРЯЧЕМ ЛОАДЕР И ПОКАЗЫВАЕМ КОНТЕНТ
+      hideLoader();
+    }
+  }
+
+  // клики по карточкам
+  document.querySelectorAll('.catalog__element').forEach(card=>{
+    const url = card.getAttribute('data-product');
+    if(!url) return;
+    card.querySelectorAll('.js-open-product').forEach(el=>{
+      el.addEventListener('click', ()=> loadProduct(url));
+    });
+  });
+
+})();
+</script>
+<!-- Fancybox -->
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+@endpush
+
+
 
 @endsection
