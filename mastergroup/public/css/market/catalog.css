@@ -112,43 +112,157 @@
 }
 
 /*****CATALOG PAGE*******/
-.catalog__wrapper {
-    width: 100%;
-    padding: 30px;
+/***** CATALOG FILTER — LIGHT THEME *****/
+.catalog__wrapper{ width:100%; padding:30px; }
+
+/* Линия фильтров: аккуратные отступы и перенос на маленьких экранах */
+.catalog__filter{
+  width:100%;
+  display:flex; gap:12px;
+  align-items:center; justify-content:space-between;
+  flex-wrap:wrap;
 }
 
-.catalog__filter {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* Контейнер каждого фильтра */
+.catalog_filter__element{
+  flex:1 1 240px;            /* адаптивно растягивается */
+  max-width:320px;           /* как у тебя */
+  height:48px;
+  border:1px solid #E5E7EB;  /* светло-серый */
+  border-radius:10px;
+  background:#FFFFFF;
+  display:flex; align-items:center;
+  padding:0 12px;
+  box-shadow:0 1px 0 rgba(16,24,40,.02);
+
 }
 
-.catalog_filter__element {
-    width: 320px;
-    height: 48px;
-    border: 1px solid var(--Labels---Vibrant---Controls-Tertiary, #d9d9d9);
-    border-radius: 8px;
+/* Всё внутри контейнера растягиваем по твоей просьбе */
+.catalog_filter__element > *{ width:100%; height:100%; }
+
+/* ====== СТИЛИ ДЛЯ SELECT (кастом) ====== */
+.catalog_filter__element .select{
+  appearance:none; -webkit-appearance:none; -moz-appearance:none;
+  background:transparent;
+  border:none; outline:none;
+  padding:0 40px 0 2px;  /* справа место под стрелку */
+  font-size:15px; color:#111827; /* почти чёрный */
+  cursor:pointer;
 }
 
-.catalog_filter__clear button {
-    width: 112px;
-    height: 48px;
-    background-color: #d9d9d9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-
-    font-weight: 400;
-
-    font-size: 15px;
-    color: #404040;
-    line-height: 20px;
-    letter-spacing: 0%;
-    text-transform: uppercase;
-    border-radius: 36px;
+/* своя стрелка */
+.catalog_filter__element{
+  position:relative;
 }
+.catalog_filter__element .select{
+  background-image:url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5' fill='none' stroke='%2362748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 4px center;
+}
+
+/* hover/focus для контейнера с select */
+.catalog_filter__element:has(.select:hover){ border-color:#D1D5DB; }
+.catalog_filter__element:has(.select:focus){
+  border-color:#1E88E5;
+  box-shadow:0 0 0 4px rgba(30,136,229,.14);
+}
+
+/* disabled */
+.catalog_filter__element .select:disabled{ color:#9CA3AF; cursor:not-allowed; }
+
+/* ====== Поиск (оставляем нативный инпут, только вписываемся в контейнер) ====== */
+.catalog_filter__element img + input[type="text"]{
+  border:none; outline:none; background:transparent;
+  padding:0 8px 0 8px;   /* справа/слева чуть воздуха */
+  font-size:15px; color:#111827;
+}
+.catalog_filter__element input::placeholder{ color:#9CA3AF; }
+.catalog_filter__element img{ width:18px; height:18px; flex:0 0 auto; opacity:.75; }
+
+/* ====== Кнопки (Apply / Clear) ====== */
+.btn-apply, .btn-clear{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:48px; min-width:112px; padding:0 16px;
+  border-radius:36px; border:1px solid transparent;
+  font-size:15px; line-height:20px; text-transform:uppercase;
+  letter-spacing:0; cursor:pointer; user-select:none;
+  transition:filter .12s ease, box-shadow .12s ease, transform .04s ease, background .12s ease, border-color .12s ease;
+}
+.btn-apply{
+border: 1px solid #FFFFFF;
+background-color: #D9D9D9;
+color: #404040;
+}
+.btn-apply:hover{ filter:brightness(1.05); }
+.btn-apply:active{ transform:translateY(1px); }
+
+.btn-clear{
+  background:#F3F4F6; color:#374151; border-color:#E5E7EB;
+}
+.btn-clear:hover{ background:#ECEFF3; border-color:#D7DBE0; }
+.btn-clear:active{ transform:translateY(1px); }
+
+/* Узкие экраны: тянем элементы на всю ширину */
+@media (max-width: 900px){
+  .catalog_filter__element{ flex:1 1 100%; max-width:none; }
+}
+/* Контейнер фильтра уже есть; уберём рамку у него,
+   т.к. сам селект рисует свою оболочку */
+.catalog_filter__element{ border:none; padding:0; background:transparent; }
+
+/* ==== CUSTOM SELECT ==== */
+.cs{ position:relative; width:100%; height:48px; }
+.cs-trigger{
+  width:100%; height:48px;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:8px; padding:0 14px;
+  background:#fff; color:#111827; cursor:pointer;
+  border:1px solid #E5E7EB; border-radius:10px;
+  box-shadow:0 1px 0 rgba(16,24,40,.02);
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+.cs-trigger:hover{ border-color:#D1D5DB; }
+.cs-trigger:focus-visible{ outline:none; border-color:#1E88E5; box-shadow:0 0 0 4px rgba(30,136,229,.14); }
+
+.cs-arrow{ width:18px; height:18px; flex:0 0 18px; color:#62748B; transition:transform .15s ease; }
+.cs.is-open .cs-arrow{ transform:rotate(180deg); }
+
+/* Выпадающее меню */
+.cs-menu{
+  position:absolute; top:calc(100% + 6px); left:0; right:0;
+  background:#fff; border:1px solid #E5E7EB; border-radius:12px;
+  box-shadow:0 12px 28px rgba(16,24,40,.15);
+  padding:8px 0; display:none; z-index:20; max-height:240px; overflow:auto;
+}
+.cs-menu.is-open{ display:block; }
+
+.cs-item{
+  width:100%; text-align:left;
+  padding:10px 14px; background:#fff; border:none; cursor:pointer;
+  font-size:15px; color:#111827;
+}
+.cs-item:hover{ background:#F3F4F6; }
+.cs-item.is-selected{ background:#EEF6FF; color:#1E88E5; }
+
+/* Скрываем настоящий <select> но оставляем в потоке формы */
+.select.js-custom-select{ position:absolute; opacity:0; pointer-events:none; width:1px; height:1px; }
+
+.catalog_filter__element-search{
+    border: 1px solid var(--Labels---Vibrant---Controls-Tertiary, #D9D9D9);
+   padding-left: 8px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 .catalog__content {
     width: 100%;
@@ -157,6 +271,55 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
+
+.pagination__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin: 30px auto 10px;
+  font-family: inherit;
+}
+
+.pagination__page,
+.pagination__arrow {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #252b3a;
+  background: #141825;
+  color: #e9eefb;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.pagination__page:hover,
+.pagination__arrow:hover {
+  background: #1e2434;
+  border-color: #3b4a65;
+}
+
+.pagination__page.active {
+  background: #3a7afe;
+  color: #fff;
+  border-color: #3a7afe;
+}
+
+.pagination__arrow.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.pagination__dots {
+  color: #8a94ad;
+  padding: 0 4px;
+}
+
 
 
 @media only screen and (max-width: 1480px) {
