@@ -31,7 +31,7 @@ class AuthController extends Controller
             }
             
         
-            return redirect()->intended(route('account.dashboard'));
+            return redirect()->intended(route('home'));
         }
         
 
@@ -46,6 +46,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('auth.login')->with('status', 'You have been signed out.');
+        return redirect()->route('home')->with('status', 'You have been signed out.');
     }
 }
