@@ -205,8 +205,6 @@
                 </div>
             </div>
             <!---Element----->
-
-
         </div>
 
         <div class="cart__selected">
