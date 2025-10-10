@@ -13,6 +13,15 @@
     headerCount: document.getElementById('cartCount'),
     modal: document.getElementById('confirmModal'),
     mConfirm: document.getElementById('mConfirm'),
+
+    // NEW: модалка подтверждения заказа
+    orderModal: document.getElementById('confirmOrderModal'),
+    oConfirm: document.getElementById('oConfirm'),
+
+        // SUCCESS modal
+    sModal: document.getElementById('orderSuccessModal'),
+    sOk: document.getElementById('sOk'),
+    sOrderNumber: document.getElementById('orderNumberText'),
   };
 
   const modalState = { pid: null, row: null, lastFocus: null };
@@ -32,7 +41,11 @@
       body: new URLSearchParams(payload),
       credentials:'same-origin'
     });
-    if(!r.ok) throw new Error('HTTP '+r.status);
+    if (!r.ok) {
+      let msg = 'HTTP '+r.status;
+      try { const d = await r.json(); if (d?.message) msg = d.message; } catch(_){}
+      throw new Error(msg);
+    }
     return await r.json();
   }
 
@@ -92,7 +105,7 @@
         <div class="selected_bin-element-image"><img src="${it.image}" alt=""></div>
         <div class="selected_bin-element-amount">
           <span>CPS ${fmt(it.price)}</span>
-          <p>x ${it.qty}</p>
+          <p> x ${it.qty}</p>
         </div>
       `;
       els.selectedWrap.appendChild(box);
@@ -155,7 +168,7 @@
     updateTotals(data.selected_sum||0, data.total_items||0);
   }
 
-  // ===== Modal logic =====
+  // ===== Modal (Remove) =====
   function openModal(pid, row, triggerBtn){
     if(!els.modal) return;
     modalState.pid = pid;
@@ -178,7 +191,6 @@
   }
   function onEscClose(e){ if (e.key === 'Escape') closeModal(); }
 
-  // modal clicks
   document.addEventListener('click', (e)=>{
     const closeBtn = e.target.closest('[data-m-close]');
     if (closeBtn) { e.preventDefault(); closeModal(); }
@@ -190,26 +202,125 @@
     if (pid) removeNow(pid, row).catch(()=>{});
   });
 
+  // ===== Modal (Order CONFIRM) — NEW =====
+  function openOrderModal(triggerBtn){
+    if(!els.orderModal) { placeOrder().catch(()=>{}); return; }
+    els.orderModal.classList.add('is-open');
+    els.orderModal.setAttribute('aria-hidden','false');
+    els.orderModal.dataset.lastFocus = triggerBtn ? '1' : '';
+    els.oConfirm?.focus();
+    document.addEventListener('keydown', onEscCloseOrder);
+  }
+  function closeOrderModal(){
+    if(!els.orderModal) return;
+    els.orderModal.classList.remove('is-open');
+    els.orderModal.setAttribute('aria-hidden','true');
+    document.removeEventListener('keydown', onEscCloseOrder);
+    // фокус обратно на кнопку Place Order
+    els.place?.focus();
+  }
+  function onEscCloseOrder(e){ if (e.key === 'Escape') closeOrderModal(); }
+
+  document.addEventListener('click', (e)=>{
+    const closeBtn = e.target.closest('[data-o-close]');
+    if (closeBtn) { e.preventDefault(); closeOrderModal(); }
+  });
+  els.oConfirm?.addEventListener('click', async (e)=>{
+    e.preventDefault();
+    els.oConfirm.disabled = true;
+    try {
+      await placeOrder();
+    } catch(_) {}
+    els.oConfirm.disabled = false;
+    closeOrderModal();
+  });
+  // ===== Modal (Order SUCCESS) =====
+  function openSuccessModal(orderNumber){
+    if(!els.sModal) return;
+    if (els.sOrderNumber) els.sOrderNumber.textContent = orderNumber ? '#' + String(orderNumber) : '';
+    els.sModal.classList.add('is-open');
+    els.sModal.setAttribute('aria-hidden','false');
+    els.sOk?.focus();
+    document.addEventListener('keydown', onEscCloseSuccess);
+  }
+  function closeSuccessModal(){
+    if(!els.sModal) return;
+    els.sModal.classList.remove('is-open');
+    els.sModal.setAttribute('aria-hidden','true');
+    document.removeEventListener('keydown', onEscCloseSuccess);
+    els.place?.focus();
+  }
+  function onEscCloseSuccess(e){ if (e.key === 'Escape') closeSuccessModal(); }
+
+  document.addEventListener('click', (e)=>{
+    const closeBtn = e.target.closest('[data-s-close]');
+    if (closeBtn) { e.preventDefault(); closeSuccessModal(); }
+  });
+  els.sOk?.addEventListener('click', (e)=>{ e.preventDefault(); closeSuccessModal(); });
+
   // ===== Page events =====
   document.addEventListener('click', (e)=>{
     const row = e.target.closest('.cart__element');
-    if (!row) return;
-    const pid = row.dataset.pid;
+    if (row) {
+      const pid = row.dataset.pid;
+      const plusBtn = e.target.closest('.btn-plus');
+      const minusBtn = e.target.closest('.btn-minus');
+      const rmBtn   = e.target.closest('.btn-remove');
+      const selBtn  = e.target.closest('.selected_element');
 
-    const plusBtn = e.target.closest('.btn-plus');
-    const minusBtn = e.target.closest('.btn-minus');
-    const rmBtn   = e.target.closest('.btn-remove');
-    const selBtn  = e.target.closest('.selected_element');
-
-    if (plusBtn) { e.preventDefault(); plus(pid, row).catch(()=>{}); }
-    if (minusBtn){ e.preventDefault(); minus(pid, row).catch(()=>{}); }
-    if (rmBtn)   { e.preventDefault(); openModal(pid, row, rmBtn); }
-    if (selBtn)  {
-      e.preventDefault();
-      const toSel = !selBtn.classList.contains('is-selected');
-      toggleSelect(pid, selBtn, toSel).catch(()=>{});
+      if (plusBtn) { e.preventDefault(); plus(pid, row).catch(()=>{}); }
+      if (minusBtn){ e.preventDefault(); minus(pid, row).catch(()=>{}); }
+      if (rmBtn)   { e.preventDefault(); openModal(pid, row, rmBtn); }
+      if (selBtn)  {
+        e.preventDefault();
+        const toSel = !selBtn.classList.contains('is-selected');
+        toggleSelect(pid, selBtn, toSel).catch(()=>{});
+      }
     }
   });
 
   document.addEventListener('DOMContentLoaded', load);
+
+  // ===== Place order (через модалку) =====
+  // ===== Place order (через модалку) =====
+  async function placeOrder(){
+    if (els.place) els.place.disabled = true;
+
+    const res = await fetch('/orders/place', {
+      method: 'POST',
+      headers: {
+        'X-Requested-With':'XMLHttpRequest',
+        'X-CSRF-TOKEN': CSRF || '',
+        'Content-Type':'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({}),
+      credentials: 'same-origin'
+    });
+
+    const data = await res.json().catch(()=>({}));
+
+    if (res.ok && data.ok) {
+      try {
+        const topbarCps = document.querySelector('.topbar__bonuses p');
+        if (topbarCps && typeof data.new_cps === 'number') topbarCps.textContent = String(data.new_cps);
+      } catch(e){}
+      await load();
+      // <-- показать success
+      openSuccessModal(data.order_number || '');
+    }
+
+    if (els.place) els.place.disabled = false;
+  }
+
+
+  // клик по кнопке: открываем модалку подтверждения
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = els.place;
+    if (btn) btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (btn.disabled) return;
+      openOrderModal(btn);
+    });
+  });
+
 })();

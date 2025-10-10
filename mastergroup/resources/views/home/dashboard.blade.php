@@ -25,60 +25,57 @@
                     to use with your product. </p>
             </div>
 
-            <!----DASHBOARD catalog----->
-            @php use Illuminate\Support\Str; @endphp
+@php use Illuminate\Support\Str; @endphp
 
-            <div class="dashboard__catalog">
-                @forelse($randomProducts as $p)
-                    @php
-                        $photoPath = optional($p->primaryImage)->path ?? optional($p->images->first())->path;
-                        if ($photoPath) {
-                            $img = Str::startsWith($photoPath, ['http://', 'https://'])
-                                ? $photoPath
-                                : asset('storage/' . ltrim($photoPath, '/'));
-                        } else {
-                            $img = asset('images/catalog/catalog_placeholder.png');
-                        }
-                        $detailUrl = route('catalog.api.product', $p);
-                    @endphp
+<div class="dashboard__catalog">
+  @forelse($randomProducts as $p)
+    @php
+      $photoPath = optional($p->primaryImage)->path ?? optional($p->images->first())->path;
+      $img = $photoPath
+        ? (Str::startsWith($photoPath, ['http://','https://']) ? $photoPath : asset('storage/'.ltrim($photoPath,'/')))
+        : asset('images/catalog/catalog_placeholder.png');
+      $detailUrl = route('catalog.api.product', $p);
+    @endphp
 
-                    <div class="catalog__element" data-product="{{ $detailUrl }}" data-name="{{ e($p->name) }}">
-                        <div class="catalog__element__wrapper">
-                            <div class="catalog__element__bin" title="Remove from cart"
-                                style="opacity:.4; pointer-events:none;">
-                                <img src="{{ asset('images/catalog/bin.svg') }}" alt="">
-                            </div>
+    <div class="catalog__element"
+         data-product="{{ $detailUrl }}"
+         data-name="{{ e($p->name) }}"
+         data-product-id="{{ $p->id }}">
+      <div class="catalog__element__wrapper">
 
-                            <div class="catalog__element__image js-open-product" style="cursor:pointer">
-                                <img src="{{ $img }}" alt="{{ $p->name }}">
-                            </div>
+        <div class="catalog__element__bin" title="Remove from cart" style="opacity:.4; pointer-events:none;">
+          <img src="{{ asset('images/catalog/bin.svg') }}" alt="">
+        </div>
 
-                            <div class="catalog__element__name">
-                                <p class="js-open-product" style="cursor:pointer">{{ $p->name }}</p>
-                            </div>
+        <div class="catalog__element__image js-open-product" style="cursor:pointer">
+          <img src="{{ $img }}" alt="{{ $p->name }}">
+        </div>
 
-                            <div class="catalog__element__type">
-                                {{ $p->type ? $p->type . ' — ' : '' }}{{ $p->code }}
-                            </div>
+        <div class="catalog__element__name">
+          <p class="js-open-product" style="cursor:pointer">{{ $p->name }}</p>
+        </div>
 
-                            <div class="catalog__element__amount-price">
-                                <div class="catalog__element-amount">
-                                    <button disabled><img src="{{ asset('images/catalog/minus.svg') }}"
-                                            alt=""></button>
-                                    <span>0</span>
-                                    <button disabled><img src="{{ asset('images/catalog/plus.svg') }}"
-                                            alt=""></button>
-                                </div>
-                                <div class="catalog__element-price">
-                                    {{ number_format((float) $p->price, 0, '.', ' ') }} CPS
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <div style="padding:12px; color:#97a2b6">No products yet.</div>
-                @endforelse
-            </div>
+        <div class="catalog__element__type">
+          {{ $p->type ? $p->type.' — ' : '' }}{{ $p->code }}
+        </div>
+
+        <div class="catalog__element__amount-price">
+          <div class="catalog__element-amount">
+            <button class="btn-minus" disabled><img src="{{ asset('images/catalog/minus.svg') }}" alt=""></button>
+            <span class="qty">0</span>
+            <button class="btn-plus" disabled><img src="{{ asset('images/catalog/plus.svg') }}" alt=""></button>
+          </div>
+          <div class="catalog__element-price">
+            {{ number_format((float) $p->price, 0, '.', ' ') }} CPS
+          </div>
+        </div>
+      </div>
+    </div>
+  @empty
+    <div style="padding:12px; color:#97a2b6">No products yet.</div>
+  @endforelse
+</div>
+
 
 
 

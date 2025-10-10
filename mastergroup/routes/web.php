@@ -42,30 +42,29 @@ Route::middleware('guest')->group(function () {
 
 // ====== Авторизованные ======
 Route::middleware('auth')->group(function () {
-    Route::get('/', [AccountController::class, 'dashboard'])->name('home');               // "/" только после логина
+    Route::get('/', [AccountController::class, 'dashboard'])->name('home');
     Route::get('/account', [AccountController::class, 'account'])->name('account');
     Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
     // AJAX: Product details (JSON)
     Route::get('/catalog/api/products/{product}', [CatalogController::class, 'showJson'])
         ->name('catalog.api.product');
-
-
-
     // CART PAGES + AJAX
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::get('/cart/summary', [CartController::class, 'summary'])->name('cart.summary');
-    Route::get('/cart/items', [CartController::class, 'items'])->name('cart.items');               // ← список позиций с инфо
+    Route::get('/cart/items', [CartController::class, 'items'])->name('cart.items');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::post('/cart/decrement', [CartController::class, 'decrement'])->name('cart.decrement');
     Route::post('/cart/set', [CartController::class, 'setQuantity'])->name('cart.set');
     Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
-    Route::post('/cart/select', [CartController::class, 'select'])->name('cart.select');           // ← выбрать/снять выбор
-
-
-
-
+    Route::post('/cart/select', [CartController::class, 'select'])->name('cart.select');
 
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}/json', [OrderController::class, 'showJson'])
+        ->name('orders.show.json')
+        ->whereNumber('order');
+
+    Route::post('/orders/place', [OrderController::class, 'place'])->name('orders.place');
+
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });

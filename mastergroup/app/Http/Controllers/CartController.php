@@ -16,7 +16,7 @@ class CartController extends Controller
 
     private function itemsForUser(int $userId)
     {
-        return CartItem::where('user_id', $userId)->get(['product_id','qty']);
+        return CartItem::where('user_id', $userId)->get(['product_id','qty','selected']);
     }
 
     private function totalItemsForUser(int $userId): int
@@ -24,20 +24,10 @@ class CartController extends Controller
         return (int) CartItem::where('user_id', $userId)->sum('qty');
     }
 
-    private function selected(Request $request): array
-    {
-        return $request->session()->get('cart_selected', []); // ids
-    }
-
-    private function putSelected(Request $request, array $ids): void
-    {
-        $request->session()->put('cart_selected', array_values(array_unique($ids)));
-    }
-
     public function index(Request $request)
     {
         return view('cart.index', [
-            'title' => 'My Cart',
+            'title'    => 'My Cart',
             'user_cps' => (int) ($request->user()->cps_total ?? 0),
         ]);
     }
@@ -48,14 +38,16 @@ class CartController extends Controller
         $rows = $this->itemsForUser($uid);
 
         $map = [];
+        $selected = [];
         foreach ($rows as $row) {
             $map[(string)$row->product_id] = ['qty' => (int)$row->qty];
+            if ($row->selected) $selected[] = (int)$row->product_id;
         }
 
         return response()->json([
             'total_items' => $this->totalItemsForUser($uid),
             'cart'        => $map,
-            'selected'    => $this->selected($request),
+            'selected'    => $selected,
         ]);
     }
 
@@ -75,7 +67,11 @@ class CartController extends Controller
         }
 
         $byPid = [];
-        foreach ($rows as $r) $byPid[$r->product_id] = (int) $r->qty;
+        $selectedIds = [];
+        foreach ($rows as $r) {
+            $byPid[$r->product_id] = (int) $r->qty;
+            if ($r->selected) $selectedIds[] = (int) $r->product_id;
+        }
 
         $products = Product::query()
             ->with([
@@ -86,28 +82,23 @@ class CartController extends Controller
             ->whereIn('id', array_keys($byPid))
             ->get();
 
-        $selectedIds = $this->selected($request);
         $items = [];
         $selectedSum = 0;
 
         foreach ($products as $p) {
             $photoPath = optional($p->primaryImage)->path ?? optional($p->images->first())->path;
-            if ($photoPath) {
-                $img = Str::startsWith($photoPath, ['http://','https://'])
-                    ? $photoPath
-                    : asset('storage/' . ltrim($photoPath, '/'));
-            } else {
-                $img = asset('images/catalog/catalog_placeholder.png');
-            }
+            $img = $photoPath
+                ? (Str::startsWith($photoPath, ['http://','https://']) ? $photoPath : asset('storage/'.ltrim($photoPath, '/')))
+                : asset('images/catalog/catalog_placeholder.png');
 
-            $qty = $byPid[$p->id] ?? 0;
-            $price = (float) $p->price;
+            $qty   = $byPid[$p->id] ?? 0;
+            $price = (int) $p->price; // CPS integer
             $isSelected = in_array($p->id, $selectedIds, true);
 
             if ($isSelected) $selectedSum += $price * $qty;
 
             $items[] = [
-                'id'       => $p->id,
+                'id'       => (int) $p->id,
                 'name'     => (string) $p->name,
                 'code'     => (string) $p->code,
                 'type'     => (string) ($p->type ?? ''),
@@ -122,11 +113,12 @@ class CartController extends Controller
             'items'        => $items,
             'total_items'  => $this->totalItemsForUser($uid),
             'selected_ids' => $selectedIds,
-            'selected_sum' => (float) $selectedSum,
+            'selected_sum' => $selectedSum,
             'user_cps'     => (int) ($request->user()->cps_total ?? 0),
         ]);
     }
 
+    // Лимит: максимум 10 штук по всей корзине и максимум 10 на позицию
     public function add(Request $request)
     {
         $data = $request->validate([
@@ -136,14 +128,40 @@ class CartController extends Controller
         $uid = (int) $request->user()->id;
         $pid = (int) $data['product_id'];
 
+        $total = (int) CartItem::where('user_id', $uid)->sum('qty');
+        if ($total >= 10) {
+            $currentQty = (int) (CartItem::where('user_id', $uid)->where('product_id', $pid)->value('qty') ?? 0);
+            return response()->json([
+                'product_id'  => $pid,
+                'qty'         => $currentQty,
+                'total_items' => $total,
+            ]);
+        }
+
         $item = CartItem::firstOrNew(['user_id' => $uid, 'product_id' => $pid]);
-        $item->qty = $this->clampQty(($item->qty ?? 0) + 1);
-        $item->qty === 0 ? $item->delete() : $item->save();
+        $newQty = (int) ($item->qty ?? 0) + 1;
+        if ($newQty > 10) $newQty = 10;
+
+        $remaining = 10 - $total;
+        if ($remaining < 1) {
+            $newQty = (int) ($item->qty ?? 0);
+        } else {
+            $newQty = min($newQty, (int) ($item->qty ?? 0) + $remaining);
+        }
+
+        if ($newQty <= 0) {
+            $item->delete();
+        } else {
+            $item->qty = $newQty;
+            $item->save();
+        }
+
+        $totalAfter = (int) CartItem::where('user_id', $uid)->sum('qty');
 
         return response()->json([
             'product_id'  => $pid,
-            'qty'         => (int)($item->qty ?? 0),
-            'total_items' => $this->totalItemsForUser($uid),
+            'qty'         => (int) ($item->qty ?? 0),
+            'total_items' => $totalAfter,
         ]);
     }
 
@@ -164,7 +182,7 @@ class CartController extends Controller
 
         return response()->json([
             'product_id'  => $pid,
-            'qty'         => (int)($item->qty ?? 0),
+            'qty'         => (int) ($item->qty ?? 0),
             'total_items' => $this->totalItemsForUser($uid),
         ]);
     }
@@ -178,20 +196,24 @@ class CartController extends Controller
 
         $uid = (int) $request->user()->id;
         $pid = (int) $data['product_id'];
-        $qty = $this->clampQty((int)$data['qty']);
+        $qty = $this->clampQty((int) $data['qty']);
 
         if ($qty === 0) {
             CartItem::where('user_id',$uid)->where('product_id',$pid)->delete();
         } else {
-            CartItem::updateOrCreate(
-                ['user_id'=>$uid,'product_id'=>$pid],
-                ['qty'=>$qty]
-            );
+            // общий лимит 10 по корзине
+            $totalOther = (int) CartItem::where('user_id',$uid)->where('product_id','!=',$pid)->sum('qty');
+            $qty = min($qty, max(0, 10 - $totalOther));
+            if ($qty === 0) {
+                CartItem::where('user_id',$uid)->where('product_id',$pid)->delete();
+            } else {
+                CartItem::updateOrCreate(['user_id'=>$uid,'product_id'=>$pid], ['qty'=>$qty]);
+            }
         }
 
         return response()->json([
             'product_id'  => $pid,
-            'qty'         => $qty,
+            'qty'         => (int) (CartItem::where('user_id',$uid)->where('product_id',$pid)->value('qty') ?? 0),
             'total_items' => $this->totalItemsForUser($uid),
         ]);
     }
@@ -207,12 +229,6 @@ class CartController extends Controller
 
         CartItem::where('user_id',$uid)->where('product_id',$pid)->delete();
 
-        $sel = $this->selected($request);
-        if (($k = array_search($pid, $sel, true)) !== false) {
-            unset($sel[$k]);
-            $this->putSelected($request, $sel);
-        }
-
         return response()->json([
             'product_id'  => $pid,
             'qty'         => 0,
@@ -227,20 +243,19 @@ class CartController extends Controller
             'selected'   => ['required','boolean'],
         ]);
 
-        $sel = $this->selected($request);
+        $uid = (int) $request->user()->id;
         $pid = (int) $data['product_id'];
 
-        if ($data['selected']) {
-            $sel[] = $pid;
-        } else {
-            if (($k = array_search($pid, $sel, true)) !== false) unset($sel[$k]);
-        }
-        $this->putSelected($request, $sel);
+        CartItem::where('user_id',$uid)->where('product_id',$pid)->update([
+            'selected' => (bool) $data['selected'],
+        ]);
+
+        $selectedIds = CartItem::where('user_id',$uid)->where('selected',true)->pluck('product_id')->map(fn($v)=>(int)$v)->all();
 
         return response()->json([
-            'product_id' => $pid,
-            'selected'   => (bool) $data['selected'],
-            'selected_ids' => array_values(array_unique($sel)),
+            'product_id'   => $pid,
+            'selected'     => (bool) $data['selected'],
+            'selected_ids' => $selectedIds,
         ]);
     }
 }

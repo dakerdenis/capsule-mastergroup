@@ -15,7 +15,7 @@
 }
 
 .orders-card__body {
-    padding: 8px;
+
 }
 
 /* горизонтальный скролл на узких экранах */
@@ -65,8 +65,9 @@
     background: #fafafa;
 }
 
-.orders-table tbody tr:last-child td {
+.orders-table tbody tr td {
     border-bottom: none;
+    text-align: center;
 }
 
 /* зелёные id как на скрине */
@@ -225,4 +226,8 @@ color: #1E5CC8;
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+.js-order-cell{
+    cursor: pointer;
+    font-weight: 700;
 }
