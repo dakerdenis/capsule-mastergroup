@@ -7,7 +7,10 @@
     <title>@yield('title', 'App')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     @stack('page-styles')
+
 </head>
 
 <body>
@@ -44,6 +47,7 @@
                         src="{{ auth()->user()->profile_photo_path ? asset('storage/' . auth()->user()->profile_photo_path) : asset('images/avatar-default.png') }}"
                         alt="Profile">
                 </a>
+                
                 <form action="{{ route('auth.logout') }}" method="POST" class="logout-form">
                     @csrf
                     <button type="submit" class="btn btn--logout">LOG OUT</button>
@@ -71,7 +75,7 @@
                 <a class="nav__link {{ request()->routeIs('catalog.*') ? 'is-active' : '' }}"
                     href="{{ route('catalog.index') }}">Catalogue</a>
                 <a class="nav__link {{ request()->routeIs('cart.*') ? 'is-active' : '' }}"
-                    href="{{ route('cart.index') }}">My Cart</a>
+                    href="{{ route('cart.index') }}"><p>My Cart</p> <span id="cartCount" class="cart-badge">0</span></a>
                 <a class="nav__link {{ request()->routeIs('orders.*') ? 'is-active' : '' }}"
                     href="{{ route('orders.index') }}">My Orders</a>
                     <a class="nav__link {{ request()->routeIs('account') ? 'is-active' : '' }}"
@@ -129,6 +133,7 @@
             }
         })();
     </script>
+<script src="{{ asset('js/cart.js') }}"></script>
 
 
 </body>

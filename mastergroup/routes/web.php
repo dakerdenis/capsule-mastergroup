@@ -51,13 +51,16 @@ Route::middleware('auth')->group(function () {
 
 
 
+    // CART PAGES + AJAX
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    // AJAX
     Route::get('/cart/summary', [CartController::class, 'summary'])->name('cart.summary');
+    Route::get('/cart/items', [CartController::class, 'items'])->name('cart.items');               // ← список позиций с инфо
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::post('/cart/decrement', [CartController::class, 'decrement'])->name('cart.decrement');
     Route::post('/cart/set', [CartController::class, 'setQuantity'])->name('cart.set');
     Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/cart/select', [CartController::class, 'select'])->name('cart.select');           // ← выбрать/снять выбор
+
 
 
 
