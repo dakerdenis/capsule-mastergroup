@@ -319,7 +319,9 @@ color: #404040;
   color: #8a94ad;
   padding: 0 4px;
 }
-
+.btn-remove{
+    background-color: rgba(0, 0, 0, 0);
+}
 
 
 @media only screen and (max-width: 1480px) {

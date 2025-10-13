@@ -299,19 +299,10 @@
 
 .m-dialog {
     position: relative;
-    background: #fff;
-    border-radius: 12px;
-    max-width: 420px;
-    width: 92%;
-    padding: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, .25)
+
 }
 
-.m-title {
-    margin: 0 0 8px;
-    font-size: 18px;
-    color: #0f172a
-}
+.m-title {}
 
 .m-text {
     margin: 0 0 16px;
@@ -330,7 +321,7 @@
     background: #e2e8f0;
     color: #0f172a;
     border-radius: 8px;
-    padding: 8px 14px;
+    padding: 8px 20px;
     cursor: pointer
 }
 
@@ -339,16 +330,28 @@
 }
 
 .m-btn--danger {
-    background: #ef4444;
-    border-color: #ef4444;
-    color: #fff
+    background: linear-gradient(98.88deg, #055A00 -2.99%, #710000 102.28%);
+
+    border: 1px solid #000000;
+    color: #fff;
+
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 15px;
+
+    line-height: 20px;
+    letter-spacing: 0%;
+    text-align: center;
+    text-transform: uppercase;
+
 }
 
-.m-btn--danger:hover {
-    background: #dc2626;
-    border-color: #dc2626
-}
 
+.m-dialog-confirm {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
 
 /* базовые стили для success-модалки (минимум) */
 #orderSuccessModal.m-modal {
@@ -368,32 +371,66 @@
     position: absolute;
     inset: 0;
     background: #000;
-    opacity: .45
+    opacity: .85
 }
 
 #orderSuccessModal .m-dialog {
     position: relative;
-    max-width: 420px;
-    width: 90%;
-    background: #111827;
-    border-radius: 12px;
-    padding: 20px;
-    border: 1px solid #374151;
-    color: #e5e7eb;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .45)
+    background-image: url('../../images/common/popup-back.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 689px;
+    height: 413px;
+    border-radius: 10px;
+    padding: 49px 30px;
+
+    backdrop-filter: blur(100px);
+
 }
 
 #orderSuccessModal .m-title {
-    font-size: 18px;
-    margin: 0 0 8px
+    width: 381px;
+    height: 54px;
+    background-color: #34C81E;
+    border-radius: 36px;
+
+    display: flex;
+    align-items: center;
+    padding-left: 13px;
+}
+
+#orderSuccessModal .m-title img {
+    width: 26px;
+    height: 26px;
+    margin-right: 15px;
 }
 
 #orderSuccessModal .m-text {
-    font-size: 14px;
+
     line-height: 1.45;
-    margin: 0 0 14px
+    margin: 0 0 14px;
+    margin-top: 30px;
+
 }
 
+.m-text {
+
+    font-weight: 400;
+
+    font-size: 20px;
+    color: #FFFFFF;
+    line-height: 32.97px;
+    letter-spacing: 0px;
+
+}
+
+.m-btn-confirm{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0);
+    top: 10px;
+    right: 10px;
+}
 #orderSuccessModal .m-actions {
     display: flex;
     gap: 10px;
@@ -405,15 +442,18 @@
     border: 0;
     border-radius: 8px;
     padding: 8px 14px;
-    background: #374151;
+
     color: #e5e7eb;
     cursor: pointer
 }
 
 #orderSuccessModal .m-btn:hover {
-    background: #4b5563
+
 }
 
+.m-text-confirm {
+    color: #343C44;
+}
 
 
 @media only screen and (max-width: 1670px) {
@@ -480,24 +520,67 @@
         height: 24px;
         width: 24px;
     }
-    .remove_item img{
+
+    .remove_item img {
         width: 100%;
         height: 100%;
         object-fit: contain;
     }
-        .cart__element__quantity button {
-            width: 25px;
+
+    .cart__element__quantity button {
+        width: 25px;
+    }
+
+    .cart__element__quantity span {
+        font-size: 16px;
+    }
+
+    .cart__elements {
+        width: calc(100% - 260px);
+    }
+
+    .cart__element {
+        width: 370px;
+    }
+
+    .cart__element-name {
+        width: 150px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .cart-list{
+        flex-direction: column;
+        align-items: center;
+    }
+    .cart__elements{
+        width: 100%;
+    }
+        .cart__selected{
+            width: 100%;
+            margin-top: 20px;
         }
-        .cart__element__quantity span {
-            font-size: 16px;
+        .cart-list{
+            padding: 20px;
         }
-        .cart__elements{
-            width: calc(100% - 260px);
+        .cart__element{
+            width: 100%;
         }
-            .cart__element {
-                width: 370px;
-            }
-            .cart__element-name{
-                width: 150px;
-            }
+        .m-dialog-confirm{
+            width: 90%;
+        }
+        .m-actions{
+            justify-content: space-evenly;
+        }
+        #orderSuccessModal .m-dialog{
+            width: 95%;
+            padding: 30px;
+            padding-top: 70px;
+        }
+        #orderSuccessModal .m-title {
+            width: 100%;
+        }
+        .orders{
+            
+        }
 }

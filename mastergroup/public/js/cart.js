@@ -73,7 +73,7 @@
     if (!t) return;
     if (t.classList.contains('btn-plus'))  { e.preventDefault(); onPlus(t).catch(()=>{}); }
     if (t.classList.contains('btn-minus')) { e.preventDefault(); onMinus(t).catch(()=>{}); }
-    if (t.classList.contains('btn-remove')){ e.preventDefault(); onRemove(t).catch(()=>{}); }
+    if (t.classList.contains('btn-remove')){ e.preventDefault(); onPlus(t).catch(()=>{}); }
   });
 
   document.addEventListener('DOMContentLoaded', getSummary);

@@ -95,11 +95,12 @@
                     data-name="{{ e($p->name) }}">
                     <div class="catalog__element__wrapper">
 
-                        <div class="catalog__element__bin" title="Remove from cart">
-                            <button class="btn-remove" type="button">
+                        <div class="catalog__element__bin" title="Add to cart">
+                            <button class="btn-remove" type="button" aria-label="Add to cart">
                                 <img src="{{ asset('images/catalog/bin.svg') }}" alt="">
                             </button>
                         </div>
+
 
                         <div class="catalog__element__image js-open-product" style="cursor:pointer">
                             <img src="{{ $img }}" alt="{{ $p->name }}">
