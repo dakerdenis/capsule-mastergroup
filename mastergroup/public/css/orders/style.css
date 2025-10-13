@@ -14,9 +14,7 @@
 
 }
 
-.orders-card__body {
-
-}
+.orders-card__body {}
 
 /* горизонтальный скролл на узких экранах */
 .table-scroll {
@@ -150,7 +148,7 @@
     width: 36px;
     height: 36px;
     border: none;
-    background: #f3f4f6;
+    background: rgba(0, 0, 0, 0);
     border-radius: 999px;
     cursor: pointer;
     font-size: 22px;
@@ -185,9 +183,10 @@
     letter-spacing: 0%;
 
 }
-.order_popup__name h3{
+
+.order_popup__name h3 {
     color: #000000;
-        font-weight: 700;
+    font-weight: 700;
     font-style: Bold;
     font-size: 20px;
 
@@ -195,6 +194,7 @@
     letter-spacing: 0%;
 
 }
+
 /****ORDERED******/
 .order_popup__name span {
     display: flex;
@@ -202,18 +202,18 @@
     justify-content: center;
     padding: 0px 10px;
     height: 24px;
-font-weight: 700;
-border-radius: 8px;
-background-color: #E0F2FE;
-font-size: 12px;
+    font-weight: 700;
+    border-radius: 8px;
+    background-color: #E0F2FE;
+    font-size: 12px;
 
-line-height: 18px;
-letter-spacing: 0%;
-text-transform: uppercase;
+    line-height: 18px;
+    letter-spacing: 0%;
+    text-transform: uppercase;
 
-margin-left: 20px;
+    margin-left: 20px;
 
-color: #1E5CC8;
+    color: #1E5CC8;
 }
 
 .order_pup-element-image {
@@ -227,10 +227,161 @@ color: #1E5CC8;
     height: 100%;
     object-fit: contain;
 }
-.js-order-cell{
+
+.js-order-cell {
     cursor: pointer;
     font-weight: 700;
 }
-.orders__container{
+
+.orders__container {
     padding-bottom: 30px;
+}
+
+.order_popup-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.order_pup-element {
+    width: 361px;
+    height: 105px;
+    display: flex;
+    padding: 10px 0;
+}
+
+.order_pup-element:nth-child(2n+1) {
+    border-right: 1px solid #D9D9D980;
+}
+
+
+.order_pup-element-desc {
+    height: 100%;
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.order_pup-element-name {
+    color: #343C44;
+
+    font-weight: 300;
+
+    font-size: 14px;
+
+    line-height: 20px;
+    letter-spacing: 0.15px;
+    text-transform: uppercase;
+
+}
+
+.order_pup-element-code {
+    color: #343C44;
+    font-weight: 400;
+
+    font-size: 10px;
+
+    line-height: 16px;
+    letter-spacing: 0.4px;
+
+}
+
+.order_pup-element-price {
+    color: #404040;
+
+    font-weight: 500;
+    font-size: 12px;
+
+    line-height: 120%;
+    letter-spacing: 0.15px;
+
+}
+.modal__close img { pointer-events: none; }
+.order_popup-data{
+    display: flex;
+    justify-content: space-between;
+    width: 220px;
+    margin-bottom: 7px;
+}
+.order_popup-price{
+        display: flex;
+    justify-content: space-between;
+    width: 220px;
+}
+.order_popup-price{
+    margin-top: 5px;
+}
+.order_popup__desc{
+    margin: 20px 0px;
+
+}
+
+
+@media (max-width: 768px) {
+    .mobile-remove {
+        display: none;
+        visibility: hidden;
+    }
+
+    .orders-table {
+        min-width: initial;
+    }
+
+    .orders {
+        padding: 10px;
+    }
+
+    .orders-table tbody td {
+        padding: 10px;
+    }
+
+    .js-order-cell {
+        font-size: 12px;
+    }
+    
+    .modal__body{
+        width: 100%;
+
+    }
+    .modal__dialog{
+        width: 95%;
+    }
+    .order_popup-wrapper{
+
+    }
+    .order_pup-element{
+        
+    }
+    .order_pup-element:nth-child(2n-1) {
+        border-right: none;
+            
+    }
+    .order_pup-element{
+border-bottom: 1px solid #D9D9D980;
+    }
+    .order_popup-wrapper{
+        max-height: 425px;
+        overflow-y: scroll;
+        padding: 4px 0px;
+    }
+    .order_popup__name{
+        position: relative;
+align-items: initial;
+justify-content: initial;
+
+height: 50px;
+    }
+    .order-modal-title{
+        font-size: 17px;
+    }
+    .order_popup__name span{
+        margin-left: 0px;
+        position: absolute;
+        bottom: 0;
+    }
+    .order_popup__name span{
+
+    }
 }

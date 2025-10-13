@@ -17,11 +17,11 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Order</th>
-                                    <th>Quantity</th>
+                                    <th  class="mobile-remove">Quantity</th>
                                     <th>CPS</th>
-                                    <th>Date of order</th>
-                                    <th>Date of execution</th>
-                                    <th>Status</th>
+                                    <th class="mobile-remove">Date of order</th>
+                                    <th class="mobile-remove">Date of execution</th>
+                                    <th >Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,10 +38,10 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td class="js-order-cell" data-order="{{ $o->number }}"
                                             data-id="{{ $o->id }}">#{{ $o->number }}</td>
-                                        <td>{{ (int) ($o->total_qty ?? 0) }}</td>
-                                        <td>CPS {{ number_format((int) $o->total_cps, 0, '.', ' ') }}</td>
-                                        <td>{{ $o->created_at?->format('m/d/y') }}</td>
-                                        <td>{{ $o->executed_at?->format('m/d/y') ?? '—' }}</td>
+                                        <td  class="mobile-remove">{{ (int) ($o->total_qty ?? 0) }}</td>
+                                        <td ><span class="mobile-remove">CPS</span> {{ number_format((int) $o->total_cps, 0, '.', ' ') }}</td>
+                                        <td class="mobile-remove">{{ $o->created_at?->format('m/d/y') }}</td>
+                                        <td class="mobile-remove"{{ $o->executed_at?->format('m/d/y') ?? '—' }}</td>
                                         <td><span class="badge {{ $badge }}">{{ $statusUpper }}</span></td>
                                     </tr>
                                 @empty
@@ -62,7 +62,9 @@
     <div class="modal" id="order-modal" aria-hidden="true">
         <div class="modal__overlay" data-close-modal></div>
         <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
-            <button class="modal__close" type="button" aria-label="Close" data-close-modal>×</button>
+            <button class="modal__close" type="button" aria-label="Close" data-close-modal>
+                <img src="{{ asset('images/common/close.svg') }}" alt="" srcset="">
+            </button>
             <div class="modal__body">
                 <div class="order_popup__name">
                     <p id="om-id">—</p>
@@ -75,7 +77,7 @@
                         <span id="om-date">—</span>
                     </div>
                     <div class="order_popup-price">
-                        Total price: <span id="om-total">0</span>
+                        <p>Total price:</p> <span id="om-total">0</span>
                     </div>
                 </div>
                 <div class="order_popup-wrapper" id="om-items"></div>
