@@ -576,6 +576,7 @@
             width: 95%;
             padding: 30px;
             padding-top: 70px;
+            height: initial;
         }
         #orderSuccessModal .m-title {
             width: 100%;

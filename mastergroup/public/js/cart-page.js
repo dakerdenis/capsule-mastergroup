@@ -3,6 +3,15 @@
   const elPage = document.getElementById('cartPage');
   const USER_CPS = parseInt(elPage?.dataset.userCps || '0', 10) || 0;
 
+  // Fallback-хелпер: если window.setCartCount нет, обновим все .js-cart-count напрямую
+  const bumpBadge = (n) => {
+    if (typeof window.setCartCount === 'function') {
+      window.setCartCount(n);
+    } else {
+      document.querySelectorAll('.js-cart-count').forEach(el => el.textContent = String(n));
+    }
+  };
+
   const els = {
     list: document.getElementById('cartItems'),
     selectedWrap: document.getElementById('selectedItems'),
@@ -10,19 +19,15 @@
     cpsSel: document.getElementById('cpsSelected'),
     cpsLeft: document.getElementById('cpsLeft'),
     place: document.getElementById('btnPlaceOrder'),
-    headerCount: document.getElementById('cartCount'),
+    // headerCount: document.getElementById('cartCount'), // ⛔️ больше не используем id
     modal: document.getElementById('confirmModal'),
     mConfirm: document.getElementById('mConfirm'),
-
-    // NEW: модалка подтверждения заказа
     orderModal: document.getElementById('confirmOrderModal'),
     oConfirm: document.getElementById('oConfirm'),
-
-        // SUCCESS modal
     sModal: document.getElementById('orderSuccessModal'),
     sOk: document.getElementById('sOk'),
     sOrderNumber: document.getElementById('orderNumberText'),
-  };
+  };  
 
   const modalState = { pid: null, row: null, lastFocus: null };
 
@@ -112,13 +117,16 @@
     }
   }
 
+
   function updateTotals(selectedSum, totalItems){
     els.cpsUser.textContent = `${fmt(USER_CPS)} CPS`;
     els.cpsSel.textContent  = `${fmt(selectedSum)} CPS`;
     const left = USER_CPS - selectedSum;
     els.cpsLeft.textContent = `${fmt(left)} CPS`;
     els.place.disabled = selectedSum <= 0;
-    if (els.headerCount) els.headerCount.textContent = String(totalItems||0);
+
+    // ✅ обновляем глобальные бейджи
+    bumpBadge(totalItems || 0);
   }
 
   function escapeHtml(s){ return (s??'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }

@@ -405,7 +405,10 @@ h6 {
 #hamburger-6.is-activa .line:nth-child(3){ transform: translateY(-13px) rotate(90deg); }
 
 
-
+.basket_mobile{
+    display: none;
+    visibility: hidden;
+}
 @media only screen and (max-width: 1670px) {
     .topbar{
         height: 100px;
@@ -608,5 +611,38 @@ h6 {
         min-height: 100vh; /* без жесткого 700px на мобиле */
         height: auto;
     }
-
+    .nav__link{
+        width: 120px;
+    }
+    .topbar__bonuses p {
+        margin-right: 10px;
+    }
+    .basket_mobile{
+        display: flex;
+        visibility: visible;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        position: relative;
+    }
+    .basket_mobile img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    .cart-badge-mobile{
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+        background-color: #bb1216;
+        border-radius: 50%;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        right: -5px;
+        top: -2px;
+    }
 }

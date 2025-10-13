@@ -30,8 +30,12 @@
                     <img src="{{ asset('images/app/bonus-info.svg') }}" alt="">
                 </div>
             </div>
+            <!-----BASKET----->
+            <a href="{{ route('cart.index') }}" class="basket_mobile">
+                <span class="cart-badge cart-badge-mobile js-cart-count">0</span>
+                <img src="{{ asset('images/common/card.png') }}" alt="">
+        </a>
             <!-- BURGER (mobile only) -->
-
             <div class="three col">
                 <div class="hamburger" id="hamburger-6" aria-label="Open menu" role="button" tabindex="0">
                     <span class="line"></span>
@@ -47,7 +51,7 @@
                         src="{{ auth()->user()->profile_photo_path ? asset('storage/' . auth()->user()->profile_photo_path) : asset('images/avatar-default.png') }}"
                         alt="Profile">
                 </a>
-                
+
                 <form action="{{ route('auth.logout') }}" method="POST" class="logout-form">
                     @csrf
                     <button type="submit" class="btn btn--logout">LOG OUT</button>
@@ -75,11 +79,13 @@
                 <a class="nav__link {{ request()->routeIs('catalog.*') ? 'is-active' : '' }}"
                     href="{{ route('catalog.index') }}">Catalogue</a>
                 <a class="nav__link {{ request()->routeIs('cart.*') ? 'is-active' : '' }}"
-                    href="{{ route('cart.index') }}"><p>My Cart</p> <span id="cartCount" class="cart-badge">0</span></a>
+                    href="{{ route('cart.index') }}">
+                    <p>My Cart</p> <span class="cart-badge js-cart-count">0</span>
+                </a>
                 <a class="nav__link {{ request()->routeIs('orders.*') ? 'is-active' : '' }}"
                     href="{{ route('orders.index') }}">My Orders</a>
-                    <a class="nav__link {{ request()->routeIs('account') ? 'is-active' : '' }}"
-                        href="{{ route('account') }}">Account</a>
+                <a class="nav__link {{ request()->routeIs('account') ? 'is-active' : '' }}"
+                    href="{{ route('account') }}">Account</a>
             </nav>
             <div class="sidebar_car">
                 <img src="{{ asset('images/app/car-left.png') }}" alt="">
@@ -95,6 +101,27 @@
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>
+
+
+
+
+<script>
+(function(){
+  function setCartCount(count){
+    const n = Math.max(0, Number(count) || 0);
+    document.querySelectorAll('.js-cart-count').forEach(el => { el.textContent = String(n); });
+    try { localStorage.setItem('cartCount', String(n)); } catch(e) {}
+  }
+  window.setCartCount = setCartCount;
+
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'cartCount') setCartCount(e.newValue);
+  });
+})();
+</script>
+
+
+
     @stack('scripts')
     @stack('page-scripts')
     <script>
@@ -133,7 +160,7 @@
             }
         })();
     </script>
-<script src="{{ asset('js/cart.js') }}"></script>
+    <script src="{{ asset('js/cart.js') }}"></script>
 
 
 </body>
