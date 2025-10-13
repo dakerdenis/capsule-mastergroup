@@ -27,7 +27,7 @@
             <input type="hidden" name="rejected_reason" id="rejectReason">
             <div style="display:flex;gap:6px">
               <button type="button" class="btn btn--sm" data-status="approved">Approve</button>
-              <button type="button" class="btn btn--sm" data-status="pending">Pending</button>
+
               <button type="button" class="btn btn--sm" data-status="rejected">Reject</button>
             </div>
           </form>

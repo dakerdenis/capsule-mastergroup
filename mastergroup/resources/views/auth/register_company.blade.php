@@ -147,7 +147,7 @@
                             <section class="step is-hidden" data-step="2">
                                 <!-- здесь пиши «другие поля» для второго этапа -->
                                 <div class="register_user-input register_user-input2"><input type="text" name="work"
-                                        placeholder="Place of work"></div>
+                                        placeholder="Adress"></div>
                                 <div class="register_user-input register_user-input2"><input type="text" name="email"
                                         placeholder="Login (e-mail) *"></div>
                                 <!-- Country (красивый кастомный селект, как gender) -->

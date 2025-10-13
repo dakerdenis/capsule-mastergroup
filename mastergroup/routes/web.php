@@ -25,19 +25,17 @@ use App\Http\Controllers\Admin\AdminOrderController;
 // ====== Гость ======
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('auth.login');
-    Route::post('/login', [AuthController::class, 'login'])
-        ->name('auth.login.submit')
-        ->middleware('throttle:login');
+    Route::post('/login', [AuthController::class, 'login'])->name('auth.login.submit')->middleware('throttle:login');
 
     Route::get('/register', [RegisterController::class, 'choose'])->name('auth.register');
     Route::get('/register/user', [RegisterController::class, 'showUser'])->name('auth.register.user');
     Route::get('/register/company', [RegisterController::class, 'showCompany'])->name('auth.register.company');
     Route::post('/register', [RegisterController::class, 'store'])->name('auth.register.store');
 
+    // <<< ТОЛЬКО ЭТИ ДВЕ СТРОКИ ДЛЯ СБРОСА >>>
     Route::get('/password/forgot', [PasswordController::class, 'forgot'])->name('password.forgot');
-    Route::post('/password/email', [PasswordController::class, 'sendLink'])->name('password.email')->middleware('throttle:password-email');
-    Route::get('/password/reset/{token}', [PasswordController::class, 'reset'])->name('password.reset');
-    Route::post('/password/reset', [PasswordController::class, 'update'])->name('password.update');
+    Route::post('/password/generate', [PasswordController::class, 'generateNew'])->name('password.generate')->middleware('throttle:password-email');
+
 });
 
 // ====== Авторизованные ======

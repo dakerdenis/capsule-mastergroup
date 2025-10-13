@@ -584,4 +584,7 @@
         .orders{
             
         }
+        .cart__element-name{
+            font-size: 12px;
+        }
 }

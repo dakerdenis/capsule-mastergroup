@@ -8,6 +8,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Services\SmsService;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -87,6 +89,10 @@ class RegisterController extends Controller
             'instagram'           => $data['instagram'] ?? null,
             'status'              => 'pending',
         ]);
+
+            // ВАЖНО: триггерим событие
+    event(new Registered($user));
+
 
         // App/Http/Controllers/Auth/RegisterController.php (без логики, только флеш-ключ под твой UI)
         return redirect()->route('auth.login')

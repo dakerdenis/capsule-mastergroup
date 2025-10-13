@@ -6,8 +6,10 @@ use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Services\SmsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class OrderController extends Controller
@@ -20,7 +22,6 @@ class OrderController extends Controller
             ->latest('id')
             ->get();
 
-        // короткое поле «Products» в таблице
         $orders->transform(function($o){
             $o->products_summary = $o->items()
                 ->with('product:id,name')
@@ -40,7 +41,6 @@ class OrderController extends Controller
         ]);
     }
 
-    // JSON детали заказа для модалки
     public function showJson(Request $request, Order $order)
     {
         abort_unless($order->user_id === $request->user()->id, 403);
@@ -81,7 +81,7 @@ class OrderController extends Controller
         ]);
     }
 
-    // POST /orders/place — уже вызывалось с корзины
+    // POST /orders/place
     public function place(Request $request)
     {
         $user = $request->user();
@@ -138,6 +138,36 @@ class OrderController extends Controller
 
             $user->decrement('cps_total', $total);
             CartItem::where('user_id',$uid)->where('selected',true)->delete();
+
+            // === SMS АДМИНИСТРАТОРУ ПОСЛЕ УСПЕШНОГО ЗАКАЗА ===
+            $itemsCount = array_sum(array_map(fn($r) => (int)$r['qty'], $prepared));
+            $userName   = (string)($user->full_name ?? $user->name ?? '');
+            $userId     = (int)$user->id;
+            $orderNum   = (string)$order->number;
+            $totalCps   = (int)$order->total_cps;
+
+            DB::afterCommit(function () use ($userName, $userId, $orderNum, $itemsCount, $totalCps) {
+                /** @var SmsService $sms */
+                $sms = app(SmsService::class);
+
+                $adminPhoneRaw =
+                    config('services.admin.alert_phone')
+                    ?? config('app.admin_phone')
+                    ?? env('ADMIN_ALERT_PHONE')
+                    ?? env('ADMIN_PHONE');
+
+                $adminPhone = $sms->normalizePhone((string)($adminPhoneRaw ?? ''));
+
+                if (!$adminPhone) {
+                    Log::warning('Order SMS skipped: admin phone not set');
+                    return;
+                }
+
+                $msg = "CAPSULE PPF: Order {$orderNum} by #{$userId} {$userName}. Items: {$itemsCount}. Total: {$totalCps} CPS. At ".now()->format('Y-m-d H:i').".";
+
+                $sms->send($adminPhone, $msg);
+            });
+            // === /SMS ===
 
             return response()->json([
                 'ok'           => true,
