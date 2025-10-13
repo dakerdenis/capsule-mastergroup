@@ -35,11 +35,19 @@
                             </div>
                         </div>
                         <!-----form and input fields----->
-                        <form action="" class="auth__form-form" >
-                            <div class="form-block" >
-                                <input id="email" type="email" placeholder="Login (e-mail)" autocomplete="username">
+                        <form action="{{ route('password.email') }}" method="POST" class="auth__form-form">
+                            @csrf
+                            <div class="form-block">
+                                <input id="email" name="email" type="email" placeholder="Login (e-mail)"
+                                    autocomplete="username" value="{{ old('email') }}" required>
+                                @error('email')
+                                    <div class="error" style="color:#ff6b6b;margin-top:8px">{{ $message }}</div>
+                                @enderror
                             </div>
 
+                            @if (session('status'))
+                                <div class="notice" style="color:#2ecc71;margin-bottom:12px">{{ session('status') }}</div>
+                            @endif
 
                             <div class="form-button">
                                 <button type="submit">
@@ -47,6 +55,7 @@
                                 </button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
