@@ -2,7 +2,9 @@
 @extends('layouts.admin')
 @section('title', $title ?? 'User')
 @section('page_title', 'User #'.$user->id)
-
+@push('page-styles')
+<link rel="stylesheet" href="{{ asset('css/admin/user_show.css') }}?v={{ filemtime(public_path('css/admin/user_show.css')) }}">
+@endpush
 @section('content')
   @php
     $clientType = is_object($user->client_type) ? ($user->client_type->value ?? (string)$user->client_type) : $user->client_type;

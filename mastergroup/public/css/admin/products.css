@@ -1,0 +1,308 @@
+/* ======= Admin • Products (Light Minimal) ======= */
+:root{
+  --bg:#ffffff;
+  --bg-alt:#f7f8fa;
+  --text:#1b2430;
+  --muted:#7a8394;
+  --border:#e8ecf2;
+  --shadow:0 8px 28px rgba(16,24,40,.06);
+  --radius:14px;
+
+  --primary:#2b6cf5;
+  --primary-ink:#ffffff;
+
+  --danger:#b42318;
+  --danger-bg:#ffefef;
+}
+
+/* Обёртка страницы */
+.admin-content{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:16px;
+}
+
+/* ================== ФИЛЬТРЫ ================== */
+.filters{
+  display:grid;
+  grid-template-columns: 1fr 220px 160px 140px auto;
+  gap:10px;
+  align-items:center;
+  margin-bottom:14px;
+}
+.filters .right{
+  display:flex; gap:10px; align-items:center; justify-content:flex-end;
+}
+
+/* Инпуты/селекты */
+.input,
+.select{
+  width:100%;
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--text);
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:14px;
+  line-height:1.35;
+  transition: box-shadow .2s ease, border-color .2s ease, background-color .2s ease;
+}
+.input::placeholder{ color:#9aa3b2; opacity:1; }
+.input:focus,
+.select:focus{
+  outline:none;
+  box-shadow:0 0 0 4px rgba(43,108,245,.25);
+  border-color:var(--primary);
+}
+
+/* Кастомная стрелка select */
+.select{
+  appearance:none; -webkit-appearance:none; -moz-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%239AA3B2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 10px center; background-size:18px 18px;
+  padding-right:40px;
+}
+
+/* Кнопка Apply */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:38px; padding:0 14px;
+  border-radius:12px; font-weight:700; font-size:14px; text-decoration:none;
+  border:1px solid var(--primary);
+  background:var(--primary); color:var(--primary-ink);
+  transition: transform .06s ease, opacity .2s ease, box-shadow .2s ease;
+  box-shadow:0 6px 18px rgba(43,108,245,.2);
+}
+.btn:hover{ transform:translateY(-1px); }
+.btn:active{ transform:translateY(0); opacity:.9; }
+.btn--primary{}
+
+/* ================== ТАБЛИЦА ================== */
+.table-wrap{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;           /* радиусы на скролле */
+  box-shadow:var(--shadow);
+}
+.table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  font-size:14px;
+  color:var(--text);
+}
+.table thead th{
+  position:sticky; top:0; z-index:1;
+  background:var(--bg);
+  text-align:left; font-weight:600;
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;
+}
+.table tbody td{
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.table tbody tr:nth-child(2n){ background:var(--bg-alt); }
+
+/* Миниатюры */
+.thumb{
+  width:54px; height:54px; border-radius:12px;
+  overflow:hidden; border:1px solid var(--border);
+  background: #fff;
+  display:flex; align-items:center; justify-content:center;
+}
+.thumb img{
+  max-width:100%; max-height:100%; display:block; object-fit:cover;
+}
+
+/* Мета внутри ячеек */
+.tbl-meta{ display:flex; flex-direction:column; gap:4px; }
+.t-primary{ font-weight:700; }
+.muted{ color:var(--muted); }
+
+/* Пилюля типа */
+.pill{
+  display:inline-flex; align-items:center;
+  height:26px; padding:0 10px;
+  border-radius:999px; border:1px solid var(--border);
+  background:#fff; font-weight:700; font-size:12px;
+}
+
+/* Цена */
+.price{ font-variant-numeric: tabular-nums; font-weight:700; }
+
+/* Действия */
+.t-actions{ text-align:right; white-space:nowrap; }
+.t-actions .btn{
+  height:32px; padding:0 12px; font-size:13px; border-radius:10px; box-shadow:0 4px 14px rgba(43,108,245,.14);
+}
+.t-actions form .btn{
+  background:#fff; color:#c0392b; border-color:#c0392b;
+  box-shadow:none;
+}
+.t-actions form .btn:hover{ transform:none; opacity:.9; }
+
+/* Пустая таблица */
+.t-empty{
+  text-align:center; color:var(--muted); padding:24px 16px;
+}
+
+/* Пагинация */
+.pagination-wrap{
+  display:flex; justify-content:center; gap:6px;
+  padding:14px 6px 2px;
+}
+.pagination-wrap .pagination{
+  display:flex; align-items:center; gap:6px;
+}
+.pagination-wrap .page-link,
+.pagination-wrap .pagination a,
+.pagination-wrap .pagination span{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:34px; height:34px; padding:0 10px;
+  border-radius:10px; border:1px solid var(--border);
+  background:#fff; color:var(--text); text-decoration:none;
+  font-weight:600; font-size:13px;
+}
+.pagination-wrap .pagination .active .page-link,
+.pagination-wrap .pagination span[aria-current="page"]{
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-ink);
+}
+
+/* ================== МОБИЛЬНАЯ АДАПТАЦИЯ ================== */
+
+/* 1) Контейнер на всю ширину, у таблицы — горизонтальный скролл */
+@media (max-width: 900px){
+  .admin-content{ border-radius:12px; padding:14px; }
+  .filters{
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: minmax(38px, auto);
+  }
+  .filters .right{
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+}
+.table-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+
+/* 2) На очень узких — единая колонка фильтров, кнопка на всю ширину */
+@media (max-width: 560px){
+  .filters{ grid-template-columns:1fr; }
+  .filters .right{ justify-content:stretch; }
+  .filters .right .select{ flex:1; }
+  .filters .right .btn{ width:100%; height:40px; }
+  .table thead th, .table tbody td{ padding:12px 12px; font-size:13px; }
+  .thumb{ width:48px; height:48px; border-radius:10px; }
+}
+
+/* ======= Pagination (arrows) – Tailwind-like markup without Tailwind ======= */
+.pagination-wrap nav[role="navigation"]{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px;
+}
+
+/* мобильная полоска «Prev/Next» */
+.pagination-wrap nav[role="navigation"] > .flex:first-child{
+  display:none;visibility: hidden; justify-content:space-between; width:100%;
+}
+
+/* десктопная секция */
+.pagination-wrap nav[role="navigation"] > .hidden.sm\:flex-1.sm\:flex{
+  display:flex; align-items:center; justify-content:space-between; width:100%;
+}
+
+/* «Showing 1 to 10 of N results» */
+.pagination-wrap nav[role="navigation"] p{
+  margin:0;
+  font-size:13px;
+  color:var(--muted);
+  display: none;
+  visibility: hidden;
+}
+
+/* общий контейнер кнопок */
+.pagination-wrap nav [class*="inline-flex"].shadow-sm.rounded-md{
+  display:inline-flex; gap:0; border-radius:12px; overflow:hidden;
+  box-shadow:0 6px 18px rgba(16,24,40,.06);
+}
+
+/* базовый вид ячеек/кнопок */
+.pagination-wrap nav a,
+.pagination-wrap nav span{
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:38px; height:38px; padding:0 12px;
+  border:1px solid var(--border);
+  background:#fff; color:var(--text);
+  font-weight:600; font-size:13px; text-decoration:none;
+  transition: background .15s ease, color .15s ease, border-color .15s ease, transform .06s ease;
+}
+
+/* скругления для краёв */
+.pagination-wrap nav span.rounded-l-md,
+.pagination-wrap nav a.rounded-l-md{ border-top-left-radius:12px; border-bottom-left-radius:12px; }
+.pagination-wrap nav span.rounded-r-md,
+.pagination-wrap nav a.rounded-r-md{ border-top-right-radius:12px; border-bottom-right-radius:12px; }
+
+/* hover/active */
+.pagination-wrap nav a:hover{ background:var(--bg-alt); transform: translateY(-1px); }
+.pagination-wrap nav a:active{ transform: translateY(0); }
+
+/* текущая страница */
+.pagination-wrap nav [aria-current="page"] > span{
+  background:var(--primary);
+  color:#fff;
+  border-color:var(--primary);
+}
+
+/* disabled (Prev на первой и т.п.) */
+.pagination-wrap nav [aria-disabled="true"] span{
+  color:#9aa3b2;
+  background:#f4f6f9;
+  border-color:var(--border);
+  cursor:default;
+  box-shadow:none;
+}
+
+/* стрелочные кнопки (svg внутри) */
+.pagination-wrap nav svg{
+  width:18px; height:18px;
+}
+
+/* мобильный блок (верхний) – кнопки Prev/Next */
+.pagination-wrap nav > .flex:first-child a,
+.pagination-wrap nav > .flex:first-child span{
+  border-radius:10px; min-width:42px; height:38px; padding:0 12px;
+  box-shadow:0 4px 14px rgba(16,24,40,.06);
+}
+
+/* компоновка, если utility классов нет (перестраховка) */
+@media (max-width: 640px){
+  .pagination-wrap nav[role="navigation"]{
+    flex-direction:column; align-items:stretch; gap:10px;
+  }
+  .pagination-wrap nav [class*="inline-flex"].shadow-sm.rounded-md{
+    align-self:center;
+  }
+}
+
+/* совместимость с твоим старым блоком .pagination-wrap .pagination ... */
+.pagination-wrap .pagination{
+  display:flex; gap:6px; align-items:center;
+}
+.pagination-wrap nav a, .pagination-wrap nav span{
+    padding: initial;
+}
+.actions-bar{
+  display:flex;
+  justify-content:flex-start;
+  margin-bottom:12px;
+}
+.actions-bar .btn{ height:38px; padding:0 16px; }

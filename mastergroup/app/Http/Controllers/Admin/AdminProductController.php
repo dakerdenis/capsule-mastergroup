@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateProductRequest;
+use App\Http\Requests\Admin\StoreProductRequest; // <-- добавь
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Category;
@@ -24,14 +25,14 @@ class AdminProductController extends Controller
         $perPage  = (int)($request->get('per_page', 20));
         $perPage  = $perPage > 0 && $perPage <= 100 ? $perPage : 20;
 
-$query = Product::query()
-    ->with([
-        'category:id,name',
-        'primaryImage',                  // ← добавили
-        'images' => function ($q) {      // оставили для фоллбэка и кода/счётчика
-            $q->orderBy('sort_order');
-        },
-    ]);
+        $query = Product::query()
+            ->with([
+                'category:id,name',
+                'primaryImage',                  // ← добавили
+                'images' => function ($q) {      // оставили для фоллбэка и кода/счётчика
+                    $q->orderBy('sort_order');
+                },
+            ]);
 
         if ($q !== '') {
             $query->where(function ($w) use ($q) {
@@ -176,5 +177,88 @@ $query = Product::query()
         return redirect()
             ->route('admin.products.index')
             ->with('success', 'Product deleted');
+    }
+
+      public function create()
+    {
+        $categories = Category::orderBy('name')->get(['id','name']);
+        $types      = Product::query()
+                        ->select('type')->distinct()->orderBy('type')
+                        ->pluck('type')->filter()->values(); // уже имеющиеся типы
+        // или задай предустановленные типы вручную, если нужно:
+        // $types = collect(['physical','service','digital']);
+
+        return view('admin.products.create', [
+            'title'      => 'Create product',
+            'categories' => $categories,
+            'types'      => $types,
+        ]);
+    }
+
+    public function store(StoreProductRequest $request): \Illuminate\Http\RedirectResponse
+    {
+        $v = $request->validated();
+
+        // Сгенерим slug, если пуст
+        if (empty($v['slug'])) {
+            $v['slug'] = Str::slug($v['name']);
+        }
+
+        // На всякий случай уникализируем slug, если занят
+        $base = $v['slug'];
+        $i = 1;
+        while (Product::where('slug', $v['slug'])->exists()) {
+            $v['slug'] = $base . '-' . ++$i;
+        }
+
+        // Создаём продукт
+        $product = DB::transaction(function () use ($v, $request) {
+            /** @var Product $product */
+            $product = Product::create([
+                'name'        => $v['name'],
+                'code'        => $v['code'] ?? null,
+                'slug'        => $v['slug'],
+                'type'        => $v['type'] ?? null,
+                'description' => $v['description'] ?? null,
+                'price'       => $v['price'],
+                'category_id' => $v['category_id'] ?? null,
+            ]);
+
+            // Загрузка изображений (опционально)
+            if ($request->hasFile('images')) {
+                $files = $request->file('images');
+                foreach ($files as $i => $file) {
+                    $stored = $file->store("products/{$product->id}", 'public');
+                    $product->images()->create([
+                        'path'       => $stored,
+                        'alt'        => $product->name,
+                        'sort_order' => $i + 1,
+                        'is_primary' => false,
+                    ]);
+                }
+            }
+
+            // Проставим primary
+            if (!empty($v['primary_image_id'])) {
+                // если передали id существующего — выставим его
+                $img = $product->images()->where('id', (int)$v['primary_image_id'])->first();
+                if ($img) {
+                    $product->images()->update(['is_primary' => false]);
+                    $img->update(['is_primary' => true]);
+                }
+            }
+
+            // Если primary нет — ставим первое по порядку
+            if (!$product->images()->where('is_primary', true)->exists()) {
+                $first = $product->images()->orderBy('sort_order')->first();
+                if ($first) $first->update(['is_primary' => true]);
+            }
+
+            return $product;
+        });
+
+        return redirect()
+            ->route('admin.products.edit', $product)
+            ->with('success', 'Product created.');
     }
 }

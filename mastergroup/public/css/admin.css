@@ -1,30 +1,31 @@
 :root{
-  --bg:#0f1115;
-  --panel:#151923;
-  --panel-2:#1b2130;
-  --text:#e9eefb;
-  --muted:#97a2b6;
-  --primary:#5b8cff;
-  --accent:#25c2a0;
-  --danger:#ff6b6b;
-  --border:#252b3a;
+  /* ===== Light Theme Tokens ===== */
+  --bg:#f6f8fc;
+  --panel:#ffffff;
+  --panel-2:#f9fbff;
+  --text:#0d1321;
+  --muted:#5b677a;
+  --primary:#1f6aff;
+  --accent:#0aa383;
+  --danger:#e23d3d;
+  --border:#e5e9f2;
 
   --sidebar-w:260px;
   --topbar-h:56px;
   --radius:12px;
-  --shadow:0 10px 30px rgba(0,0,0,.25);
+  --shadow:0 6px 22px rgba(13,19,33,.08);
 }
 
 *{box-sizing:border-box}
 html,body{height:100%}
 body.admin{
   margin:0; color:var(--text);
-  background:linear-gradient(180deg,#0d1016 0%, #0b0e14 100%);
+  background:linear-gradient(180deg,#f9fbff 0%, #eef3fb 100%);
   font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
 }
 
-/* === LAYOUT: одна строка (без отдельной row под topbar) === */
+/* === LAYOUT === */
 .admin-shell{
   min-height:100dvh;
   display:grid;
@@ -42,42 +43,50 @@ body.admin{
 }
 
 .admin-brand{padding:6px 8px 14px}
-.brand-link{display:inline-block; font-weight:700; letter-spacing:.4px; color:var(--text); text-decoration:none}
+.brand-link{
+  display:inline-block; font-weight:700; letter-spacing:.4px;
+  color:var(--text); text-decoration:none
+}
 .brand-link:hover{color:var(--primary)}
 
-.admin-nav{display:flex; flex-direction:column; gap:4px; padding:6px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-bottom:12px}
+.admin-nav{
+  display:flex; flex-direction:column; gap:4px; padding:6px;
+  border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  margin-bottom:12px
+}
 .admin-nav__link{
   display:flex; align-items:center; gap:10px; padding:10px 12px;
   border-radius:10px; color:var(--text); text-decoration:none;
-  transition:background .18s ease, color .18s ease;
+  transition:background .18s ease, color .18s ease, box-shadow .18s ease, outline-color .18s ease;
 }
-.admin-nav__link:hover{background:rgba(91,140,255,.12); color:#fff}
+.admin-nav__link:hover{
+  background:rgba(31,106,255,.08); color:#0a1228
+}
 .admin-nav__link.is-active{
-  background:linear-gradient(180deg, rgba(91,140,255,.18), rgba(91,140,255,.12));
-  outline:1px solid rgba(91,140,255,.35);
-  box-shadow: inset 0 0 0 1px rgba(91,140,255,.25), 0 6px 20px rgba(8,18,46,.4);
-  color:#fff;
+  background:linear-gradient(180deg, rgba(31,106,255,.14), rgba(31,106,255,.10));
+  outline:1px solid rgba(31,106,255,.28);
+  box-shadow: inset 0 0 0 1px rgba(31,106,255,.18), 0 8px 20px rgba(31,106,255,.12);
+  color:#0a1228;
 }
 
-.admin-sidebar__footer{margin-top:auto; padding:8px 10px; color:var(--muted); border-top:1px solid var(--border)}
+.admin-sidebar__footer{
+  margin-top:auto; padding:8px 10px; color:var(--muted); border-top:1px solid var(--border)
+}
 
 .admin-main{
   grid-area: main;
-  min-width:0; /* чтобы контент не расползался */
-  padding:0px;
+  min-width:0;
+  padding:0;
 }
-.admin__content__wrapper {
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-}
-/* === TOPBAR внутри main (ровно по верху) === */
+.admin__content__wrapper { width:100%; padding:10px }
+
+/* === TOPBAR === */
 .admin-topbar{
   display:flex; align-items:center; gap:12px;
   position:sticky; top:0; z-index:10;
   height:var(--topbar-h);
   padding:0 16px;
-  background:rgba(21,25,35, .65);
+  background:rgba(255,255,255,.75);
   backdrop-filter:blur(8px);
   border-bottom:1px solid var(--border);
 }
@@ -85,70 +94,80 @@ body.admin{
 .admin-topbar__right{margin-left:auto; display:flex; align-items:center; gap:10px}
 .admin-name{color:var(--muted)}
 
+/* === Buttons === */
 .btn{
-  --btn-bg:transparent; --btn-fg:var(--text); --btn-bd:var(--border);
+  --btn-bg:#fff; --btn-fg:var(--text); --btn-bd:var(--border);
   display:inline-flex; align-items:center; gap:8px;
   height:34px; padding:0 12px; border-radius:10px;
   background:var(--btn-bg); color:var(--btn-fg); border:1px solid var(--btn-bd);
-  cursor:pointer;
+  cursor:pointer; box-shadow:0 1px 0 rgba(13,19,33,.04);
 }
-.btn:hover{filter:brightness(1.05)}
+.btn:hover{filter:brightness(1.02)}
 .btn:active{transform:translateY(1px)}
-.btn--logout:hover{background:rgba(255,107,107,.1); border-color:rgba(255,107,107,.45)}
+.btn--logout:hover{
+  background:rgba(226,61,61,.08);
+  border-color:rgba(226,61,61,.35);
+}
 
-/* === BURGER: скрыт на десктопе, только мобилка === */
+/* === Burger (mobile only) === */
 .sidebar-toggle{
   display:none;
   align-items:center; justify-content:center;
   width:36px; height:36px; border-radius:10px;
-  background:transparent; color:var(--text);
+  background:#fff; color:var(--text);
   border:1px solid var(--border); cursor:pointer;
+  box-shadow:0 1px 0 rgba(13,19,33,.04);
 }
-.sidebar-toggle:hover{background:rgba(255,255,255,.05)}
+.sidebar-toggle:hover{background:#f3f6fd}
 
-/* === CONTENT CARD === */
+/* === Content Card === */
 .admin-content{
-
-  background:linear-gradient(180deg, rgba(27,33,48,.6), rgba(21,25,35,.6));
+  background:#ffffff;
   border:1px solid var(--border);
   border-radius:var(--radius);
   padding:18px;
   box-shadow:var(--shadow);
 }
 
-/* === MOBILE: выдвижной сайдбар и бургер === */
+/* === MOBILE: slide-in sidebar === */
 @media (max-width: 1023.98px){
   .admin-shell{
     grid-template-columns: 1fr;
     grid-template-areas: "main";
   }
   .admin-sidebar{
-    position:fixed; inset:0 auto 0 0; width:min(86vw, 320px); transform:translateX(-100%);
+    position:fixed; inset:0 auto 0 0;
+    width:min(86vw, 320px);
+    transform:translateX(-100%);
     transition:transform .2s ease; z-index:20;
+    box-shadow: 12px 0 32px rgba(13,19,33,.12);
   }
   .admin-shell.is-sidebar-open .admin-sidebar{ transform:translateX(0) }
   .admin-shell.is-sidebar-open::after{
-    content:""; position:fixed; inset:0; background:rgba(0,0,0,.45); backdrop-filter:blur(1px); z-index:15;
+    content:""; position:fixed; inset:0;
+    background:rgba(0,0,0,.28); backdrop-filter:blur(1px); z-index:15;
   }
-  .sidebar-toggle{ display:inline-flex } /* ← бургер только тут */
+  .sidebar-toggle{ display:inline-flex }
 }
 
-/* === ACCESSIBILITY & SCROLLBARS === */
+/* === Accessibility & Scrollbars === */
 :focus-visible{ outline:2px solid var(--primary); outline-offset:2px; border-radius:8px }
 .admin-sidebar,.admin-content{ scrollbar-width:thin; scrollbar-color: var(--primary) transparent }
 .admin-sidebar::-webkit-scrollbar,.admin-content::-webkit-scrollbar{height:10px;width:10px}
-.admin-sidebar::-webkit-scrollbar-thumb,.admin-content::-webkit-scrollbar-thumb{background:rgba(91,140,255,.45); border-radius:10px}
+.admin-sidebar::-webkit-scrollbar-thumb,.admin-content::-webkit-scrollbar-thumb{background:rgba(31,106,255,.45); border-radius:10px}
 
-
-
-/*************USERS********/
+/************* USERS *************/
 /* Tables */
 .table-wrap{overflow:auto}
 .table{width:100%; border-collapse:separate; border-spacing:0 8px}
-.table thead th{font-weight:600; color:var(--muted); text-align:left; padding:8px 12px}
+.table thead th{
+  font-weight:600; color:var(--muted); text-align:left; padding:8px 12px
+}
 .table tbody td{
-  background:rgba(27,33,48,.6); border:1px solid var(--border);
+  background:#fff;
+  border:1px solid var(--border);
   padding:10px 12px; vertical-align:middle;
+  box-shadow:0 1px 0 rgba(13,19,33,.03);
 }
 .table tbody tr td:first-child{border-top-left-radius:10px; border-bottom-left-radius:10px}
 .table tbody tr td:last-child{border-top-right-radius:10px; border-bottom-right-radius:10px}
@@ -158,22 +177,50 @@ body.admin{
 .t-empty{color:var(--muted); text-align:center}
 
 /* Badges & pills */
-.badge{display:inline-flex; align-items:center; height:24px; padding:0 10px; border-radius:999px; font-size:12px; border:1px solid transparent}
-.badge--pending{background:rgba(255,193,7,.12); color:#ffca2c; border-color:rgba(255,193,7,.25)}
-.badge--approved{background:rgba(37,194,160,.12); color:#25c2a0; border-color:rgba(37,194,160,.25)}
-.badge--rejected{background:rgba(255,107,107,.12); color:#ff6b6b; border-color:rgba(255,107,107,.25)}
-.pill{display:inline-block; padding:2px 8px; border-radius:999px; background:rgba(91,140,255,.12); color:#cfe0ff; font-size:12px}
+.badge{
+  display:inline-flex; align-items:center; height:24px; padding:0 10px;
+  border-radius:999px; font-size:12px; border:1px solid transparent;
+  background:#fff; box-shadow:0 1px 0 rgba(13,19,33,.04);
+}
+.badge--pending{background:rgba(255,193,7,.14); color:#7a5b00; border-color:rgba(255,193,7,.35)}
+.badge--approved{background:rgba(10,163,131,.14); color:#0a6b58; border-color:rgba(10,163,131,.35)}
+.badge--rejected{background:rgba(226,61,61,.14); color:#8e1f1f; border-color:rgba(226,61,61,.35)}
+
+.pill{
+  display:inline-block; padding:2px 8px; border-radius:999px;
+  background:rgba(31,106,255,.14); color:#1b3f89; font-size:12px;
+  border:1px solid rgba(31,106,255,.25);
+}
 
 /* Cards on show page */
-.card{background:linear-gradient(180deg, rgba(27,33,48,.6), rgba(21,25,35,.6)); border:1px solid var(--border); border-radius:12px; padding:16px; box-shadow:var(--shadow)}
+.card{
+  background:#ffffff;
+  border:1px solid var(--border);
+  border-radius:12px; padding:16px;
+  box-shadow:var(--shadow)
+}
 .card-title{margin:0 0 10px; font-size:14px; font-weight:700}
 .user-show__grid{display:grid; grid-template-columns: 2fr 1fr; gap:16px}
 @media (max-width: 900px){ .user-show__grid{grid-template-columns:1fr} }
+
 .dl{display:grid; grid-template-columns: 180px 1fr; gap:8px 12px}
 .dl dt{color:var(--muted)}
 .dl dd{margin:0}
+
 .media-list{display:grid; gap:12px}
 .media-item{display:grid; gap:8px}
 .media-label{color:var(--muted); font-size:12px}
-.media-img{display:block; width:100%; max-height:260px; object-fit:contain; background:#0d1016; border:1px dashed var(--border); border-radius:10px; padding:6px}
+.media-img{
+  display:block; width:100%; max-height:260px; object-fit:contain;
+  background:#f5f7fc; border:1px dashed var(--border); border-radius:10px; padding:6px
+}
+
 .pagination-wrap{margin-top:14px}
+
+/* Optional: primary button variant */
+.btn.btn--primary{
+  --btn-bg:#1f6aff; --btn-fg:#fff; --btn-bd:#1f6aff;
+  color:#fff; border-color:#1f6aff; background:#1f6aff;
+  box-shadow:0 6px 16px rgba(31,106,255,.22);
+}
+.btn.btn--primary:hover{filter:brightness(1.04)}

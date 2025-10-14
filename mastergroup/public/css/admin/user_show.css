@@ -1,0 +1,216 @@
+/* ======= Admin • User Show (Light Minimal) ======= */
+/* Общая палитра и токены */
+:root{
+  --bg:#ffffff;
+  --bg-alt:#f7f8fa;
+  --text:#1b2430;
+  --muted:#7a8394;
+  --border:#e8ecf2;
+  --shadow:0 8px 28px rgba(16,24,40,.06);
+  --radius:14px;
+
+  --primary:#2b6cf5;
+  --primary-ink:#ffffff;
+
+  --pending:#947a00;
+  --pending-bg:#fff8db;
+
+  --approved:#0b8a36;
+  --approved-bg:#e8fbef;
+
+  --rejected:#b42318;
+  --rejected-bg:#ffefef;
+}
+
+/* ----- Карточки и базовые элементы ----- */
+.card{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:16px;
+}
+
+.card-title{
+  font-size:18px;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:12px;
+}
+
+/* Кнопки (совместимо со списком пользователей) */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:36px;
+  padding:0 14px;
+  border-radius:10px;
+  border:1px solid var(--primary);
+  background:var(--primary);
+  color:var(--primary-ink);
+  font-weight:600;
+  font-size:13px;
+  text-decoration:none;
+  box-shadow:0 4px 14px rgba(43,108,245,.18);
+  transition:transform .06s ease, opacity .2s ease, box-shadow .2s ease;
+}
+.btn:hover{ transform:translateY(-1px); }
+.btn:active{ transform:translateY(0); opacity:.9; }
+.btn--sm{ height:30px; padding:0 10px; font-size:12px; }
+
+/* Бейджи статуса (совместимо) */
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  height:26px;
+  padding:0 10px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:.2px;
+}
+.badge::before{
+  content:"";
+  width:8px; height:8px; border-radius:50%;
+}
+.badge--pending{ color:var(--pending); background:var(--pending-bg); }
+.badge--pending::before{ background:var(--pending); }
+.badge--approved{ color:var(--approved); background:var(--approved-bg); }
+.badge--approved::before{ background:var(--approved); }
+.badge--rejected{ color:var(--rejected); background:var(--rejected-bg); }
+.badge--rejected::before{ background:var(--rejected); }
+
+/* ----- Структура страницы ----- */
+.user-show{
+  display:block;
+}
+.user-show__grid{
+  display:grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap:16px;
+}
+@media (max-width: 992px){
+  .user-show__grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Основной блок */
+.user-show__main .card-title{
+  font-size:20px;
+  margin-bottom:6px;
+}
+
+/* DL (атрибуты пользователя) */
+.dl{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px 16px;
+}
+.dl > div{
+  display:grid;
+  grid-template-columns: 160px 1fr;
+  align-items:start;
+  gap:10px;
+  padding:10px 8px;
+  border-bottom:1px dashed var(--border);
+}
+.dl > div:last-child{
+  border-bottom:0;
+}
+.dl dt{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.2px;
+}
+.dl dd{
+  color:var(--text);
+  margin:0;
+  font-size:14px;
+  word-break:break-word;
+}
+
+@media (max-width: 992px){
+  .dl{
+    grid-template-columns:1fr;
+  }
+  .dl > div{
+    grid-template-columns: 140px 1fr;
+  }
+}
+@media (max-width: 560px){
+  .dl > div{
+    grid-template-columns: 120px 1fr;
+    padding:8px 4px;
+  }
+  .dl dt{ font-size:11px; }
+  .dl dd{ font-size:13px; }
+}
+
+/* ----- Медиа ----- */
+.user-show__media .card-title{
+  margin-bottom:10px;
+}
+.media-list{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:14px;
+}
+.media-item{
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--bg);
+  overflow:hidden;
+}
+.media-label{
+  font-size:12px;
+  color:var(--muted);
+  padding:10px 12px 0 12px;
+}
+.media-img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:cover;
+  margin:10px 12px 12px 12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  transition: box-shadow .2s ease, transform .08s ease;
+}
+.media-item a:hover .media-img{
+  box-shadow:0 8px 28px rgba(16,24,40,.10);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 992px){
+  .media-list{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ----- Вспомогательные тексты ----- */
+.inline{ display:inline; }
+.t-muted{ color:var(--muted); }
+
+/* ----- Верхняя панель действий в .user-show__main ----- */
+/* (контейнер уже во вёрстке — выравниваем только отступы при переполнении) */
+.user-show__main .card > .actions{
+  display:flex;
+  gap:6px;
+}
+
+/* ----- Адаптация плотности для мобильных ----- */
+@media (max-width: 768px){
+  .card{ padding:14px; border-radius:12px; }
+  .card-title{ font-size:18px; }
+  .user-show__main .card-title{ font-size:19px; }
+}
+
+/* ----- Уведомление сессии (вёрстка у тебя уже есть) ----- */
+.card + .user-show,
+.user-show + .card{
+  margin-top:12px;
+}

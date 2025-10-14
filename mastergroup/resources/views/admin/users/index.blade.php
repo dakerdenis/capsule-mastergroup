@@ -1,7 +1,9 @@
 @extends('layouts.admin')
 @section('title', $title ?? 'Users')
 @section('page_title', 'Users')
-
+@push('page-styles')
+<link rel="stylesheet" href="{{ asset('css/admin/users.css') }}?v={{ filemtime(public_path('css/admin/users.css')) }}">
+@endpush
 @section('content')
   <div class="table-wrap">
     <table class="table">

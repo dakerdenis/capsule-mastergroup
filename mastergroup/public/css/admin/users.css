@@ -1,0 +1,220 @@
+/* ========= Users: Minimal White Theme ========= */
+
+/* CSS vars (легко твикать палитру) */
+:root{
+  --bg: #fff;
+  --bg-alt:#f7f8fa;
+  --text:#1b2430;
+  --muted:#7a8394;
+  --border:#e8ecf2;
+  --shadow: 0 6px 24px rgba(16,24,40,.06);
+  --radius: 14px;
+
+  --primary:#2b6cf5;
+  --primary-ink:#fff;
+
+  --pending:#947a00;
+  --pending-bg:#fff8db;
+
+  --approved:#0b8a36;
+  --approved-bg:#e8fbef;
+
+  --rejected:#b42318;
+  --rejected-bg:#ffefef;
+}
+
+/* Контейнер и базовые отступы */
+.table-wrap{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding: 12px;
+  overflow:hidden;            /* скругление для внутреннего скролла */
+}
+
+/* На очень маленьких — контейнер на всю ширину */
+@media (max-width: 768px){
+  .table-wrap{
+    padding:8px;
+    border-radius:12px;
+  }
+}
+
+/* Таблица */
+.table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  font-size:14px;
+  color:var(--text);
+}
+
+/* Шапка */
+.table thead th{
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background:var(--bg);
+  text-align:left;
+  font-weight:600;
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;
+}
+
+/* Тело */
+.table tbody td{
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+
+/* Зебра лёгкая */
+.table tbody tr:nth-child(2n){
+  background: var(--bg-alt);
+}
+
+/* Первый и последний столбцы с лёгким выравниванием */
+.table tbody td:first-child,
+.table thead th:first-child{
+  padding-left:18px;
+}
+.table tbody td:last-child,
+.table thead th:last-child{
+  padding-right:18px;
+}
+
+/* Текстовые утилиты */
+.t-primary{ font-weight:600; }
+.t-muted{ color:var(--muted); font-size:12px; margin-top:2px; }
+.t-actions{ text-align:right; white-space:nowrap; }
+.t-empty{ text-align:center; color:var(--muted); padding:24px 16px; }
+
+/* Пилюля (Type) */
+.pill{
+  display:inline-flex;
+  align-items:center;
+  height:26px;
+  padding:0 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:#fff;
+  font-weight:600;
+  font-size:12px;
+}
+
+/* Бейджи статусов */
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  height:26px;
+  padding:0 10px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:.2px;
+}
+.badge::before{
+  content:"";
+  width:8px; height:8px; border-radius:50%;
+}
+
+.badge--pending{ color:var(--pending); background:var(--pending-bg); }
+.badge--pending::before{ background:var(--pending); }
+
+.badge--approved{ color:var(--approved); background:var(--approved-bg); }
+.badge--approved::before{ background:var(--approved); }
+
+.badge--rejected{ color:var(--rejected); background:var(--rejected-bg); }
+.badge--rejected::before{ background:var(--rejected); }
+
+/* Кнопки */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:34px;
+  padding:0 12px;
+  border-radius:10px;
+  border:1px solid var(--primary);
+  background:var(--primary);
+  color:var(--primary-ink);
+  font-weight:600;
+  font-size:13px;
+  text-decoration:none;
+  transition: transform .06s ease, box-shadow .2s ease, opacity .2s ease;
+  box-shadow: 0 4px 14px rgba(43,108,245,.18);
+}
+.btn:hover{ transform: translateY(-1px); }
+.btn:active{ transform: translateY(0); opacity:.9; }
+.btn.btn--sm{ height:30px; padding:0 10px; font-size:12px; }
+
+/* Пагинация (Laravel links) */
+.pagination-wrap{
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  padding:14px 6px 2px;
+}
+.pagination-wrap .pagination{
+  display:flex; align-items:center; gap:6px;
+}
+.pagination-wrap .page-link,
+.pagination-wrap .pagination a,
+.pagination-wrap .pagination span{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:34px; height:34px; padding:0 10px;
+  border-radius:10px; border:1px solid var(--border);
+  background:#fff; color:var(--text); text-decoration:none;
+  font-weight:600; font-size:13px;
+}
+.pagination-wrap .pagination .active .page-link,
+.pagination-wrap .pagination span[aria-current="page"]{
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-ink);
+}
+
+/* ======= Адаптация под телефон ======= */
+
+/* 1) Контейнер на всю ширину, у таблицы — горизонтальный скролл для сохранения читаемости */
+@media (max-width: 768px){
+  .table-wrap{
+    margin: 0 -12px;         /* растягиваем контейнер до краёв */
+    border-left:0; border-right:0; border-radius:0;
+  }
+}
+
+/* Горизонтальный скролл самой таблицы (мягкий для iOS) */
+.table-wrap{
+  overflow-x:auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Уплотняем строки и шрифты на телефоне */
+@media (max-width: 768px){
+  .table thead th,
+  .table tbody td{
+    padding:12px 12px;
+    font-size:13px;
+  }
+  .t-muted{ font-size:11px; }
+  .btn.btn--sm{ height:28px; padding:0 10px; font-size:12px; }
+}
+
+/* Доп: прячем менее критичные колонки на очень узких экранах (опционально)
+   Раскомментировать при желании. Индексы колонок:
+   1: ID, 2: Name/Email, 3: Type, 4: Phone, 5: Status, 6: Created, 7: Actions
+*/
+
+@media (max-width: 520px){
+  .table thead th:nth-child(4),
+  .table tbody td:nth-child(4),   /* Phone */
+  .table thead th:nth-child(6),
+  .table tbody td:nth-child(6){   /* Created */
+    display:none;
+  }
+}
+

@@ -4,34 +4,7 @@
 @section('page_title', 'Edit product')
 
 @push('page-styles')
-<style>
-  .form-card{ background:linear-gradient(180deg, rgba(25,31,45,.8), rgba(17,22,34,.8)); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow) }
-  .form-head{ padding:14px 18px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center }
-  .form-body{ padding:18px; display:grid; gap:18px }
-  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px } @media (max-width:1024px){ .grid{ grid-template-columns:1fr } }
-  .field{ display:flex; flex-direction:column; gap:8px }
-  .label{ font-weight:700; color:#cfe0ff }
-  .input,.select,.textarea{ height:44px; padding:0 12px; background:linear-gradient(180deg,#151a25,#121723); border:1px solid #263046; border-radius:12px; color:var(--text); outline:none }
-  .input:focus,.select:focus,.textarea:focus{ border-color:rgba(91,140,255,.55); box-shadow:0 0 0 3px rgba(91,140,255,.12) }
-  .textarea{ min-height:120px; height:auto; padding:10px 12px; resize:vertical }
-  .help{ color:var(--muted); font-size:12px }
-  .error{ color:var(--danger); font-size:12px }
-
-  .images{ display:grid; gap:12px }
-  .img-grid{ display:grid; grid-template-columns:repeat(5, 1fr); gap:12px } @media (max-width:1100px){ .img-grid{ grid-template-columns:repeat(3,1fr) } } @media (max-width:700px){ .img-grid{ grid-template-columns:repeat(2,1fr) } }
-  .img-card{ background:rgba(27,33,48,.6); border:1px solid var(--border); border-radius:12px; overflow:hidden; display:flex; flex-direction:column }
-  .img-card .p{ padding:8px }
-  .thumb{ width:100%; aspect-ratio: 4/3; background:#0f1421; display:flex; align-items:center; justify-content:center; overflow:hidden }
-  .thumb img{ width:100%; height:100%; object-fit:cover }
-  .img-actions{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px }
-  .badge{ display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid rgba(91,140,255,.35); background:rgba(91,140,255,.12); color:#cfe0ff; font-size:12px }
-
-  .upload{ border:1px dashed #314166; border-radius:12px; padding:12px; background:rgba(21,25,35,.5) }
-  .actions{ display:flex; gap:10px; border-top:1px solid var(--border); padding:12px 18px; justify-content:flex-end }
-  .btn{ height:40px; padding:0 14px; border-radius:12px; border:1px solid var(--border); background:transparent; color:var(--text); cursor:pointer }
-  .btn-primary{ background:linear-gradient(180deg,#6a98ff,#4f7aff); border-color:rgba(91,140,255,.6); color:#fff }
-  .btn:hover{ filter:brightness(1.05) }
-</style>
+<link rel="stylesheet" href="{{ asset('css/admin/edit_product.css') }}">
 @endpush
 
 @section('content')
