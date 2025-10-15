@@ -47,6 +47,7 @@
           <div><dt>Instagram</dt><dd>{{ $user->instagram ?? '—' }}</dd></div>
           <div><dt>Created</dt><dd>{{ optional($user->created_at)->format('Y-m-d H:i') }}</dd></div>
           <div><dt>Approved at</dt><dd>{{ optional($user->approved_at)->format('Y-m-d H:i') ?? '—' }}</dd></div>
+          <div><dt>CPS Balance</dt><dd><strong>{{ $user->cps_total ?? '0' }} CPS</strong></dd></div>
           @if($user->rejected_reason)
             <div><dt>Rejected reason</dt><dd>{{ $user->rejected_reason }}</dd></div>
           @endif

@@ -1,6 +1,7 @@
 {{-- resources/views/layouts/admin.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>@yield('title', 'Admin')</title>
@@ -12,6 +13,7 @@
 
     @stack('page-styles')
 </head>
+
 <body class="admin">
     <div class="main__wrapper">
 
@@ -21,7 +23,7 @@
                 <div class="brand">
                     <a href="{{ route('admin.dashboard') }}" class="brand__logo-link">
                         <img src="{{ asset('images/common/capsule_logo-white.png') }}" alt="CAPSULE • Admin"
-                             class="brand__logo">
+                            class="brand__logo">
                     </a>
                 </div>
             </div>
@@ -29,7 +31,7 @@
             {{-- Бургер (mobile) --}}
             <div class="three col">
                 <div class="hamburger" id="hamburger-6" aria-label="Open menu" role="button" tabindex="0"
-                     aria-controls="adminSidebar" aria-expanded="false">
+                    aria-controls="adminSidebar" aria-expanded="false">
                     <span class="line"></span>
                     <span class="line"></span>
                     <span class="line"></span>
@@ -60,23 +62,21 @@
                 </form>
             </div>
 
-            {{-- Навигация админки --}}
             <nav class="nav" role="navigation">
                 <a class="nav__link {{ request()->routeIs('admin.dashboard') ? 'is-active' : '' }}"
-                   href="{{ route('admin.dashboard') }}">Dashboard</a>
-
+                    href="{{ route('admin.dashboard') }}">Dashboard</a>
                 <a class="nav__link {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}"
-                   href="{{ route('admin.users.index') }}">Users</a>
-
+                    href="{{ route('admin.users.index') }}">Users</a>
                 <a class="nav__link {{ request()->routeIs('admin.categories.*') ? 'is-active' : '' }}"
-                   href="{{ route('admin.categories.index') }}">Categories</a>
-
+                    href="{{ route('admin.categories.index') }}">Categories</a>
                 <a class="nav__link {{ request()->routeIs('admin.products.*') ? 'is-active' : '' }}"
-                   href="{{ route('admin.products.index') }}">Products</a>
-
+                    href="{{ route('admin.products.index') }}">Products</a>
                 <a class="nav__link {{ request()->routeIs('admin.orders.*') ? 'is-active' : '' }}"
-                   href="{{ route('admin.orders.index') }}">Orders</a>
+                    href="{{ route('admin.orders.index') }}">Orders</a>
+                <a class="nav__link {{ request()->routeIs('admin.codes.*') ? 'is-active' : '' }}"
+                    href="{{ route('admin.codes.index') }}">Codes</a>
             </nav>
+
 
             {{-- Декоративный блок можно убрать/заменить при необходимости --}}
             <div class="sidebar_car" aria-hidden="true">
@@ -94,7 +94,6 @@
         <main class="main">
             {{-- Заголовок страницы админки (как было в admin-шаблоне) --}}
             @hasSection('page_title')
-
             @endif
 
             @yield('content')
@@ -110,16 +109,16 @@
          - нет иконок корзины и бейджей. --}}
 
     <script>
-        (function () {
+        (function() {
             const body = document.body;
             const burger = document.getElementById('hamburger-6');
             const overlay = document.querySelector('.offcanvas-overlay');
             const sidebar = document.getElementById('adminSidebar');
 
             function toggleMenu(forceState) {
-                const willOpen = typeof forceState === 'boolean'
-                    ? forceState
-                    : !body.classList.contains('menu-open');
+                const willOpen = typeof forceState === 'boolean' ?
+                    forceState :
+                    !body.classList.contains('menu-open');
 
                 body.classList.toggle('menu-open', willOpen);
                 if (burger) {
@@ -155,4 +154,5 @@
     @stack('scripts')
     @stack('page-scripts')
 </body>
+
 </html>
