@@ -585,6 +585,113 @@ section {
 .register_user-input3{
     overflow: initial;
 }
+/* === Custom checkbox === */
+.chk{
+  --chk-color: #16a34a;        /* основной цвет (зелёный по умолчанию) */
+  --chk-border: #cbd5e1;       /* цвет рамки для пустого состояния */
+  --chk-bg: #ffffff;           /* фон коробки по умолчанию */
+  --chk-bg-checked: #e9f9ef;   /* фон коробки при чекe */
+  --chk-focus: #bbf7d0;        /* подсветка при фокусе */
+}
+
+.chk__input{
+  /* полностью доступно, но визуально скрыто */
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+
+.chk__label{
+  display: grid;
+  grid-template-columns: 22px auto;
+  align-items: start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.chk__box{
+  inline-size: 22px;
+  block-size: 22px;
+  border: 2px solid var(--chk-border);
+  border-radius: 6px;
+  background: var(--chk-bg);
+  display: inline-grid;
+  place-items: center;
+  transition: background .15s ease, border-color .15s ease, transform .06s ease;
+  box-shadow: 0 0 0 0 rgba(0,0,0,0);
+}
+
+/* галочка (рисуем внутри коробки) */
+.chk__box::after{
+  content: "";
+  inline-size: 12px;
+  block-size: 12px;
+  transform: scale(0);
+  transform-origin: center;
+  transition: transform .12s ease-out, background .12s ease-out;
+  background: var(--chk-color);
+  /* аккуратная галочка через clip-path: */
+  -webkit-clip-path: polygon(14% 52%, 0 66%, 42% 100%, 100% 28%, 86% 14%, 42% 72%);
+  clip-path: polygon(14% 52%, 0 66%, 42% 100%, 100% 28%, 86% 14%, 42% 72%);
+  border-radius: 2px;
+}
+
+/* checked */
+.chk__input:checked + .chk__label .chk__box{
+  background: var(--chk-bg-checked);
+  border-color: var(--chk-color);
+}
+.chk__input:checked + .chk__label .chk__box::after{
+  transform: scale(1);
+}
+
+/* hover / active небольшие оживки */
+.chk__label:hover .chk__box{
+  border-color: color-mix(in oklab, var(--chk-border) 70%, var(--chk-color));
+}
+.chk__label:active .chk__box{
+  transform: translateY(0.5px);
+}
+
+/* focus-visible — клавиатурная доступность */
+.chk__input:focus-visible + .chk__label .chk__box{
+  outline: 3px solid var(--chk-focus);
+  outline-offset: 2px;
+}
+
+/* disabled */
+.chk__input:disabled + .chk__label{
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+/* invalid (если хочешь подсветку при ошибке валидации) */
+.chk.is-invalid .chk__box{
+  border-color: #ef4444;
+  background: #fff1f2;
+}
+.chk.is-invalid .chk__text{
+  color: #b91c1c;
+}
+
+/* текст справа */
+.chk__text{
+color: #8C8C8C;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    width: 505px;
+    height: 44px;
+}
 
 @media only screen and (max-width: 1680px) {
     .auth__form-logo {

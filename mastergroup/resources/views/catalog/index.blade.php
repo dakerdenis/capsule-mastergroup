@@ -259,6 +259,56 @@
                 });
             })();
         </script>
+        <script>
+            (function() {
+                function parseQty(el) {
+                    const n = parseInt((el?.textContent || '').trim(), 10);
+                    return Number.isFinite(n) ? n : 0;
+                }
+
+                function updateBinState(card) {
+                    const qtyEl = card.querySelector('.qty');
+                    const qty = parseQty(qtyEl);
+                    card.classList.toggle('is-in-cart', qty > 0);
+                }
+
+                // Для каждого товара:
+                document.querySelectorAll('.catalog__element').forEach(card => {
+                    // 1) Инициализация
+                    updateBinState(card);
+
+                    // 2) Следим за изменением qty (на случай, если другие скрипты меняют текст)
+                    const qtyEl = card.querySelector('.qty');
+                    if (qtyEl) {
+                        const mo = new MutationObserver(() => updateBinState(card));
+                        mo.observe(qtyEl, {
+                            childList: true,
+                            characterData: true,
+                            subtree: true
+                        });
+                        // Можно сохранить observer в card.mo, если понадобится отключать
+                    }
+
+                    // 3) Перехват кликов plus/minus — чтобы гарантированно обновить состояние
+                    card.querySelectorAll('.btn-plus, .btn-minus').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            // Дадим сторонним скриптам обновить qty и чуть позже синхронизируем состояние
+                            setTimeout(() => updateBinState(card), 0);
+                        });
+                    });
+
+                    // 4) Кнопка-«индикатор корзины» НЕ ДОЛЖНА ничего делать
+                    const binBtn = card.querySelector('.catalog__element__bin .btn-remove');
+                    if (binBtn) {
+                        binBtn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            // Ничего не делаем специально — это просто индикатор.
+                        });
+                    }
+                });
+            })();
+        </script>
     @endpush
 
 

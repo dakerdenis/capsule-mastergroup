@@ -17,11 +17,11 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Order</th>
-                                    <th  class="mobile-remove">Quantity</th>
+                                    <th class="mobile-remove">Quantity</th>
                                     <th>CPS</th>
                                     <th class="mobile-remove">Date of order</th>
                                     <th class="mobile-remove">Date of execution</th>
-                                    <th >Status</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,10 +38,11 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td class="js-order-cell" data-order="{{ $o->number }}"
                                             data-id="{{ $o->id }}">#{{ $o->number }}</td>
-                                        <td  class="mobile-remove">{{ (int) ($o->total_qty ?? 0) }}</td>
-                                        <td ><span class="mobile-remove">CPS</span> {{ number_format((int) $o->total_cps, 0, '.', ' ') }}</td>
+                                        <td class="mobile-remove">{{ (int) ($o->total_qty ?? 0) }}</td>
+                                        <td><span class="mobile-remove">CPS</span>
+                                            {{ number_format((int) $o->total_cps, 0, '.', ' ') }}</td>
                                         <td class="mobile-remove">{{ $o->created_at?->format('m/d/y') }}</td>
-                                        <td class="mobile-remove"{{ $o->executed_at?->format('m/d/y') ?? '—' }}</td>
+                                        <td class="mobile-remove">{{ $o->executed_at?->format('m/d/y') ?? '—' }}</td>
                                         <td><span class="badge {{ $badge }}">{{ $statusUpper }}</span></td>
                                     </tr>
                                 @empty
@@ -63,27 +64,32 @@
         <div class="modal__overlay" data-close-modal></div>
         <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
             <button class="modal__close" type="button" aria-label="Close" data-close-modal>
-                <img src="{{ asset('images/common/close.svg') }}" alt="" srcset="">
+                <img src="{{ asset('images/common/close.svg') }}" alt="">
             </button>
             <div class="modal__body">
                 <div class="order_popup__name">
                     <p id="om-id">—</p>
                     <h3 id="order-modal-title" class="modal__title">Order</h3>
-                    <span id="om-status">—</span>
+                    <!-- ОСТАВЛЯЕМ ТОЛЬКО ОДИН om-status -->
+                    <span id="om-status" class="badge">—</span>
                 </div>
+
                 <div class="order_popup__desc">
                     <div class="order_popup-data">
                         <p>Order date:</p>
+                        <!-- БЫЛО: id="om-status" — это ошибка -->
                         <span id="om-date">—</span>
                     </div>
                     <div class="order_popup-price">
                         <p>Total price:</p> <span id="om-total">0</span>
                     </div>
                 </div>
+
                 <div class="order_popup-wrapper" id="om-items"></div>
             </div>
         </div>
     </div>
+
 
 @endsection
 
@@ -91,44 +97,59 @@
     <script>
         (function() {
             const modal = document.getElementById('order-modal');
-            const itemsWrap = document.getElementById('om-items');
-            const elId = document.getElementById('om-id');
-            const elTitle = document.getElementById('order-modal-title');
-            const elStatus = document.getElementById('om-status');
-            const elDate = document.getElementById('om-date');
-            const elTotal = document.getElementById('om-total');
+            const itemsEl = document.getElementById('om-items');
+            const idEl = document.getElementById('om-id');
+            const titleEl = document.getElementById('order-modal-title');
+            const statusEl = document.getElementById('om-status');
+            const dateEl = document.getElementById('om-date');
+            const totalEl = document.getElementById('om-total');
+
+            // === МАППИНГ КАК В PHP (ordered|completed|cancelled [+ опционально processing]) ===
+            function setStatusBadge(el, statusRaw) {
+                if (!el) return;
+                const s = String(statusRaw || '').trim().toLowerCase(); // на входе может прийти 'ORDERED'
+                const map = {
+                    ordered: 'badge--ordered',
+                    processing: 'badge--processing', // на всякий случай, если появится
+                    completed: 'badge--completed',
+                    cancelled: 'badge--cancelled',
+                };
+                // убрать прошлые модификаторы
+                el.classList.remove('badge--ordered', 'badge--processing', 'badge--completed', 'badge--cancelled');
+                // гарантируем базовый .badge
+                if (!el.classList.contains('badge')) el.classList.add('badge');
+                // навесить нужный
+                el.classList.add(map[s] || 'badge--ordered');
+                // текст в UPPERCASE как в таблице
+                el.textContent = (statusRaw ? String(statusRaw).toUpperCase() : '—');
+            }
 
             function openModal() {
-                modal.classList.add('is-open');
+                modal?.classList.add('is-open');
                 document.body.classList.add('body--modal-open');
             }
 
             function closeModal() {
-                modal.classList.remove('is-open');
+                modal?.classList.remove('is-open');
                 document.body.classList.remove('body--modal-open');
             }
-            modal.addEventListener('click', e => {
+            modal?.addEventListener('click', e => {
                 if (e.target.matches('[data-close-modal]')) closeModal();
             });
             document.addEventListener('keydown', e => {
-                if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+                if (e.key === 'Escape' && modal?.classList.contains('is-open')) closeModal();
             });
 
-            function fmt(n) {
-                return (Math.round(n * 100) / 100).toLocaleString(undefined, {
-                    maximumFractionDigits: 2
-                });
-            }
-
-            function esc(s) {
-                return (s ?? '').replace(/[&<>"']/g, m => ({
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    '"': '&quot;',
-                    "'": '&#39;'
-                } [m]));
-            }
+            const fmt = n => (Math.round((n || 0) * 100) / 100).toLocaleString(undefined, {
+                maximumFractionDigits: 2
+            });
+            const esc = s => (s ?? '').replace(/[&<>"']/g, m => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            } [m]));
 
             async function fetchOrder(id) {
                 const res = await fetch(`/orders/${id}/json`, {
@@ -138,29 +159,29 @@
                     credentials: 'same-origin'
                 });
                 if (!res.ok) throw new Error('HTTP ' + res.status);
-                return await res.json();
+                return res.json();
             }
 
             function renderItems(items) {
-                itemsWrap.innerHTML = '';
+                if (!itemsEl) return;
+                itemsEl.innerHTML = '';
                 if (!items || !items.length) {
-                    itemsWrap.innerHTML = '<div style="color:#97a2b6;padding:8px 0;">No items.</div>';
+                    itemsEl.innerHTML = '<div style="color:#97a2b6;padding:8px 0;">No items.</div>';
                     return;
                 }
                 for (const it of items) {
                     const row = document.createElement('div');
                     row.className = 'order_pup-element';
                     row.innerHTML = `
-        <div class="order_pup-element-image"><img src="${it.image}" alt=""></div>
+        <div class="order_pup-element-image"><img src="${esc(it.image)}" alt=""></div>
         <div class="order_pup-element-desc">
           <div class="order_pup-element-namecode">
             <div class="order_pup-element-name">${esc(it.name)}</div>
             <div class="order_pup-element-code">${esc((it.type?it.type+' - ':'') + (it.code||''))}</div>
           </div>
           <div class="order_pup-element-price">CPS ${fmt(it.price)} × ${it.qty}</div>
-        </div>
-      `;
-                    itemsWrap.appendChild(row);
+        </div>`;
+                    itemsEl.appendChild(row);
                 }
             }
 
@@ -168,18 +189,22 @@
                 const cell = e.target.closest('.js-order-cell');
                 if (!cell) return;
                 e.preventDefault();
+
                 const id = cell.dataset.id;
                 const num = cell.dataset.order || cell.textContent.trim();
+
                 try {
                     const data = await fetchOrder(id);
-                    elId.textContent = String(data.id);
-                    elTitle.textContent = 'Order ' + (data.number || num);
-                    elStatus.textContent = data.status || '—';
-                    elDate.textContent = data.created_at || '—';
-                    elTotal.textContent = fmt(data.total_cps || 0);
+                    idEl && (idEl.textContent = String(data.id ?? ''));
+                    titleEl && (titleEl.textContent = 'Order ' + (data.number || num));
+                    setStatusBadge(statusEl, data.status); // ← применяем классы как в PHP
+                    dateEl && (dateEl.textContent = data.created_at || '—');
+                    totalEl && (totalEl.textContent = fmt(data.total_cps));
                     renderItems(data.items || []);
                     openModal();
-                } catch (_) {}
+                } catch (err) {
+                    console.error(err);
+                }
             });
         })();
     </script>

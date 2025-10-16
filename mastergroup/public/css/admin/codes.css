@@ -151,4 +151,56 @@
   .legend-bonus__unit{
     font-weight:800; font-size:11px; color:#5872a3; letter-spacing:.3px;
   }
-  
+
+  .codes-page{
+    padding: 10px;
+  }
+
+
+
+  /* === Clean pager (arrows + numbers only) === */
+.pager{
+  display:flex; align-items:center; gap:6px; justify-content:center;
+  padding:8px 0;
+}
+.pager__btn,
+.pager__num,
+.pager__gap{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:36px; height:36px; padding:0 10px;
+  border:1px solid var(--border);
+  background:#fff; color:var(--text);
+  border-radius:10px; text-decoration:none;
+  font-weight:700; font-size:13px;
+  transition:background .15s ease, transform .06s ease, border-color .15s ease;
+}
+.pager__btn:hover,
+.pager__num:hover{
+  background:var(--bg-alt); transform:translateY(-1px);
+}
+.pager__num.is-current{
+  background:var(--primary); color:#fff; border-color:var(--primary);
+  pointer-events:none;
+}
+.pager__btn.is-disabled{
+  opacity:.45; pointer-events:none;
+}
+.pager__gap{
+  background:#f8fafc; color:#94a3b8; border-style:dashed;
+}
+.pagination-wrap{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn--ghost{
+  background:#fff;
+  color:#0f172a;
+  border:1px solid var(--border);
+}
+.btn--ghost:hover{
+  background:var(--bg-alt);
+  transform:translateY(-1px);
+}

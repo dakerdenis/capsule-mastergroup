@@ -99,3 +99,34 @@
     if (e.detail && 'count' in e.detail) setCartCount(e.detail.count);
   });
 })();
+
+
+(function(){
+  function parseQty(el){
+    const n = parseInt((el?.textContent || '').trim(), 10);
+    return Number.isFinite(n) ? n : 0;
+  }
+  function updateBinState(card){
+    const qtyEl = card.querySelector('.qty');
+    const qty = parseQty(qtyEl);
+    card.classList.toggle('is-in-cart', qty > 0);
+  }
+
+  document.querySelectorAll('.catalog__element').forEach(card => {
+    // начальная инициализация
+    updateBinState(card);
+
+    // реагируем на изменения количества (cart.js обновляет .qty)
+    const qtyEl = card.querySelector('.qty');
+    if (qtyEl){
+      const mo = new MutationObserver(() => updateBinState(card));
+      mo.observe(qtyEl, { childList:true, characterData:true, subtree:true });
+    }
+  });
+
+  // если хочешь мгновенно переставлять состояние после глобальных обновлений корзины,
+  // можно слушать наш собственный хук (оставлен в cart.js):
+  window.addEventListener('cart:count', () => {
+    document.querySelectorAll('.catalog__element').forEach(updateBinState);
+  });
+})();

@@ -323,7 +323,42 @@ color: #404040;
     background-color: rgba(0, 0, 0, 0);
 }
 
+/* Bin-indicator (does nothing) */
+.catalog__element__bin .btn-remove{
+  opacity:.5;
+  transition: opacity .2s ease;
+  cursor: default;            /* визуально не кликабельно */
+}
 
+.catalog__element.is-in-cart .catalog__element__bin .btn-remove{
+  opacity:1;
+  cursor: default;
+}
+
+.pagination__page.active{
+    background-color: #34C81E;
+    border: none;
+}
+
+
+/* Bin indicator (dashboard cards) */
+.catalog__element__bin img{
+  opacity:.5;
+  transition: opacity .2s ease;
+  pointer-events: none; /* чтобы точно не кликалось */
+}
+.catalog__element.is-in-cart .catalog__element__bin img{
+  opacity:1;
+}
+.catalog__element__bin{
+    background-color: #fff;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 @media only screen and (max-width: 1480px) {
     .catalog__element {
         width: 231px;

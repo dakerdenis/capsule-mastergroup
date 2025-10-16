@@ -15,8 +15,12 @@ class AdminCodeController extends Controller
         $q      = trim((string)$request->get('q'));
         $status = $request->get('status'); // new|activated
         $type   = $request->get('type');   // welcome|promo|...
-        $per    = (int)($request->get('per_page', 20));
-        $per    = $per > 0 && $per <= 100 ? $per : 20;
+
+        // всегда не больше 20 на странице
+        $per = (int) $request->get('per_page', 20);
+        if ($per <= 0 || $per > 20) {
+            $per = 20;
+        }
 
         $query = Code::query()
             ->with(['activatedBy:id,full_name,email'])
@@ -27,8 +31,9 @@ class AdminCodeController extends Controller
         }
         $query->status($status)->type($type);
 
-        // Сортировка: сначала new, потом activated
-        $query->orderByRaw("FIELD(status, 'new', 'activated')")->orderByDesc('id');
+        // сначала new, потом activated
+        $query->orderByRaw("FIELD(status, 'new', 'activated')")
+            ->orderByDesc('id');
 
         $codes = $query->paginate($per)->appends($request->query());
 
@@ -38,7 +43,7 @@ class AdminCodeController extends Controller
             'q'      => $q,
             'status' => $status,
             'type'   => $type,
-            'per'    => $per,
+            'per'    => $per,                 // можно убрать если не используется во вьюхе
             'types'  => config('codes.types'),
         ]);
     }
@@ -58,7 +63,7 @@ class AdminCodeController extends Controller
 
         // ввод: textarea с кодами по одному на строку
         $request->validate([
-            'codes' => ['required','string'],
+            'codes' => ['required', 'string'],
         ]);
 
         $lines = collect(preg_split('/\R/u', (string)$request->input('codes')))
