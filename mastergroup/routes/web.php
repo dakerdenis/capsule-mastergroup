@@ -32,10 +32,15 @@ Route::middleware('guest')->group(function () {
     Route::get('/register/company', [RegisterController::class, 'showCompany'])->name('auth.register.company');
     Route::post('/register', [RegisterController::class, 'store'])->name('auth.register.store');
 
-    // <<< ТОЛЬКО ЭТИ ДВЕ СТРОКИ ДЛЯ СБРОСА >>>
     Route::get('/password/forgot', [PasswordController::class, 'forgot'])->name('password.forgot');
-    Route::post('/password/generate', [PasswordController::class, 'generateNew'])->name('password.generate')->middleware('throttle:password-email');
 });
+
+
+// <<< ВНЕ групп, доступен всем (есть только троттлинг) >>>
+Route::post('/password/generate', [PasswordController::class, 'generateNew'])
+    ->name('password.generate')
+    ->middleware('throttle:password-email');
+
 
 // ====== Авторизованные ======
 Route::middleware('auth')->group(function () {

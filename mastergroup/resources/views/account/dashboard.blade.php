@@ -109,8 +109,8 @@
 
                     @endif
                     <div class="account__profile-password">
-                        <button type="button" aria-haspopup="dialog" aria-controls="modal-change-password"
-                            data-modal-open="#modal-change-password">
+                        <button type="button" class="js-trigger-generate" data-email="{{ $user->email }}"
+                            data-success-modal="#modal-change-password">
                             CHANGE PASSWORD
                         </button>
                     </div>
@@ -207,7 +207,7 @@
         aria-labelledby="modal-change-password-title" hidden>
         <div class="modal__content" role="document">
             <div class="change__password__wrapper">
-                <button type="button" class="modal__close" data-modal-close >
+                <button type="button" class="modal__close" data-modal-close>
                     <img src="{{ asset('images/common/close.svg') }}">
                 </button>
 
@@ -225,106 +225,240 @@
         </div>
     </div>
 
+    <!-- Confirm Reset Password (CR) -->
+    <div class="cr-overlay" id="cr-overlay" hidden></div>
+
+    <div class="cr-modal" id="cr-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cr-title"
+        hidden>
+        <div class="cr-dialog" role="document">
+            <button type="button" class="cr-close" id="cr-close" aria-label="Close">
+                ✕
+            </button>
+
+            <div class="cr-header">
+                <div class="cr-icon">!</div>
+                <h3 class="cr-title" id="cr-title">Confirm action</h3>
+            </div>
+
+            <div class="cr-body">
+                <p>Are you sure you want to reset your password?</p>
+                <p>A new password will be generated and sent to: <strong id="cr-email">—</strong></p>
+                <div class="cr-error" id="cr-error" hidden></div>
+            </div>
+
+            <div class="cr-actions">
+                <button type="button" class="cr-btn cr-btn--danger" id="cr-yes">Yes, reset</button>
+                <button type="button" class="cr-btn" id="cr-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
+
 
 
     @push('page-scripts')
         <script>
             (function() {
-                const overlay = document.querySelector('[data-modal-overlay]');
-                let lastFocused = null;
+                const CSRF = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                const routeGenerate = @json(route('password.generate'));
 
-                function openModal(selector) {
-                    const modal = document.querySelector(selector);
-                    if (!modal) return;
+                // элементы модалки
+                const overlay = document.getElementById('cr-overlay');
+                const modal = document.getElementById('cr-modal');
+                const emailEl = document.getElementById('cr-email');
+                const btnYes = document.getElementById('cr-yes');
+                const btnCancel = document.getElementById('cr-cancel');
+                const btnClose = document.getElementById('cr-close');
+                const errBox = document.getElementById('cr-error');
 
-                    lastFocused = document.activeElement;
-                    modal.hidden = false;
-                    overlay.hidden = false;
-                    document.body.setAttribute('data-modal-open', 'true');
+                let pending = null; // { email, successModal, triggerBtn, originalText }
 
-                    // фокус на первую интерактивную внутри модалки
-                    const focusable = modal.querySelector(
-                        'button, [href], input, textarea, [tabindex]:not([tabindex="-1"])');
-                    (focusable || modal).focus();
-
-                    // запретим скролл страницы (дальше стили добавишь сам, если нужно)
+                function crOpen(email, successModal, triggerBtn) {
+                    pending = {
+                        email,
+                        successModal,
+                        triggerBtn,
+                        originalText: triggerBtn?.textContent || ''
+                    };
+                    if (emailEl) emailEl.textContent = email;
+                    errBox?.setAttribute('hidden', '');
+                    modal?.removeAttribute('hidden');
+                    overlay?.removeAttribute('hidden');
+                    modal?.setAttribute('aria-hidden', 'false');
                     document.documentElement.style.overflow = 'hidden';
+                    btnYes?.focus();
                 }
 
-                function closeModal(modal) {
-                    if (!modal) return;
-                    modal.hidden = true;
-
-                    // закрыть, если ни одна модалка не открыта
-                    const anyOpen = !!document.querySelector('.modal:not([hidden])');
-                    if (!anyOpen) {
-                        overlay.hidden = true;
-                        document.body.removeAttribute('data-modal-open');
-                        document.documentElement.style.overflow = '';
-                    }
-
-                    // вернуть фокус туда, откуда пришли
-                    if (lastFocused && document.body.contains(lastFocused)) {
-                        lastFocused.focus();
-                        lastFocused = null;
-                    }
+                function crClose() {
+                    modal?.setAttribute('hidden', '');
+                    overlay?.setAttribute('hidden', '');
+                    modal?.setAttribute('aria-hidden', 'true');
+                    document.documentElement.style.overflow = '';
+                    if (pending?.triggerBtn && typeof pending.triggerBtn.focus === 'function') pending.triggerBtn.focus();
+                    pending = null;
                 }
 
-                // Открытие
-                document.addEventListener('click', function(e) {
-                    const opener = e.target.closest('[data-modal-open]');
-                    if (opener) {
-                        const target = opener.getAttribute('data-modal-open');
-                        openModal(target);
+                async function postGenerate(email) {
+                    const res = await fetch(routeGenerate, {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-TOKEN': CSRF,
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams({
+                            email
+                        }),
+                        credentials: 'same-origin'
+                    });
+                    if (!res.ok) {
+                        let message = 'Failed to start password reset.';
+                        try {
+                            const d = await res.json();
+                            if (d?.message) message = d.message;
+                        } catch (_) {}
+                        throw new Error(message);
+                    }
+                    return true;
+                }
+
+                // Клик на CHANGE PASSWORD (кнопка .js-trigger-generate)
+                document.addEventListener('click', (e) => {
+                    const btn = e.target.closest('.js-trigger-generate');
+                    if (!btn) return;
+
+                    e.preventDefault();
+                    const email = btn.getAttribute('data-email') || '';
+                    const successModal = btn.getAttribute('data-success-modal') || '#modal-change-password';
+                    if (!email) return; // нет email — ничего не делаем
+
+                    crOpen(email, successModal, btn);
+                });
+
+                // Подтвердить
+                btnYes?.addEventListener('click', async () => {
+                    if (!pending) return;
+                    const {
+                        email,
+                        successModal,
+                        triggerBtn,
+                        originalText
+                    } = pending;
+
+                    // Заблокировать кнопки на время запроса
+                    btnYes.disabled = true;
+                    btnCancel.disabled = true;
+                    btnClose.disabled = true;
+                    if (triggerBtn) {
+                        triggerBtn.disabled = true;
+                        triggerBtn.textContent = 'Processing…';
+                    }
+
+                    try {
+                        await postGenerate(email);
+                        crClose();
+
+                        // Открыть успех-модалку (используем твою систему, fallback — прозрачный)
+                        if (typeof window.openModal === 'function') {
+                            window.openModal(successModal);
+                        } else {
+                            const overlay2 = document.querySelector('[data-modal-overlay]');
+                            const m2 = document.querySelector(successModal);
+                            if (overlay2 && m2) {
+                                m2.hidden = false;
+                                overlay2.hidden = false;
+                                document.body.setAttribute('data-modal-open', 'true');
+                                document.documentElement.style.overflow = 'hidden';
+                                (m2.querySelector(
+                                    'button,[href],input,textarea,[tabindex]:not([tabindex="-1"])') || m2).focus
+                                    ();
+                            }
+                        }
+                    } catch (err) {
+                        if (errBox) {
+                            errBox.textContent = String(err.message || err);
+                            errBox.removeAttribute('hidden');
+                        }
+                    } finally {
+                        btnYes.disabled = false;
+                        btnCancel.disabled = false;
+                        btnClose.disabled = false;
+                        if (triggerBtn) {
+                            triggerBtn.disabled = false;
+                            triggerBtn.textContent = originalText;
+                        }
                     }
                 });
 
-                // Закрытие по кнопкам
-                document.addEventListener('click', function(e) {
-                    if (e.target.closest('[data-modal-close]')) {
-                        const modal = e.target.closest('.modal');
-                        closeModal(modal);
-                    }
+                // Закрыть/отмена
+                function onCancel() {
+                    crClose();
+                }
+                overlay?.addEventListener('click', onCancel);
+                btnCancel?.addEventListener('click', onCancel);
+                btnClose?.addEventListener('click', onCancel);
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !modal?.hasAttribute('hidden')) crClose();
                 });
 
-                // Клик по оверлею — закрыть активную модалку
-                overlay?.addEventListener('click', function() {
-                    const active = document.querySelector('.modal:not([hidden])');
-                    closeModal(active);
-                });
-
-                // Escape
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape') {
-                        const active = document.querySelector('.modal:not([hidden])');
-                        if (active) closeModal(active);
-                    }
-                });
-
-                // Примитивный фокус-трап (опционально усильшь)
-                document.addEventListener('keydown', function(e) {
-                    if (e.key !== 'Tab') return;
-                    const modal = document.querySelector('.modal:not([hidden])');
-                    if (!modal) return;
-
-                    const focusables = modal.querySelectorAll(
-                        'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])');
-                    const list = Array.prototype.slice.call(focusables);
-                    if (list.length === 0) return;
-
-                    const first = list[0];
-                    const last = list[list.length - 1];
-
-                    if (e.shiftKey && document.activeElement === first) {
-                        e.preventDefault();
-                        last.focus();
-                    } else if (!e.shiftKey && document.activeElement === last) {
-                        e.preventDefault();
-                        first.focus();
-                    }
-                });
             })();
         </script>
+        <script>
+(function () {
+  const overlay = document.querySelector('[data-modal-overlay]');
+
+  function actuallyClose(modal) {
+    if (!modal) return;
+    modal.hidden = true;
+
+    // если открытых модалок больше нет — прячем оверлей и возвращаем скролл
+    const anyOpen = !!document.querySelector('.modal:not([hidden])');
+    if (!anyOpen) {
+      overlay && (overlay.hidden = true);
+      document.body.removeAttribute('data-modal-open');
+      document.documentElement.style.overflow = '';
+    }
+  }
+
+  // Глобальные функции (если вдруг их нет)
+  window.openModal = window.openModal || function (selector) {
+    const m = document.querySelector(selector);
+    if (!m) return;
+    m.hidden = false;
+    if (overlay) overlay.hidden = false;
+    document.body.setAttribute('data-modal-open', 'true');
+    document.documentElement.style.overflow = 'hidden';
+    (m.querySelector('button,[href],input,textarea,[tabindex]:not([tabindex="-1"])') || m).focus();
+  };
+
+  window.closeModal = window.closeModal || function (selOrEl) {
+    const modal = typeof selOrEl === 'string' ? document.querySelector(selOrEl) : selOrEl;
+    actuallyClose(modal);
+  };
+
+  // Крестик внутри модалки
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-modal-close]');
+    if (!btn) return;
+    const modal = btn.closest('.modal');
+    actuallyClose(modal);
+  });
+
+  // Клик по оверлею
+  overlay?.addEventListener('click', () => {
+    const active = document.querySelector('.modal:not([hidden])');
+    actuallyClose(active);
+  });
+
+  // Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const active = document.querySelector('.modal:not([hidden])');
+    if (active) actuallyClose(active);
+  });
+})();
+</script>
     @endpush
 
 
