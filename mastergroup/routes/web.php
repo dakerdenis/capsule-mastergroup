@@ -66,6 +66,9 @@ Route::middleware('auth')->group(function () {
         ->whereNumber('order');
 
     Route::post('/orders/place', [OrderController::class, 'place'])->name('orders.place');
+    // КОДЫ: активация пользователем
+    Route::post('/codes/activate', [\App\Http\Controllers\CodeActivationController::class, 'activate'])
+        ->name('codes.activate');
 
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');

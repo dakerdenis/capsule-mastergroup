@@ -564,6 +564,14 @@ body[data-modal-open="true"] {
 
 
 
+/* Messages under code form */
+.code-msg { margin-top: 8px; font-size: 14px; line-height: 1.3; }
+.code-msg--error { color: #b42318; }
+.code-msg--ok    { color: #15803d; }
+.code-msg--muted { color: #97a2b6; }
+
+/* Disabled state */
+#codeBtn[disabled] { opacity: .6; pointer-events: none; }
 
 
 

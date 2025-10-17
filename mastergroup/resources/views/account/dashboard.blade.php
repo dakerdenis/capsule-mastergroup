@@ -130,11 +130,16 @@
         <div class="account__bonuses_collection">
             <div class="account__bonuses-desc_collect">
                 <p>Bonuses collection history</p>
-                <form action="#">
-                    <input type="text" placeholder="Enter the product code">
-                    <button type="button">REQUEST CPS</button>
+                <form id="codeForm" action="{{ route('codes.activate') }}" method="POST" autocomplete="off"
+                    onsubmit="return false;">
+                    @csrf
+                    <input id="codeInput" type="text" name="code" placeholder="Enter the product code"
+                        inputmode="latin" maxlength="128">
+                    <button id="codeBtn" type="submit">REQUEST CPS</button>
+                    <div id="codeMsg" class="code-msg" aria-live="polite"></div>
                 </form>
             </div>
+
 
             {{-- Таблица (как мы переделали ранее) --}}
             <div class="account_bonuses__wrapper">
@@ -153,12 +158,6 @@
                             <td class="code">#242332228</td>
                             <td class="date">08/20/22</td>
                             <td class="amount">499</td>
-
-                        </tr>
-                        <tr class="account_bonuses-element">
-                            <td class="code">#242332229</td>
-                            <td class="date">08/22/22</td>
-                            <td class="amount">199</td>
 
                         </tr>
                     </tbody>
@@ -228,8 +227,8 @@
     <!-- Confirm Reset Password (CR) -->
     <div class="cr-overlay" id="cr-overlay" hidden></div>
 
-    <div class="cr-modal" id="cr-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cr-title"
-        hidden>
+    <div class="cr-modal" id="cr-modal" aria-hidden="true" role="dialog" aria-modal="true"
+        aria-labelledby="cr-title" hidden>
         <div class="cr-dialog" role="document">
             <button type="button" class="cr-close" id="cr-close" aria-label="Close">
                 ✕
@@ -405,60 +404,169 @@
             })();
         </script>
         <script>
-(function () {
-  const overlay = document.querySelector('[data-modal-overlay]');
+            (function() {
+                const overlay = document.querySelector('[data-modal-overlay]');
 
-  function actuallyClose(modal) {
-    if (!modal) return;
-    modal.hidden = true;
+                function actuallyClose(modal) {
+                    if (!modal) return;
+                    modal.hidden = true;
 
-    // если открытых модалок больше нет — прячем оверлей и возвращаем скролл
-    const anyOpen = !!document.querySelector('.modal:not([hidden])');
-    if (!anyOpen) {
-      overlay && (overlay.hidden = true);
-      document.body.removeAttribute('data-modal-open');
-      document.documentElement.style.overflow = '';
-    }
-  }
+                    // если открытых модалок больше нет — прячем оверлей и возвращаем скролл
+                    const anyOpen = !!document.querySelector('.modal:not([hidden])');
+                    if (!anyOpen) {
+                        overlay && (overlay.hidden = true);
+                        document.body.removeAttribute('data-modal-open');
+                        document.documentElement.style.overflow = '';
+                    }
+                }
 
-  // Глобальные функции (если вдруг их нет)
-  window.openModal = window.openModal || function (selector) {
-    const m = document.querySelector(selector);
-    if (!m) return;
-    m.hidden = false;
-    if (overlay) overlay.hidden = false;
-    document.body.setAttribute('data-modal-open', 'true');
-    document.documentElement.style.overflow = 'hidden';
-    (m.querySelector('button,[href],input,textarea,[tabindex]:not([tabindex="-1"])') || m).focus();
-  };
+                // Глобальные функции (если вдруг их нет)
+                window.openModal = window.openModal || function(selector) {
+                    const m = document.querySelector(selector);
+                    if (!m) return;
+                    m.hidden = false;
+                    if (overlay) overlay.hidden = false;
+                    document.body.setAttribute('data-modal-open', 'true');
+                    document.documentElement.style.overflow = 'hidden';
+                    (m.querySelector('button,[href],input,textarea,[tabindex]:not([tabindex="-1"])') || m).focus();
+                };
 
-  window.closeModal = window.closeModal || function (selOrEl) {
-    const modal = typeof selOrEl === 'string' ? document.querySelector(selOrEl) : selOrEl;
-    actuallyClose(modal);
-  };
+                window.closeModal = window.closeModal || function(selOrEl) {
+                    const modal = typeof selOrEl === 'string' ? document.querySelector(selOrEl) : selOrEl;
+                    actuallyClose(modal);
+                };
 
-  // Крестик внутри модалки
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-modal-close]');
-    if (!btn) return;
-    const modal = btn.closest('.modal');
-    actuallyClose(modal);
-  });
+                // Крестик внутри модалки
+                document.addEventListener('click', (e) => {
+                    const btn = e.target.closest('[data-modal-close]');
+                    if (!btn) return;
+                    const modal = btn.closest('.modal');
+                    actuallyClose(modal);
+                });
 
-  // Клик по оверлею
-  overlay?.addEventListener('click', () => {
-    const active = document.querySelector('.modal:not([hidden])');
-    actuallyClose(active);
-  });
+                // Клик по оверлею
+                overlay?.addEventListener('click', () => {
+                    const active = document.querySelector('.modal:not([hidden])');
+                    actuallyClose(active);
+                });
 
-  // Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return;
-    const active = document.querySelector('.modal:not([hidden])');
-    if (active) actuallyClose(active);
-  });
-})();
-</script>
+                // Escape
+                document.addEventListener('keydown', (e) => {
+                    if (e.key !== 'Escape') return;
+                    const active = document.querySelector('.modal:not([hidden])');
+                    if (active) actuallyClose(active);
+                });
+            })();
+        </script>
+        <!----CODE CHECK---->
+        <script>
+            (function() {
+                const form = document.getElementById('codeForm');
+                const input = document.getElementById('codeInput');
+                const btn = document.getElementById('codeBtn');
+                const msg = document.getElementById('codeMsg');
+                const CSRF = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                const url = form?.getAttribute('action') || '{{ route('codes.activate') }}';
+
+                const regex = /^[A-Z][A-Z0-9]{3,}$/;
+                const tbody = document.querySelector('.account_bonuses-table tbody');
+
+                function setMsg(text, type) {
+                    if (!msg) return;
+                    msg.textContent = text || '';
+                    msg.classList.remove('code-msg--error', 'code-msg--ok', 'code-msg--muted');
+                    if (type) msg.classList.add(type);
+                }
+
+                async function post(url, payload) {
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-TOKEN': CSRF || '',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams(payload),
+                        credentials: 'same-origin'
+                    });
+                    const data = await res.json().catch(() => ({}));
+                    if (!res.ok) {
+                        const err = new Error(data?.message || 'Request error');
+                        err.data = data;
+                        throw err;
+                    }
+                    return data;
+                }
+
+                function appendHistoryRow(code, isoDate, cps) {
+                    if (!tbody) return;
+                    const tr = document.createElement('tr');
+                    tr.className = 'account_bonuses-element';
+                    const d = isoDate ? new Date(isoDate) : new Date();
+                    const mm = String(d.getMonth() + 1).padStart(2, '0');
+                    const dd = String(d.getDate()).padStart(2, '0');
+                    const yy = String(d.getFullYear()).slice(-2);
+                    tr.innerHTML = `
+      <td class="code">#${code}</td>
+      <td class="date">${mm}/${dd}/${yy}</td>
+      <td class="amount">${(cps||0)}</td>
+    `;
+                    // вставим в начало
+                    tbody.insertBefore(tr, tbody.firstChild);
+                }
+
+                function bumpHeaderCps(newCps) {
+                    try {
+                        const top = document.querySelector('.topbar__bonuses p');
+                        if (top && typeof newCps === 'number') top.textContent = String(newCps);
+                    } catch (_) {}
+                }
+
+                form?.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const raw = (input?.value || '').trim().toUpperCase();
+
+                    // локальная проверка
+                    if (!raw) {
+                        setMsg('Enter the code.', 'code-msg--error');
+                        return;
+                    }
+                    if (!regex.test(raw)) {
+                        setMsg('Invalid code format.', 'code-msg--error');
+                        return;
+                    }
+
+                    // отправка
+                    btn.disabled = true;
+                    setMsg('Checking…', 'code-msg--muted');
+                    try {
+                        const data = await post(url, {
+                            code: raw
+                        });
+
+                        // успех
+                        setMsg(`Code activated. +${data.bonus_cps} CPS`, 'code-msg--ok');
+                        input.value = '';
+
+                        // обновим историю/баланс
+                        appendHistoryRow(data.code || raw, data.activated_at, data.bonus_cps);
+                        bumpHeaderCps(data.new_cps);
+
+                    } catch (err) {
+                        const e = err.data || {};
+                        let text = e.message || 'Activation failed.';
+                        if (e.error === 'NOT_FOUND') text = 'Code not found.';
+                        if (e.error === 'ALREADY_USED') text = 'This code has already been activated.';
+                        if (e.error === 'INVALID_FORMAT') text = 'Invalid code format.';
+                        if (e.error === 'NO_BONUS') text = 'This code has no bonus configured.';
+                        setMsg(text, 'code-msg--error');
+                    } finally {
+                        btn.disabled = false;
+                    }
+                });
+
+            })();
+        </script>
     @endpush
 
 
