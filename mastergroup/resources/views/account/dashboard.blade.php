@@ -142,33 +142,53 @@
 
 
             {{-- Таблица (как мы переделали ранее) --}}
-            <div class="account_bonuses__wrapper">
+            <div class="account_bonuses__wrapper" data-per="{{ $codes->perPage() ?? 10 }}">
                 <table class="account_bonuses-table">
                     <thead>
                         <tr>
                             <th class="code">PRODUCT CODE</th>
                             <th class="date">ACTIVATION DATE</th>
                             <th class="amount">CPS</th>
-
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- Пример. Позже сюда подставишь реальные записи из БД/сервиса --}}
-                        <tr class="account_bonuses-element">
-                            <td class="code">#242332228</td>
-                            <td class="date">08/20/22</td>
-                            <td class="amount">499</td>
-
-                        </tr>
+                        @forelse($codes ?? [] as $row)
+                            <tr class="account_bonuses-element">
+                                <td class="code">#{{ $row->code }}</td>
+                                <td class="date">{{ $row->activated_at?->format('m/d/y') ?? '—' }}</td>
+                                <td class="amount">{{ number_format((int) $row->bonus_cps, 0, '.', ' ') }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" style="text-align:center;color:#97a2b6">No activations yet.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
 
-                <div class="account_bonuses-navigation">
-                    <button type="button">Previous</button>
-                    <span>1-10 of 100</span>
-                    <button type="button">Next</button>
+                <div class="account_bonuses-navigation" style="display:flex;align-items:center;gap:12px;">
+                    @php
+                        $fi = $codes?->firstItem();
+                        $li = $codes?->lastItem();
+                        $tot = $codes?->total();
+                    @endphp
+
+                    @if ($codes?->onFirstPage())
+                        <button type="button" disabled>Previous</button>
+                    @else
+                        <a class="btn" href="{{ $codes->previousPageUrl() }}">Previous</a>
+                    @endif
+
+                    <span id="bonusRange">{{ $fi }}-{{ $li }} of {{ $tot }}</span>
+
+                    @if ($codes?->hasMorePages())
+                        <a class="btn" href="{{ $codes->nextPageUrl() }}">Next</a>
+                    @else
+                        <button type="button" disabled>Next</button>
+                    @endif
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -461,6 +481,7 @@
         <!----CODE CHECK---->
         <script>
             (function() {
+                
                 const form = document.getElementById('codeForm');
                 const input = document.getElementById('codeInput');
                 const btn = document.getElementById('codeBtn');
@@ -468,7 +489,7 @@
                 const CSRF = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
                 const url = form?.getAttribute('action') || '{{ route('codes.activate') }}';
 
-                const regex = /^[A-Z][A-Z0-9]{3,}$/;
+                const regex = /^[A-Z]{2}[A-Z0-9]{3,}$/;
                 const tbody = document.querySelector('.account_bonuses-table tbody');
 
                 function setMsg(text, type) {

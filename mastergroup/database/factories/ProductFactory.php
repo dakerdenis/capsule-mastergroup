@@ -30,7 +30,7 @@ class ProductFactory extends Factory
             'slug'        => null, // сгенерируется в модельном хукe
             'type'        => $this->faker->randomElement(['standard', 'premium', 'limited']),
             'description' => $this->faker->sentences(rand(2, 5), true),
-            'price'       => $this->faker->numberBetween(100, 900),
+            'price'       => $this->faker->numberBetween(5, 50),
 
         ];
     }

@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory; // ← добавить
 
 class Code extends Model
 {
+    use HasFactory; // ← добавить
     protected $fillable = [
         'code', 'type', 'status', 'bonus_cps',
         'activated_by_user_id', 'activated_at',
