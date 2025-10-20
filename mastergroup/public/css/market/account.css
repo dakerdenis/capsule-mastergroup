@@ -471,7 +471,9 @@ body[data-modal-open="true"] .modal-overlay {
     letter-spacing: 0px;
     color: #FFFFFF;
 }
-
+.change__password-desc a {
+    color: #fff;
+}
 
 /* если хочешь блокировать скролл у body вместо html — оставил на всякий */
 body[data-modal-open="true"] {

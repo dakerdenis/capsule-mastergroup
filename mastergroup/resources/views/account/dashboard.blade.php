@@ -97,7 +97,7 @@
                         @endif
                         @if ($user->instagram)
                             @php $ig = ltrim($user->instagram, '@'); @endphp
-                            <div class="account__profile-input">
+                            <div class="account__profile-input account__profile-country">
                                 <p>
                                     Instagram:
                                     <a href="https://instagram.com/{{ $ig }}" target="_blank" rel="noopener">
@@ -120,6 +120,7 @@
                             data-modal-open="#modal-change-data">
                             Change data
                         </button>
+
                     </div>
 
                 </div>
@@ -430,8 +431,6 @@
                 function actuallyClose(modal) {
                     if (!modal) return;
                     modal.hidden = true;
-
-                    // если открытых модалок больше нет — прячем оверлей и возвращаем скролл
                     const anyOpen = !!document.querySelector('.modal:not([hidden])');
                     if (!anyOpen) {
                         overlay && (overlay.hidden = true);
@@ -440,7 +439,7 @@
                     }
                 }
 
-                // Глобальные функции (если вдруг их нет)
+                // Глобальные функции (как у тебя)
                 window.openModal = window.openModal || function(selector) {
                     const m = document.querySelector(selector);
                     if (!m) return;
@@ -450,27 +449,31 @@
                     document.documentElement.style.overflow = 'hidden';
                     (m.querySelector('button,[href],input,textarea,[tabindex]:not([tabindex="-1"])') || m).focus();
                 };
-
                 window.closeModal = window.closeModal || function(selOrEl) {
                     const modal = typeof selOrEl === 'string' ? document.querySelector(selOrEl) : selOrEl;
                     actuallyClose(modal);
                 };
 
-                // Крестик внутри модалки
+                // ✅ ОТКРЫТИЕ по data-modal-open (вот этого у тебя не было)
+                document.addEventListener('click', (e) => {
+                    const opener = e.target.closest('[data-modal-open]');
+                    if (!opener) return;
+                    e.preventDefault();
+                    const target = opener.getAttribute('data-modal-open');
+                    if (target) window.openModal(target);
+                });
+
+                // Закрытие
                 document.addEventListener('click', (e) => {
                     const btn = e.target.closest('[data-modal-close]');
                     if (!btn) return;
                     const modal = btn.closest('.modal');
                     actuallyClose(modal);
                 });
-
-                // Клик по оверлею
                 overlay?.addEventListener('click', () => {
                     const active = document.querySelector('.modal:not([hidden])');
                     actuallyClose(active);
                 });
-
-                // Escape
                 document.addEventListener('keydown', (e) => {
                     if (e.key !== 'Escape') return;
                     const active = document.querySelector('.modal:not([hidden])');
@@ -478,10 +481,11 @@
                 });
             })();
         </script>
+
         <!----CODE CHECK---->
         <script>
             (function() {
-                
+
                 const form = document.getElementById('codeForm');
                 const input = document.getElementById('codeInput');
                 const btn = document.getElementById('codeBtn');

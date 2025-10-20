@@ -417,6 +417,7 @@ color: #404040;
     .catalog__element__bin {
         width: 20PX;
         height: 20px;
+        padding: 3px;
     }
 
     .catalog__element__bin img {

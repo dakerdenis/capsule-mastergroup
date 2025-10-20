@@ -298,22 +298,29 @@
     letter-spacing: 0.15px;
 
 }
-.modal__close img { pointer-events: none; }
-.order_popup-data{
+
+.modal__close img {
+    pointer-events: none;
+}
+
+.order_popup-data {
     display: flex;
     justify-content: space-between;
     width: 220px;
     margin-bottom: 7px;
 }
-.order_popup-price{
-        display: flex;
+
+.order_popup-price {
+    display: flex;
     justify-content: space-between;
     width: 220px;
 }
-.order_popup-price{
+
+.order_popup-price {
     margin-top: 5px;
 }
-.order_popup__desc{
+
+.order_popup__desc {
     margin: 20px 0px;
 
 }
@@ -340,48 +347,75 @@
     .js-order-cell {
         font-size: 12px;
     }
-    
-    .modal__body{
+
+    .modal__body {
         width: 100%;
 
     }
-    .modal__dialog{
+
+    .modal__dialog {
         width: 95%;
     }
-    .order_popup-wrapper{
 
-    }
-    .order_pup-element{
-        
-    }
+    .order_popup-wrapper {}
+
+    .order_pup-element {}
+
     .order_pup-element:nth-child(2n-1) {
         border-right: none;
-            
+
     }
-    .order_pup-element{
-border-bottom: 1px solid #D9D9D980;
+
+    .order_pup-element {
+        border-bottom: 1px solid #D9D9D980;
     }
-    .order_popup-wrapper{
+
+    .order_popup-wrapper {
         max-height: 425px;
         overflow-y: scroll;
         padding: 4px 0px;
     }
-    .order_popup__name{
-        position: relative;
-align-items: initial;
-justify-content: initial;
 
-height: 50px;
+    .order_popup__name {
+        position: relative;
+        align-items: initial;
+        justify-content: initial;
+
+        height: 50px;
     }
-    .order-modal-title{
+
+    .order-modal-title {
         font-size: 17px;
     }
-    .order_popup__name span{
+
+    .order_popup__name span {
         margin-left: 0px;
         position: absolute;
         bottom: 0;
     }
-    .order_popup__name span{
 
+    .order_popup__name span {}
+
+    .order_popup__name p {
+        line-height: initial;
+        font-size: 16px;
+    }
+
+    .order_popup__name h3 {
+        font-size: 16px;
+        line-height: initial;
+    }
+        .js-order-cell {
+            font-size: 10px;
+        }
+        .badge{
+            font-size: 9px;
+        }
+        .js-order-amount{
+            font-size: 11px;
+        }
+        
+    .orders-table tbody td {
+        padding: 15px 3px;
     }
 }

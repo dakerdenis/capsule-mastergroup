@@ -425,12 +425,13 @@
 
 }
 
-.m-btn-confirm{
+.m-btn-confirm {
     position: absolute;
     background-color: rgba(0, 0, 0, 0);
     top: 10px;
     right: 10px;
 }
+
 #orderSuccessModal .m-actions {
     display: flex;
     gap: 10px;
@@ -447,9 +448,7 @@
     cursor: pointer
 }
 
-#orderSuccessModal .m-btn:hover {
-
-}
+#orderSuccessModal .m-btn:hover {}
 
 .m-text-confirm {
     color: #343C44;
@@ -550,42 +549,73 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .cart-list{
+    .cart-list {
         flex-direction: column;
         align-items: center;
     }
-    .cart__elements{
+
+    .cart__elements {
         width: 100%;
     }
-        .cart__selected{
-            width: 100%;
-            margin-top: 20px;
-        }
-        .cart-list{
-            padding: 20px;
-        }
-        .cart__element{
-            width: 100%;
-        }
-        .m-dialog-confirm{
-            width: 90%;
-        }
-        .m-actions{
-            justify-content: space-evenly;
-        }
-        #orderSuccessModal .m-dialog{
-            width: 95%;
-            padding: 30px;
-            padding-top: 70px;
-            height: initial;
-        }
-        #orderSuccessModal .m-title {
-            width: 100%;
-        }
-        .orders{
-            
-        }
-        .cart__element-name{
-            font-size: 12px;
-        }
+
+    .cart__selected {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .cart-list {
+        padding: 20px;
+    }
+
+    .cart__element {
+        width: 100%;
+    }
+
+    .m-dialog-confirm {
+        width: 90%;
+    }
+
+    .m-actions {
+        justify-content: space-evenly;
+    }
+
+    #orderSuccessModal .m-dialog {
+        width: 95%;
+        padding: 30px;
+        padding-top: 70px;
+        height: initial;
+    }
+
+    #orderSuccessModal .m-title {
+        width: 100%;
+    }
+
+    .orders {}
+
+    .cart__element-name {
+        font-size: 12px;
+    }
+    #orderSuccessModal .m-dialog{
+                padding: 13px;
+                        padding-top: 70px;
+
+    }
+    #orderSuccessModal h3 p {
+        font-size: 10px;
+    }
+    #orderSuccessModal .m-text{
+        font-size: 14px;
+        line-height: 18px;
+        margin: initial;
+    margin-top: 22px;
+    }
+    #orderSuccessModal .m-title{
+        height: 40px;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    .cart__element-name {
+        width: 100px;
+    }
 }

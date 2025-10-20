@@ -39,7 +39,7 @@
                                         <td class="js-order-cell" data-order="{{ $o->number }}"
                                             data-id="{{ $o->id }}">#{{ $o->number }}</td>
                                         <td class="mobile-remove">{{ (int) ($o->total_qty ?? 0) }}</td>
-                                        <td><span class="mobile-remove">CPS</span>
+                                        <td class="js-order-amount"><span class="mobile-remove">CPS</span>
                                             {{ number_format((int) $o->total_cps, 0, '.', ' ') }}</td>
                                         <td class="mobile-remove">{{ $o->created_at?->format('m/d/y') }}</td>
                                         <td class="mobile-remove">{{ $o->executed_at?->format('m/d/y') ?? '—' }}</td>
