@@ -69,10 +69,10 @@ Route::middleware('auth')->group(function () {
     // КОДЫ: активация пользователем
     Route::post('/codes/activate', [\App\Http\Controllers\CodeActivationController::class, 'activate'])
         ->name('codes.activate');
-// CONTACT: отправка сообщения с главной
-Route::post('/contact/send', [\App\Http\Controllers\ContactController::class, 'send'])
-    ->name('contact.send')
-    ->middleware('throttle:20,1'); // до 20 запросов в минуту
+    // CONTACT: отправка сообщения с главной
+    Route::post('/contact/send', [\App\Http\Controllers\ContactController::class, 'send'])
+        ->name('contact.send')
+        ->middleware('throttle:20,1'); // до 20 запросов в минуту
 
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');

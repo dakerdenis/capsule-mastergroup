@@ -127,68 +127,76 @@
         </div>
     </div>
 
+ 
     <script>
-        (function() {
-            const form = document.getElementById('contactForm');
-            const input = document.getElementById('contactMessage');
-            const btn = document.getElementById('contactSendBtn');
-            const msg = document.getElementById('contactMsg');
-            const CSRF = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-            const url = form?.getAttribute('action') || '{{ route('contact.send') }}';
+(function() {
+  const form = document.getElementById('contactForm');
+  const input = document.getElementById('contactMessage');
+  const btn = document.getElementById('contactSendBtn');
+  const msg = document.getElementById('contactMsg');
+  const CSRF = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+  const url = form?.getAttribute('action') || '{{ route('contact.send') }}';
 
-            function setMsg(text, type) {
-                if (!msg) return;
-                msg.textContent = text || '';
-                msg.classList.remove('code-msg--error', 'code-msg--ok', 'code-msg--muted');
-                if (type) msg.classList.add(type);
-            }
+  function setMsg(text, type, shake=false) {
+    if (!msg) return;
+    msg.textContent = text || '';
+    msg.classList.remove('code-msg--error','code-msg--ok','code-msg--muted');
+    if (type) msg.classList.add(type);
+    if (type === 'code-msg--error') {
+      msg.dataset.shake = shake ? '1' : '0';
+      if (shake) setTimeout(()=>{ msg.dataset.shake = '0'; }, 400);
+    } else {
+      msg.dataset.shake = '0';
+    }
+  }
 
-            async function post(url, payload) {
-                const res = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRF-TOKEN': CSRF || '',
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: new URLSearchParams(payload),
-                    credentials: 'same-origin'
-                });
-                const data = await res.json().catch(() => ({}));
-                if (!res.ok) {
-                    const err = new Error(data?.message || 'Send failed');
-                    err.data = data;
-                    throw err;
-                }
-                return data;
-            }
+  async function post(url, payload) {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': CSRF || '',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams(payload),
+      credentials: 'same-origin'
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      const err = new Error(data?.message || 'Send failed');
+      err.data = data;
+      throw err;
+    }
+    return data;
+  }
 
-            form?.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const text = (input?.value || '').trim();
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const text = (input?.value || '').trim();
 
-                if (!text || text.length < 5) {
-                    setMsg('Please enter at least 5 characters.', 'code-msg--error');
-                    return;
-                }
+    if (!text || text.length < 5) {
+      setMsg('Please enter at least 5 characters.', 'code-msg--error', true);
+      input?.focus();
+      return;
+    }
 
-                btn.disabled = true;
-                setMsg('Sending…', 'code-msg--muted');
+    btn.disabled = true;
+    setMsg('Sending…', 'code-msg--muted');
 
-                try {
-                    const data = await post(url, {
-                        message: text
-                    });
-                    setMsg(data?.message || 'Message sent.', 'code-msg--ok');
-                    input.value = '';
-                } catch (err) {
-                    setMsg(err?.data?.message || 'Failed to send. Try later.', 'code-msg--error');
-                } finally {
-                    btn.disabled = false;
-                }
-            });
-        })();
-    </script>
+    try {
+      const data = await post(url, { message: text });
+      setMsg(data?.message || 'Message sent !', 'code-msg--ok');
+      input.value = '';
+      input.blur();
+    } catch (err) {
+      setMsg(err?.data?.message || 'Failed to send. Try later.', 'code-msg--error', true);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
+
 
 
     @include('partials.product_modal')

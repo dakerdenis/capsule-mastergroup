@@ -159,6 +159,29 @@
         font-size: 17px;
     margin-top: 13px;
 }
+/* статус под формой */
+.code-msg{
+  margin-top:10px;
+  font-size:.95rem;
+  line-height:1.35;
+  min-height:1.2em;            /* чтоб блок не прыгал при появлении текста */
+  transition: color .15s ease, opacity .15s ease;
+  opacity: .95;
+}
+
+/* цвета состояний */
+.code-msg--error{ color:#e23b3b; }   /* красный */
+.code-msg--ok{    color:#17a247; }   /* зелёный */
+.code-msg--muted{ color:#808b9a; }   /* серый */
+
+/* необязательно: лёгкая вибрация при ошибке */
+@keyframes msg-shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX( 2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX( 4px); }
+}
+.code-msg--error[data-shake="1"]{ animation: msg-shake .35s; }
 
 @media only screen and (max-width: 1850px) {
 .dashboard__content{
