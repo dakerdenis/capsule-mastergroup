@@ -24,17 +24,19 @@
                             class="brand__logo">
                     </a>
                 </div>
-                <div class="topbar__bonuses">
-                    <span class="muted">CPS Bonuses:</span>
-                    <p>{{ auth()->user()->cps_total ?? 0 }}</p>
-                    <img src="{{ asset('images/app/bonus-info.svg') }}" alt="">
+                <div class="topbar__bonuses"> <span class="muted">CPS Bonuses:</span>
+                    <p>{{ auth()->user()->cps_total ?? 0 }}</p> <span class="topbar-tooltip" tabindex="0"
+                        aria-describedby="cpsTip"> <img src="{{ asset('images/app/bonus-info.svg') }}" alt=""
+                            class="topbar-tooltip__icon"> <span id="cpsTip" role="tooltip"
+                            class="topbar-tooltip__bubble"> Your CPS bonuses can be used to redeem gifts in the Catalog.
+                            Add items to cart and spend CPS at checkout. </span> </span>
                 </div>
             </div>
             <!-----BASKET----->
             <a href="{{ route('cart.index') }}" class="basket_mobile">
                 <span class="cart-badge cart-badge-mobile js-cart-count">0</span>
                 <img src="{{ asset('images/common/card.png') }}" alt="">
-        </a>
+            </a>
             <!-- BURGER (mobile only) -->
             <div class="three col">
                 <div class="hamburger" id="hamburger-6" aria-label="Open menu" role="button" tabindex="0">
@@ -105,20 +107,24 @@
 
 
 
-<script>
-(function(){
-  function setCartCount(count){
-    const n = Math.max(0, Number(count) || 0);
-    document.querySelectorAll('.js-cart-count').forEach(el => { el.textContent = String(n); });
-    try { localStorage.setItem('cartCount', String(n)); } catch(e) {}
-  }
-  window.setCartCount = setCartCount;
+    <script>
+        (function() {
+            function setCartCount(count) {
+                const n = Math.max(0, Number(count) || 0);
+                document.querySelectorAll('.js-cart-count').forEach(el => {
+                    el.textContent = String(n);
+                });
+                try {
+                    localStorage.setItem('cartCount', String(n));
+                } catch (e) {}
+            }
+            window.setCartCount = setCartCount;
 
-  window.addEventListener('storage', (e) => {
-    if (e.key === 'cartCount') setCartCount(e.newValue);
-  });
-})();
-</script>
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'cartCount') setCartCount(e.newValue);
+            });
+        })();
+    </script>
 
 
 

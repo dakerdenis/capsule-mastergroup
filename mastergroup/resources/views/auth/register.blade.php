@@ -22,7 +22,7 @@
                         <!---form block with text and buttons---->
                         <div class="auth__form-name">
                             <h2>
-                                Welcome to Mastegroup Portal
+                                Welcome to Mastergroup Portal
                             </h2>
 
                             <!-----Lined text----->

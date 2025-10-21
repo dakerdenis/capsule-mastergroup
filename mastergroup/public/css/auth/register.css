@@ -126,7 +126,7 @@ box-shadow: -6px 10px 16.7px 2px #FBFBFB4D;
         width: 661px;
     }
 }
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 768px) {
     .registraion__options__container {
         flex-direction: column;
         width: 100%;
@@ -162,5 +162,19 @@ box-shadow: -6px 10px 16.7px 2px #FBFBFB4D;
     }
         .auth__form-logo {
             height: 75px;
+        }
+        .auth_page-container{
+            min-height: 850px;
+        }
+        .form__controll a{
+            width: 45%;
+    
+        }
+        .chk{
+            width: 100%;
+        }
+        .chk__text{
+            width: initial;
+            font-size: 10px;
         }
 }

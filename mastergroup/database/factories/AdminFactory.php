@@ -14,7 +14,7 @@ class AdminFactory extends Factory
     {
         return [
             'name' => 'Test Admin',
-            'email' => 'admin@example.com',
+            'email' => 'admin@capsuleppf.com',
             'password' => Hash::make('geklas123'),
             'email_verified_at' => now(),
             'remember_token' => str()->random(10),

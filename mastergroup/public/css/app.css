@@ -109,6 +109,7 @@ h6 {
     background-repeat: no-repeat;
     position: relative;
 }
+
 .topbar {
     width: 100%;
     height: 136px;
@@ -118,20 +119,24 @@ h6 {
     justify-content: space-between;
     padding: 0px 44px 0px 74px;
 }
+
 .topbar_logo_bonuses {
     display: flex;
     height: 100%;
     align-items: center;
 }
+
 .brand {
     width: 236px;
     height: 79px;
     padding: 7px;
 }
+
 .brand a {
     width: 100%;
     height: 100%;
 }
+
 .brand img {
     width: 100%;
     height: 100%;
@@ -153,10 +158,12 @@ h6 {
     display: flex;
     color: #fff;
 }
+
 .topbar__bonuses img {
     width: 20px;
     height: 20px;
 }
+
 .topbar__bonuses p {
     margin-left: 10px;
     margin-right: 25px;
@@ -170,6 +177,7 @@ h6 {
     align-items: center;
     justify-content: space-between;
 }
+
 .topbar__profile-image {
     width: 80px;
     height: 80px;
@@ -180,15 +188,18 @@ h6 {
     justify-content: center;
     overflow: hidden;
 }
+
 .topbar__profile-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .topbar__profile form {
     width: 101px;
     height: 31px;
 }
+
 .topbar__profile button {
     border: 1px solid #ffffff;
     width: 100%;
@@ -226,11 +237,13 @@ h6 {
     width: 322px;
     height: 421px;
 }
+
 .sidebar_car img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .sidebar__footer {
     position: absolute;
     bottom: 30px;
@@ -255,6 +268,7 @@ h6 {
     height: 261px;
     border-left: 2px solid #fff;
 }
+
 .nav__link {
     font-weight: 500;
     font-style: Medium;
@@ -268,6 +282,7 @@ h6 {
     display: flex;
     position: relative;
 }
+
 .nav__link span {
     display: flex;
     align-items: center;
@@ -293,7 +308,8 @@ h6 {
     position: relative;
 
 }
-.is-active::before{
+
+.is-active::before {
     content: '';
     position: absolute;
     left: -30px;
@@ -307,7 +323,7 @@ h6 {
 }
 
 
-.main{
+.main {
     width: calc(100% - 390px);
     height: calc(100% - 136px);
     background-color: #fff;
@@ -326,7 +342,8 @@ h6 {
     position: sticky;
     top: 0;
     z-index: 800;
-    backdrop-filter: none; /* не меняю стиль, просто закрепляю */
+    backdrop-filter: none;
+    /* не меняю стиль, просто закрепляю */
 }
 
 /* Кнопка бургера — по умолчанию скрыта (для десктопа) */
@@ -336,11 +353,12 @@ h6 {
     height: 44px;
     border-radius: 10px;
     border: 1px solid #ffffff;
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
     align-items: center;
     justify-content: center;
     gap: 4px;
 }
+
 .burger-btn span {
     display: block;
     width: 22px;
@@ -355,10 +373,12 @@ h6 {
     gap: 12px;
     align-items: center;
 }
+
 .mobile-menu__account .topbar__profile-image {
     width: 56px;
     height: 56px;
 }
+
 .mobile-menu__account .btn--logout {
     border: 1px solid #ffffff;
     height: 36px;
@@ -376,95 +396,210 @@ h6 {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.35);
+    background: rgba(0, 0, 0, .35);
     z-index: 998;
 }
+
 /* === New burger base (desktop: hidden) === */
-.three.col { display: none; align-items: center; }
-.hamburger { width: 32px; height: 28px; position: relative; cursor: pointer; }
-.hamburger .line{
-  position: absolute; left: 0; right: 0; margin: 0 auto;
-  display: block; height: 3px; width: 100%;
-  background:#fff; border-radius: 2px;
-  transition: transform .3s ease-in-out, width .3s ease-in-out, opacity .3s ease-in-out;
+.three.col {
+    display: none;
+    align-items: center;
 }
-.hamburger .line:nth-child(1){ top: 0; }
-.hamburger .line:nth-child(2){ top: 12.5px; }
-.hamburger .line:nth-child(3){ bottom: 0; }
+
+.hamburger {
+    width: 32px;
+    height: 28px;
+    position: relative;
+    cursor: pointer;
+}
+
+.hamburger .line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform .3s ease-in-out, width .3s ease-in-out, opacity .3s ease-in-out;
+}
+
+.hamburger .line:nth-child(1) {
+    top: 0;
+}
+
+.hamburger .line:nth-child(2) {
+    top: 12.5px;
+}
+
+.hamburger .line:nth-child(3) {
+    bottom: 0;
+}
 
 /* active animation from your spec */
-#hamburger-6.is-active{
-  transition: all 0.3s ease-in-out;
-  transition-delay: 0.6s;
-  transform: rotate(45deg);
+#hamburger-6.is-active {
+    transition: all 0.3s ease-in-out;
+    transition-delay: 0.6s;
+    transform: rotate(45deg);
 }
-#hamburger-6.is-activa .line:nth-child(2){ width: 0px; }
+
+#hamburger-6.is-activa .line:nth-child(2) {
+    width: 0px;
+}
+
 #hamburger-6.is-activa .line:nth-child(1),
-#hamburger-6.is-activa .line:nth-child(3){ transition-delay: 0.3s; }
-#hamburger-6.is-activa .line:nth-child(1){ transform: translateY(12px); }
-#hamburger-6.is-activa .line:nth-child(3){ transform: translateY(-13px) rotate(90deg); }
+#hamburger-6.is-activa .line:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+#hamburger-6.is-activa .line:nth-child(1) {
+    transform: translateY(12px);
+}
+
+#hamburger-6.is-activa .line:nth-child(3) {
+    transform: translateY(-13px) rotate(90deg);
+}
 
 
-.basket_mobile{
+.basket_mobile {
     display: none;
     visibility: hidden;
 }
+
+/* === Topbar tooltip === */
+.topbar-tooltip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 6px;
+    outline: none;
+    cursor: default;
+}
+
+.topbar-tooltip__icon {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+.topbar-tooltip__bubble {
+    position: absolute;
+    bottom: -69px;
+    right: -3px;
+    /* max-width: 240px; */
+    width: 330px;
+    padding: 8px 10px;
+    font-size: 12px;
+    line-height: 1.35;
+    color: #fff;
+    background: #111;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+    opacity: 0;
+    transform: translateY(4px);
+    pointer-events: none;
+    transition: opacity .16s ease, transform .16s ease;
+    z-index: 50;
+    white-space: normal;
+}
+
+/* маленькая стрелочка */
+.topbar-tooltip__bubble::after {
+    content: "";
+    position: absolute;
+    top: -18%;
+    right: 8px;
+    border: 6px solid transparent;
+    border-top-color: #111;
+    transform: rotate(-180deg);
+}
+
+/* показать по hover или фокусу */
+.topbar-tooltip:hover .topbar-tooltip__bubble,
+.topbar-tooltip:focus .topbar-tooltip__bubble,
+.topbar-tooltip:focus-within .topbar-tooltip__bubble {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* чуть увеличим зону ховера, чтобы не мигало */
+.topbar-tooltip::before {
+    content: "";
+    position: absolute;
+    inset: -6px -6px -6px -6px;
+}
+
 @media only screen and (max-width: 1670px) {
-    .topbar{
+    .topbar {
         height: 100px;
         padding: 0px 44px 0px 22px;
     }
+
     .topbar__bonuses {
         margin-left: 33px;
     }
-    .main{
+
+    .main {
         width: calc(100% - 290px);
         height: calc(100% - 100px);
     }
-    .sidebar{
+
+    .sidebar {
         width: 290px;
         height: calc(100% - 100px);
     }
-    .sidebar_car{
+
+    .sidebar_car {
         width: 222px;
         height: 348px;
     }
+
     .sidebar__footer {
         font-size: 14px;
         left: 156px;
     }
 
 
-    .topbar__profile-image{
+    .topbar__profile-image {
         width: 60px;
         height: 60px;
     }
-    .topbar__profile{
+
+    .topbar__profile {
         height: 60px;
-    }.topbar__bonuses{
+    }
+
+    .topbar__bonuses {
         font-size: 25px;
     }
 }
 
 @media only screen and (max-width: 1380px) {
-    .topbar{
+    .topbar {
         height: 80px;
         padding: 0px 44px 0px 10px;
     }
-    .main{
+
+    .main {
         height: calc(100% - 80px);
-        width: calc(100%  - 230px);
+        width: calc(100% - 230px);
     }
+
     .sidebar {
         width: 230px;
         height: calc(100% - 80px);
     }
+
     .nav {
         margin-left: 30px;
         margin-top: 30px;
 
     }
-    .nav__link{
+
+    .nav__link {
         font-size: 18px;
     }
 
@@ -472,38 +607,47 @@ h6 {
         width: 167px;
         height: 263px;
     }
-    .topbar__bonuses{
+
+    .topbar__bonuses {
         margin-left: 45px;
     }
+
     .brand {
         width: 178px;
     }
+
     .sidebar__footer {
         font-size: 13px;
         left: 115px;
     }
-        .topbar__profile-image {
-            width: 50px;
-            height: 50px;
-        }
-        .topbar__profile {
-            width: 180px;
-        }
-        .topbar__bonuses{
-            font-size: 19.5px;
-        }
-        .topbar__bonuses img{
-            width: 17px;
-            height: 17px;
 
-        }
-        .topbar__profile button{
-            font-size: 13px;
-        }
-        .topbar__profile form {
-            width: 93px;
-    height: 28px;
-        }
+    .topbar__profile-image {
+        width: 50px;
+        height: 50px;
+    }
+
+    .topbar__profile {
+        width: 180px;
+    }
+
+    .topbar__bonuses {
+        font-size: 19.5px;
+    }
+
+    .topbar__bonuses img {
+        width: 17px;
+        height: 17px;
+
+    }
+
+    .topbar__profile button {
+        font-size: 13px;
+    }
+
+    .topbar__profile form {
+        width: 93px;
+        height: 28px;
+    }
 
 }
 
@@ -511,7 +655,10 @@ h6 {
 
 /* ===== Телефоны ===== */
 @media (max-width: 768px) {
-  .three.col { display: inline-flex; }
+    .three.col {
+        display: inline-flex;
+    }
+
     /* Уменьшаем высоту шапки */
     .topbar {
         height: 60px;
@@ -530,6 +677,7 @@ h6 {
         height: auto;
         gap: 8px;
     }
+
     .topbar__bonuses img {
         width: 16px;
         height: 16px;
@@ -539,6 +687,7 @@ h6 {
     .topbar__profile {
         display: none !important;
     }
+
     .burger-btn {
         display: inline-flex;
     }
@@ -553,7 +702,8 @@ h6 {
     /* Сайдбар превращаем в оффканвас */
     .sidebar {
         position: fixed;
-        top: 60px; /* высота topbar на мобиле */
+        top: 60px;
+        /* высота topbar на мобиле */
         left: 0;
         width: 100%;
 
@@ -579,11 +729,17 @@ h6 {
         height: 200px;
 
     }
-    .nav__link { font-size: 18px; }
+
+    .nav__link {
+        font-size: 18px;
+    }
+
     .sidebar_car {
         width: 244px;
         height: 371px;
-    }/* картинку машины прячем на мобиле */
+    }
+
+    /* картинку машины прячем на мобиле */
     .sidebar__footer {
 
         margin: 18px;
@@ -602,22 +758,27 @@ h6 {
     body.menu-open .sidebar {
         transform: translateX(0);
     }
+
     body.menu-open .offcanvas-overlay {
         display: block;
     }
 
     /* Подправим общий контейнер, чтобы высота работала корректно */
     .main__wrapper {
-        min-height: 100vh; /* без жесткого 700px на мобиле */
+        min-height: 100vh;
+        /* без жесткого 700px на мобиле */
         height: auto;
     }
-    .nav__link{
+
+    .nav__link {
         width: 120px;
     }
+
     .topbar__bonuses p {
         margin-right: 10px;
     }
-    .basket_mobile{
+
+    .basket_mobile {
         display: flex;
         visibility: visible;
         align-items: center;
@@ -626,12 +787,14 @@ h6 {
         height: 30px;
         position: relative;
     }
-    .basket_mobile img{
+
+    .basket_mobile img {
         width: 100%;
         height: 100%;
         object-fit: contain;
     }
-    .cart-badge-mobile{
+
+    .cart-badge-mobile {
         position: absolute;
         width: 20px;
         height: 20px;
@@ -645,4 +808,15 @@ h6 {
         right: -5px;
         top: -2px;
     }
+
+    .topbar-tooltip__bubble {
+        bottom: -74px;
+        right: -76px;
+        width: 313px;
+    }
+
+    .topbar-tooltip__bubble::after {
+        right: 79px;
+    }
+
 }

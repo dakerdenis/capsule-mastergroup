@@ -724,3 +724,65 @@ color: #8C8C8C;
     margin-top: 25px;
 }
 }
+
+@media only screen and (max-width: 768px) {
+    .register_user-form{
+        width: 100%;
+    }
+    .auth_page-container{
+        min-height: 850px;
+    }
+    
+    .auth-line{
+        width: 62px;
+    }
+    .register_user-element{
+        width: 100%;
+    }
+    .file-upload{
+        width: 100%;
+    }
+    .register_user-input{
+        width: 100%;
+    }
+    .register_user-inputs{
+        width: 100%;
+    }
+    .register_user-birth{
+        width: 45%;
+        height: 60px;
+    }
+    .register_user-gender{
+        width: 45%;
+        height: 60px;
+    }
+    .register_user-input {
+        height: 60px;
+    }
+    .register_user-inputs{
+        height: 60px;
+    }
+    .auth__form-name h2 {
+        font-size: 24px;
+    }
+    .form__controll{
+        width: 100%;
+    }
+    .form_next {
+        width: 45%;
+    }
+    .form__controll a{
+        width: 45%;
+
+    }
+    .chk{
+        width: 100%;
+    }
+    .chk__text{
+        width: initial;
+        font-size: 10px;
+    }
+}
+
+
+

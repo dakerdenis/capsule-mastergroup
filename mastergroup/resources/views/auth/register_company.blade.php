@@ -25,7 +25,7 @@
                     <!---form block with text and buttons---->
                     <div class="auth__form-name">
                         <h2>
-                            Welcome to Mastegroup Portal
+                            Welcome to Mastergroup Portal
                         </h2>
 
                         <!-----Lined text----->
@@ -214,12 +214,16 @@
                                 </div>
 
 
-                                <div class="register_checkbox">
-
-                                    <input type="checkbox" name="agree" id="agree">
-                                    <label for="agree">I confirm my consent to the processing of personal data, and
-                                        that I have read and agree to the terms and conditions.</label>
-                                </div>
+<!-- Agree -->
+<div class="chk" id="agreeBlk" style="--chk-color:#16a34a;">
+    <input class="chk__input" type="checkbox" name="agree" id="agree" required>
+    <label class="chk__label" for="agree">
+      <span class="chk__box" aria-hidden="true"></span>
+      <span class="chk__text">
+        I confirm my consent to the processing of personal data, and that I have read and agree to the terms and conditions.
+      </span>
+    </label>
+  </div>
 
                                 <div class="form__controll2">
                                     <button type="submit" class="form_submit">register</button>
