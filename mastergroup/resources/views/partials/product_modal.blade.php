@@ -249,7 +249,7 @@
         }
 
 
-        @media only screen and (max-width: 1000px) {
+        @media only screen and (max-width: 768px) {
             .pm-dialog {
                 width: 95%;
                 height: 100%;
@@ -315,6 +315,8 @@
 
             .popup__desc {
                 margin-top: 15px;
+                height: calc(100% - 145px);
+                overflow: scroll
             }
 
             .popup__amount .catalog__element-amount {
@@ -328,6 +330,17 @@
 
             .popup__amount .catalog__element-amount span {
                 font-size: 20px;
+            }
+            .popup__code{
+                margin-bottom: 10px;
+                margin-top: 7px;
+                font-size: 13px;
+                line-height: 14px;
+            }
+            .popup__name {
+                height: 60px;
+                font-size: 20px;
+                line-height: 25px;
             }
         }
     </style>

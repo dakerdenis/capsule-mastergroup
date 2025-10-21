@@ -769,4 +769,24 @@ body[data-modal-open="true"] {
     .account__bonuses-desc_collect button {
         margin-top: 10px;
     }
+    .modal__content{
+        width: 100%;
+        height: initial;
+    }
+    .change__password__wrapper{
+        padding: 10px;
+        padding-top: 50px;
+    }
+    .change__password-green{
+        width: 100%;
+        height: 44px;
+        margin-bottom: 20px;
+    }
+    .change__password-desc {
+        font-size: 16px;
+    }
+    .change__password__wrapper button {
+        right: 11px;
+    top: 11px;
+    }
 }

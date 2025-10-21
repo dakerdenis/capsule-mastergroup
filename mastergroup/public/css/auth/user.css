@@ -723,6 +723,10 @@ color: #8C8C8C;
 .register_user-form {
     margin-top: 25px;
 }
+.auth_page-container{
+    
+    min-height: 895px;
+}
 }
 
 @media only screen and (max-width: 768px) {
@@ -782,7 +786,11 @@ color: #8C8C8C;
         width: initial;
         font-size: 10px;
     }
+    .auth_page-container{
+        min-height: 852px;
+    }
 }
+
 
 
 

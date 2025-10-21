@@ -49,14 +49,14 @@ class RegisterController extends Controller
 
         $forIndividual = [
             'workplace'       => ['required', 'string', 'max:255'],
-            'identity_photo'  => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
-            'profile_photo'   => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'identity_photo'  => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'profile_photo'   => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];
 
         $forCompany = [
             'workplace'     => ['nullable', 'string', 'max:255'],
-            'profile_photo' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
-            'company_logo'  => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'profile_photo' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'company_logo'  => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];
 
         $data = $request->validate(array_merge(

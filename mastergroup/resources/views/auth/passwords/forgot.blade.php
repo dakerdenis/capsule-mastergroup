@@ -44,7 +44,7 @@
                             </div>
                         
                             @if (session('status'))
-                                <div class="notice" style="color:#2ecc71;margin-bottom:12px">{{ session('status') }}</div>
+                                <div class="notice notice_pssword">{{ session('status') }}</div>
                             @endif
                         
                             <div class="form-button">

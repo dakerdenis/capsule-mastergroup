@@ -447,6 +447,9 @@ color: #404040;
     .catalog__element-amount button{
         width: 28px;
     }
+    .popup__desc{
+
+    }
 }
 
 @media (max-width: 390px) {
