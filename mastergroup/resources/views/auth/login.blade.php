@@ -7,25 +7,20 @@
 @section('content')
     <div class="auth_page-container">
         <div class="auth_page-wrapper">
-            <!--------FORM---->
             <div class="auth__form">
                 <div class="auth__form-back">
                     <img src="{{ asset('images/auth/back_.png') }}" alt="Capsuleppf Back">
                 </div>
                 <div class="auth__form-container">
                     <div class="auth__form__wrapper">
-                        <!--- logo with link to /--->
                         <a href="{{ route('home') }}" class="auth__form-logo">
                             <img src="{{ asset('images/common/capsule_logo-white.png') }}" alt="Capsuleppf Logo">
                         </a>
-
-                        <!---form block with text and buttons---->
                         <div class="auth__form-name">
                             <h2>
                                 Welcome to Mastergroup Portal
                             </h2>
                             <p>Masters marketpace. Use bonuses - get gifts.</p>
-                            <!-----Lined text----->
                             <div class="auth__form-lined">
                                 <div class="auth-line"></div>
                                 <div class="auth__form-desc">
@@ -34,34 +29,45 @@
                                 <div class="auth-line"></div>
                             </div>
                         </div>
-                        <!-----form and input fields----->
-{{-- LOGIN FORM (без изменений логики, только чтоб отправлялось) --}}
-<form action="{{ route('auth.login.submit') }}" method="POST" class="auth__form-form" id="loginForm" novalidate>
-    @csrf
-    <div class="form-block" id="emailBlock">
-        <input id="email" name="email" type="email" placeholder="Login (e-mail)" autocomplete="username" value="{{ old('email') }}">
-    </div>
+                        <form action="{{ route('auth.login.submit') }}" method="POST" class="auth__form-form"
+                            id="loginForm" novalidate>
+                            @csrf
+                            <div class="form-block" id="emailBlock">
+                                <input id="email" name="email" type="email" placeholder="Login (e-mail)"
+                                    autocomplete="username" value="{{ old('email') }}">
+                            </div>
+                            <div class="form-block form-block--with-eye" id="passBlock">
+                                <input id="password" name="password" type="password" placeholder="Password"
+                                    autocomplete="current-password">
+                                <button type="button" class="input-eye" aria-label="Show password" aria-pressed="false">
+                                    <span class="eye-icon" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            {{-- Только для мобилок: общая ошибка авторизации от сервера --}}
+                            @php
+                                // Обычно Laravel кладёт текст "These credentials do not match our records." в $errors->email
+                                $authFailed =
+                                    session('login_error') ||
+                                    session('error') ||
+                                    ($errors->has('email') &&
+                                        str_contains(strtolower($errors->first('email')), 'match')) ||
+                                    $errors->has('password');
+                            @endphp
 
-    <div class="form-block form-block--with-eye" id="passBlock">
-        <input id="password" name="password" type="password" placeholder="Password" autocomplete="current-password">
-        <button type="button" class="input-eye" aria-label="Show password" aria-pressed="false">
-            <span class="eye-icon" aria-hidden="true"></span>
-        </button>
-    </div>
-
-    <div class="form-forgot">
-        <a href="{{ route('password.forgot') }}">Forgot password ?</a>
-    </div>
-    <div class="form-button">
-        <button type="submit">
-            <p>LOG IN</p>
-        </button>
-    </div>
-</form>
-
-
-                        <!--------->
-
+                            @if ($authFailed)
+                                <div class="mobile-auth-error" role="alert" aria-live="polite">
+                                    Incorrect email or password.
+                                </div>
+                            @endif
+                            <div class="form-forgot">
+                                <a href="{{ route('password.forgot') }}">Forgot password ?</a>
+                            </div>
+                            <div class="form-button">
+                                <button type="submit">
+                                    <p>LOG IN</p>
+                                </button>
+                            </div>
+                        </form>
                         <!----link to registration---->
                         <div class="auth__form-register">
                             <p>Have no registration ?</p>
@@ -70,19 +76,15 @@
                     </div>
                 </div>
             </div>
-
             <!------block and car--->
             <div class="auth__car">
                 <div class="auth__car-container">
-                    <!---ERRORS AND TEXT BLOCK---->
                     @php
-                        // включится, если из контроллера придёт любой из этих flash-ключей
                         $regOK =
                             session('registration_success') ||
                             session('status') === 'registered' ||
                             session('success') === 'registered';
                     @endphp
-
                     <div class="auth__car-block {{ $regOK ? 'is-success' : '' }}">
                         <!---text with green background ---->
                         <div class="auth__car-mainmessage">
@@ -95,12 +97,12 @@
                                 @endif
                             </p>
                         </div>
-
                         <div class="auth__car-text">
                             @if ($regOK)
                                 <p>Your registration request has been accepted and sent to the administrator for review.</p>
                                 <p style="    font-size: 19px;
-    line-height: 27px;">Once your registration is confirmed, you will receive a notification via email.</p>
+    line-height: 27px;">Once your registration is confirmed,
+                                    you will receive a notification via email.</p>
                             @else
                                 <p>Earn bonuses for every product you purchase. Exchange your bonuses for useful gifts to
                                     use
@@ -109,10 +111,6 @@
                             @endif
                         </div>
                     </div>
-
-                    <!-------->
-
-                    <!---car image--->
                     <div class="auth__car-image">
                         <img src="{{ asset('images/auth/car.png') }}" alt="Capsuleppf Back">
                     </div>
@@ -129,31 +127,22 @@
             const emailBlk = document.getElementById('emailBlock');
             const passBlk = document.getElementById('passBlock');
             const eyeBtn = passBlk.querySelector('.input-eye');
-
-            // Показ/скрытие пароля
             eyeBtn.addEventListener('click', () => {
                 const isShown = password.type === 'text';
                 password.type = isShown ? 'password' : 'text';
                 eyeBtn.classList.toggle('is-on', !isShown);
                 eyeBtn.setAttribute('aria-pressed', String(!isShown));
             });
-
-            // Флаг: начал ли пользователь попытку отправки
             let triedSubmit = false;
-
             const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
             function validateAll() {
-                // правила валидности
                 const emailVal = email.value.trim();
                 const passVal = password.value;
-
                 const emailOk = emailVal === '' ? false : emailRe.test(
-                    emailVal); // пустой email — считаем невалидным на сабмите
+                    emailVal);
                 const passOk = !(emailVal !== '' && passVal ===
-                    ''); // если email есть, пароль не должен быть пустым
-
-                // Подсветка только после попытки сабмита
+                    '');
                 if (triedSubmit) {
                     emailBlk.classList.toggle('has-error', !emailOk);
                     passBlk.classList.toggle('has-error', !passOk);
@@ -162,7 +151,6 @@
                 return emailOk && passOk;
             }
 
-            // При вводе пересчёт делаем ТОЛЬКО если уже была попытка отправить
             function maybeRevalidate() {
                 if (triedSubmit) validateAll();
             }
@@ -177,6 +165,4 @@
             });
         });
     </script>
-
-
 @endsection

@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="{{ asset('css/pickaday.css') }}">
 @endpush
 @section('content')
+<style>
+    /* error text for file upload */
+.file-error{
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #dc2626; /* красный */
+}
+
+</style>
 <div class="auth_page-container">
     <div class="auth_page-wrapper">
         <!--------FORM---->
@@ -55,7 +65,7 @@
                                             <div class="file-icon">
                                                 <img src="{{ asset('images/auth/doc.png') }}" alt="">
                                             </div>
-                                            <p>Company Logo <span class="req">*</span></p>
+                                            <p>Company Logo <span class="req">*</span> <small>max 5 mb</small></p>
                                             <p class="file-text">Drag and Drop file here or <span class="choose">Choose
                                                     file</span></p>
                                         </div>
@@ -74,7 +84,7 @@
                                         <div class="file-dropzone">
                                             <div class="file-icon"><img src="{{ asset('images/auth/doc.png') }}" alt="">
                                             </div>
-                                            <p>Profile photo <span class="req">*</span></p>
+                                            <p>Profile photo <span class="req">*</span> <small>max 5 mb</small></p>
                                             <p class="file-text">Drag and Drop file here or <span class="choose">Choose
                                                     file</span></p>
                                         </div>
