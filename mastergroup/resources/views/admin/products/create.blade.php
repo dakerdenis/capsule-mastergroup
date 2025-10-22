@@ -47,16 +47,7 @@
         @error('category_id') <div class="text-danger small">{{ $message }}</div> @enderror
       </div>
 
-      <div class="col-md-6">
-        <label class="form-label">Type</label>
-        <select name="type" class="form-select">
-          <option value="">— None —</option>
-          @foreach($types as $t)
-            <option value="{{ $t }}" @selected(old('type') === $t)>{{ $t }}</option>
-          @endforeach
-        </select>
-        @error('type') <div class="text-danger small">{{ $message }}</div> @enderror
-      </div>
+
 
       <div class="col-12">
         <label class="form-label">Description</label>

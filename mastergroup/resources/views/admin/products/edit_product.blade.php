@@ -43,14 +43,7 @@
         @error('slug') <div class="error">{{ $message }}</div> @enderror
       </div>
 
-      <div class="field">
-        <label class="label">Type</label>
-        <input class="input" name="type" value="{{ old('type', $product->type) }}" list="type-list">
-        <datalist id="type-list">
-          @foreach($types as $t) <option value="{{ $t }}"> @endforeach
-        </datalist>
-        @error('type') <div class="error">{{ $message }}</div> @enderror
-      </div>
+
 
       <div class="field">
         <label class="label">Price *</label>

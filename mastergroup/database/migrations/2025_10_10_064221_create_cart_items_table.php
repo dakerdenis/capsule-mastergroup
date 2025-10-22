@@ -10,10 +10,13 @@ return new class extends Migration {
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('product_id')->constrained()->restrictOnDelete();
+            $table->foreignId('product_id')
+                ->constrained()
+                ->cascadeOnUpdate()   // (рекомендую) если id товара когда-либо меняется (обычно нет)
+                ->cascadeOnDelete();  // ← было restrictOnDelete()
             $table->unsignedTinyInteger('qty')->default(1);
             $table->timestamps();
-            $table->unique(['user_id','product_id']);
+            $table->unique(['user_id', 'product_id']);
         });
     }
 

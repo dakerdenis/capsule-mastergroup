@@ -812,7 +812,7 @@ h6 {
     .topbar-tooltip__bubble {
         bottom: -74px;
         right: -76px;
-        width: 313px;
+        width: 280px;
     }
 
     .topbar-tooltip__bubble::after {

@@ -83,7 +83,7 @@ class AdminProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         $validated = $request->validated();
-
+ $validated['type'] = trim((string)($validated['type'] ?? 'general'));
         // проверим лимит фото: существующие - удаляемые + новые ≤ 5 и итог ≥ 1
         $existingCount = $product->images()->count();
         $toDeleteCount = count($validated['delete_images'] ?? []);
@@ -102,7 +102,7 @@ class AdminProductController extends Controller
                 'name'        => $validated['name'],
                 'code'        => $validated['code'],
                 'slug'        => $validated['slug'] ?? null, // модель сгенерит если пусто
-                'type'        => $validated['type'] ?? null,
+                'type'        => $validated['type'],
                 'description' => $validated['description'] ?? null,
                 'price'       => $validated['price'],
                 'category_id' => $validated['category_id'],
@@ -198,6 +198,8 @@ class AdminProductController extends Controller
     public function store(StoreProductRequest $request): \Illuminate\Http\RedirectResponse
     {
         $v = $request->validated();
+        // дефолт для type, если не пришёл с формы
+        $v['type'] = trim((string)($v['type'] ?? 'general')); // или '' если хочешь пустую строку
 
         // Сгенерим slug, если пуст
         if (empty($v['slug'])) {
@@ -205,11 +207,10 @@ class AdminProductController extends Controller
         }
 
         // На всякий случай уникализируем slug, если занят
-        $base = $v['slug'];
-        $i = 1;
-        while (Product::where('slug', $v['slug'])->exists()) {
-            $v['slug'] = $base . '-' . ++$i;
-        }
+    $base = $v['slug']; $i = 1;
+    while (Product::where('slug', $v['slug'])->exists()) {
+        $v['slug'] = $base . '-' . ++$i;
+    }
 
         // Создаём продукт
         $product = DB::transaction(function () use ($v, $request) {
@@ -218,7 +219,7 @@ class AdminProductController extends Controller
                 'name'        => $v['name'],
                 'code'        => $v['code'] ?? null,
                 'slug'        => $v['slug'],
-                'type'        => $v['type'] ?? null,
+                'type'        => $v['type'],
                 'description' => $v['description'] ?? null,
                 'price'       => $v['price'],
                 'category_id' => $v['category_id'] ?? null,
