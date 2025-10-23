@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('css/admin.css') }}"> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="icon" href="https://capsuleppf.com/public/images/casule_favicon.png">
     @stack('page-styles')
 </head>
 

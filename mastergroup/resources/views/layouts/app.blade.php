@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="icon" href="https://capsuleppf.com/public/images/casule_favicon.png">
     @stack('page-styles')
 
 </head>

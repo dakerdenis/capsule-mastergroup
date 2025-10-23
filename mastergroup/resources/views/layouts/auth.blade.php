@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{{ asset('css/main.css') }}?v={{ filemtime(public_path('css/main.css')) }}">
   <link rel="stylesheet" href="{{ asset('css/auth/base.css') }}?v={{ filemtime(public_path('css/auth/base.css')) }}">
+      <link rel="icon" href="https://capsuleppf.com/public/images/casule_favicon.png">
   @stack('page-styles')
 </head>
 <body class="auth">
