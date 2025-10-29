@@ -1,0 +1,116 @@
+/* Light theme for Gift CPS admin card */
+.admin-card{
+  background:#ffffff;
+  border:1px solid #E6EAF0;
+  border-radius:12px;
+  padding:16px 18px;
+  color:#1F2937; /* текст по умолчанию */
+  max-width:680px;
+  box-shadow:0 2px 8px rgba(17,24,39,0.06);
+}
+
+.admin-card h3{
+  margin:0 0 14px;
+  font-size:20px;
+  color:#111827; /* заголовок чуть темнее */
+}
+
+.form-row{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:14px;
+}
+
+.form-row label{
+  font-size:13px;
+  color:#6B7280; /* серый для подписей */
+}
+
+.form-row input{
+  background:#ffffff;
+  border:1px solid #D1D5DB;
+  border-radius:10px;
+  padding:10px 12px;
+  color:#111827;
+  outline:none;
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+
+.form-row input::placeholder{
+  color:#9CA3AF;
+}
+
+.form-row input:focus{
+  border-color:#3B82F6; /* blue-500 */
+  box-shadow:0 0 0 3px rgba(59,130,246,0.15);
+}
+
+.req{ color:#EF4444; }
+
+.form-actions .btn{
+  padding:10px 16px;
+  border-radius:10px;
+  border:0;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.btn--primary{
+  background:#3B82F6;   /* синий */
+  color:#ffffff;
+}
+
+.btn--primary:hover{
+  background:#2563EB;   /* чуть темнее при ховере */
+}
+
+.btn[disabled]{
+  opacity:.6; cursor:default;
+}
+
+/* Alerts */
+.alert{
+  border-radius:10px;
+  padding:10px 12px;
+  margin-bottom:12px;
+  border:1px solid transparent;
+}
+
+.alert--ok{
+  background:#ECFDF5;   /* зеленый светлый */
+  color:#065F46;
+  border-color:#A7F3D0;
+}
+
+.alert--error{
+  background:#FEF2F2;   /* красный светлый */
+  color:#991B1B;
+  border-color:#FECACA;
+}
+
+/* детали/подсказки */
+.hints summary{
+  cursor:pointer;
+  color:#6B7280;
+  margin-top:8px;
+}
+
+.mini-list{
+  margin:8px 0 0 18px;
+  color:#374151;
+}
+
+/* контейнер страницы */
+.gift__container{
+  width:100%;
+  padding:10px;
+  background:#F9FAFB; /* общий светлый фон секции/страницы */
+}
+
+/* Доп: состояние ошибки для инпутов (если используешь $errors->has(...)) */
+.form-row input.is-invalid{
+  border-color:#EF4444;
+  box-shadow:0 0 0 3px rgba(239,68,68,0.12);
+}
+

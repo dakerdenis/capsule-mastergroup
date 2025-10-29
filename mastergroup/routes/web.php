@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminCodeController;
+use App\Http\Controllers\Admin\AdminGiftController;
 
 
 // ====== Гость ======
@@ -125,5 +126,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::patch('/orders/{order}', [AdminOrderController::class, 'update'])->name('orders.update');
 
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+
+        // routes/web.php (внутри Route::middleware('auth:admin')->group(...))
+        Route::prefix('gifts')->name('gifts.')->group(function () {
+            Route::get('/',  [AdminGiftController::class, 'gift'])->name('index');  // admin.gifts.index
+            Route::post('/', [AdminGiftController::class, 'store'])->name('store'); // admin.gifts.store
+        });
     });
 });

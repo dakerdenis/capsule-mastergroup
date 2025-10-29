@@ -75,6 +75,9 @@
                     href="{{ route('admin.orders.index') }}">Orders</a>
                 <a class="nav__link {{ request()->routeIs('admin.codes.*') ? 'is-active' : '' }}"
                     href="{{ route('admin.codes.index') }}">Codes</a>
+                <a class="nav__link {{ request()->routeIs('admin.gifts.*') ? 'is-active' : '' }}"
+                    href="{{ route('admin.gifts.index') }}">Gifts</a>
+
             </nav>
 
 
