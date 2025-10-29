@@ -56,6 +56,23 @@
                                     <span class="eye-icon" aria-hidden="true"></span>
                                 </button>
                             </div>
+                            {{-- Только для мобилок: общая ошибка авторизации от сервера --}}
+                            @php
+                                // Обычно Laravel кладёт текст "These credentials do not match our records." в $errors->email
+                                $authFailed =
+                                    session('login_error') ||
+                                    session('error') ||
+                                    ($errors->has('email') &&
+                                        str_contains(strtolower($errors->first('email')), 'match')) ||
+                                    $errors->has('password');
+                            @endphp
+
+                            @if ($authFailed)
+                                <div class="mobile-auth-error" role="alert" aria-live="polite">
+                                    Incorrect email or password.
+                                </div>
+                            @endif
+                            
                             <div class="form-forgot">
                                 <a href="{{ route('password.forgot') }}">Forgot password ?</a>
                             </div>
@@ -64,13 +81,6 @@
                                     <p>LOG IN</p>
                                 </button>
                             </div>
-
-                            {{-- серверные ошибки авторизации прямо под кнопкой --}}
-                            @if ($errors->has('email'))
-                                <div class="form-error" role="alert" aria-live="polite">
-                                    {{ $errors->first('email') }}
-                                </div>
-                            @endif
                         </form>
                         <!----link to registration---->
                         <div class="auth__form-register">
