@@ -43,6 +43,7 @@ Route::post('/password/generate', [PasswordController::class, 'generateNew'])
     ->middleware('throttle:password-email');
 
 
+    
 // ====== Авторизованные ======
 Route::middleware('auth')->group(function () {
     Route::get('/', [AccountController::class, 'dashboard'])->name('home');
@@ -80,6 +81,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
+
 // Админ-логин: 5 попыток/час по IP и по паре email+IP
 RateLimiter::for('admin-login', function (Request $request) {
     $ip = $request->ip();
@@ -90,6 +92,9 @@ RateLimiter::for('admin-login', function (Request $request) {
         Limit::perHour(5)->by('combo:' . sha1(strtolower($email) . '|' . $ip)),
     ];
 });
+
+
+
 
 // Админ-маршруты: отдельный guard и middlewareЫ
 Route::prefix('admin')->name('admin.')->group(function () {

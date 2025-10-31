@@ -38,11 +38,12 @@
     font-weight: 400;
 
     font-size: 14px;
-
+    color: #fff;
     line-height: 122%;
     letter-spacing: 0%;
     text-align: center;
 }
+.registration_name{}
 .registration_image {
 }
 .registration_text {

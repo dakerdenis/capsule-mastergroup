@@ -19,13 +19,22 @@ class AppServiceProvider extends ServiceProvider
             $ip = $request->ip();
             $email = (string) $request->input('email');
             return [
-                Limit::perMinute(5)->by('ip:'.sha1($ip)),
-                Limit::perMinute(5)->by('combo:'.sha1(Str::lower($email).'|'.$ip)),
+                Limit::perMinute(5)->by('ip:' . sha1($ip)),
+                Limit::perMinute(5)->by('combo:' . sha1(Str::lower($email) . '|' . $ip)),
             ];
         });
 
         RateLimiter::for('password-email', function (Request $request) {
-            return [ Limit::perMinute(3)->by('ip:'.sha1($request->ip())) ];
+            return [Limit::perMinute(3)->by('ip:' . sha1($request->ip()))];
+        });
+
+        RateLimiter::for('admin-login', function (Request $request) {
+            $ip = $request->ip();
+            $email = (string) $request->input('email');
+            return [
+                Limit::perMinute(5)->by('admin:ip:' . sha1($ip)),
+                Limit::perMinute(5)->by('admin:combo:' . sha1(Str::lower($email) . '|' . $ip)),
+            ];
         });
     }
 }

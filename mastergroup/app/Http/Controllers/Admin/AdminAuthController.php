@@ -29,12 +29,14 @@ class AdminAuthController extends Controller
         // Ключи для лимитера по IP и по паре email+IP
         $ip = $request->ip();
         $email = (string) $request->input('email');
-        $keyIp = 'admin_login:ip:'.md5($ip);
-        $keyCombo = 'admin_login:combo:'.md5(Str::lower($email).'|'.$ip);
+        $keyIp = 'admin_login:ip:' . md5($ip);
+        $keyCombo = 'admin_login:combo:' . md5(Str::lower($email) . '|' . $ip);
 
         // Если превысили порог — шлём 429 с временем ожидания
-        if (RateLimiter::tooManyAttempts($keyIp, $this->maxAttempts) ||
-            RateLimiter::tooManyAttempts($keyCombo, $this->maxAttempts)) {
+        if (
+            RateLimiter::tooManyAttempts($keyIp, $this->maxAttempts) ||
+            RateLimiter::tooManyAttempts($keyCombo, $this->maxAttempts)
+        ) {
 
             $seconds = max(
                 RateLimiter::availableIn($keyIp),
@@ -46,13 +48,13 @@ class AdminAuthController extends Controller
             ])->status(429);
         }
 
-// Валидация входных (DNS-проверку включаем только в проде)
-$rules = [
-    'email' => ['required','string','lowercase', app()->isProduction() ? 'email:rfc,dns' : 'email:rfc'],
-    'password' => ['required','string','min:8','max:128'],
-];
+        // Валидация входных (DNS-проверку включаем только в проде)
+        $rules = [
+            'email' => ['required', 'string', 'lowercase', app()->isProduction() ? 'email:rfc,dns' : 'email:rfc'],
+            'password' => ['required', 'string', 'min:8', 'max:128'],
+        ];
 
-$validated = $request->validate($rules);
+        $validated = $request->validate($rules);
 
         // Попытка входа
         $ok = Auth::guard('admin')->attempt(

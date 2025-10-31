@@ -34,10 +34,10 @@
                                 <div class="auth-line"></div>
                             </div>
                         </div>
-                        <!-----Registration Options----->
+                        {{-- Регистрация: варианты --}}
                         <div class="registraion__options__container">
-                            <!-- REGISTER AS USER -->
-                            <div class="regitration__option" data-route="{{ route('auth.register.user') }}">
+                            {{-- REGISTER AS USER --}}
+                            <a class="regitration__option" href="{{ route('auth.register.user') }}">
                                 <div class="registration_name">Register as an Individual</div>
                                 <div class="registration_image">
                                     <img src="{{ asset('images/auth/reg-user.svg') }}" alt="Capsuleppf Back">
@@ -45,10 +45,10 @@
                                 <div class="registration_text">
                                     Your registration request has been accepted and sent to the administrator for review.
                                 </div>
-                            </div>
+                            </a>
 
-                            <!-- REGISTER AS COMPANY -->
-                            <div class="regitration__option" data-route="{{ route('auth.register.company') }}">
+                            {{-- REGISTER AS COMPANY --}}
+                            <a class="regitration__option" href="{{ route('auth.register.company') }}">
                                 <div class="registration_name">Register as a Company</div>
                                 <div class="registration_image">
                                     <img src="{{ asset('images/auth/reg-company.svg') }}" alt="Capsuleppf Back">
@@ -56,15 +56,8 @@
                                 <div class="registration_text">
                                     Your registration request has been accepted and sent to the administrator for review.
                                 </div>
-                            </div>
+                            </a>
                         </div>
-
-                        <!-- REGISTRATION NEXT -->
-                        <div class="registration__next">
-                            <a id="regNext" href="#" aria-disabled="true" class="is-disabled">NEXT</a>
-                        </div>
-
-
                     </div>
                 </div>
             </div>
