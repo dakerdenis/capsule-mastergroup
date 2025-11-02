@@ -31,6 +31,7 @@
         sModal: document.getElementById("orderSuccessModal"),
         sOk: document.getElementById("sOk"),
         sOrderNumber: document.getElementById("orderNumberText"),
+        notice: document.getElementById("cpsError"), 
     };
 
     const modalState = { pid: null, row: null, lastFocus: null };
@@ -143,15 +144,25 @@
 
     function updateTotals(selectedSum, totalItems) {
         els.cpsUser.textContent = `${fmt(USER_CPS)} CPS`;
-        els.cpsSel.textContent = `${fmt(selectedSum)} CPS`;
+        els.cpsSel.textContent  = `${fmt(selectedSum)} CPS`;
+      
         const left = USER_CPS - selectedSum;
         els.cpsLeft.textContent = `${fmt(left)} CPS`;
-        els.place.disabled = selectedSum <= 0;
-
-        // ✅ обновляем глобальные бейджи
+      
+        // кнопка активна только если сумма > 0 и не превышает баланс
+        const canPlace = selectedSum > 0 && selectedSum <= USER_CPS;
+        els.place.disabled = !canPlace;
+      
+        // сообщение показываем ТОЛЬКО если сумма превышает баланс
+        if (els.notice) {
+          const overBalance = selectedSum > USER_CPS;
+          els.notice.hidden = !overBalance;   // скрыто если не превышает или = 0
+        }
+      
         bumpBadge(totalItems || 0);
-    }
-
+      }
+      
+      
     function escapeHtml(s) {
         return (s ?? "").replace(
             /[&<>"']/g,

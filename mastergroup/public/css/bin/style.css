@@ -454,7 +454,12 @@
     color: #343C44;
 }
 
-
+.cart__total__notice{
+    margin: 8px 0 10px;
+    color: #DC2626;      /* красный */
+    font-size: 13px;
+  }
+  
 @media only screen and (max-width: 1670px) {
     .cart__selected {
         width: 327px;
