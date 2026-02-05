@@ -26,7 +26,7 @@
     <section class="bonus-legend">
       <header class="legend-head">
         <h4>Prefixes & bonuses</h4>
-        <span class="legend-note">Example: <code>AA12345</code> → Type: <b>{{ $map['AA']['type'] ?? '—' }}</b>, +<b>{{ $map['AA']['bonus_cps'] ?? 0 }}</b> CPS</span>
+        <span class="legend-note">Example: <code>UR12345</code> → Type: <b>{{ $map['AA']['type'] ?? '—' }}</b>, +<b>{{ $map['AA']['bonus_cps'] ?? 0 }}</b> CPS</span>
       </header>
 
       <div class="legend-grid">
@@ -49,9 +49,9 @@
 
     <div class="field" style="margin-top:10px">
       <label class="label">Codes *</label>
-      <textarea class="textarea" name="codes" rows="10" placeholder="AA12345
-AB9XYZ
-AC0001
+      <textarea class="textarea" name="codes" rows="10" placeholder="OP12345
+UR9XYZ
+EL0001
 …">{{ old('codes') }}</textarea>
       <div class="hint">Allowed: 2 letters + letters/digits ({{ config('codes.regex') }}).</div>
     </div>

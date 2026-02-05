@@ -4,15 +4,15 @@ return [
     // Префикс => [type, bonus_cps]
     // Заполни значения bonus_cps под себя
     'prefix_map' => [
-        'AA' => ['type' => 'welcome',     'bonus_cps' => 10],
-        'AB' => ['type' => 'promo',       'bonus_cps' => 20],
-        'AC' => ['type' => 'gift',        'bonus_cps' => 30],
-        'AD' => ['type' => 'compensation','bonus_cps' => 40],
-        'AE' => ['type' => 'referral',    'bonus_cps' => 50],
+        'UR' => ['type' => 'urban',     'bonus_cps' => 20],
+        'OP' => ['type' => 'optima',       'bonus_cps' => 25],
+        'EL' => ['type' => 'element',        'bonus_cps' => 30],
+        'HU' => ['type' => 'hurrican','bonus_cps' => 40],
+        'MA' => ['type' => 'matte',    'bonus_cps' => 30],
     ],
 
     // Допустимые «человеческие» типы (валидатор/фильтры)
-    'types' => ['welcome','promo','gift','compensation','referral'],
+    'types' => ['urban','optima','element','hurrican','matte'],
 
     // Максимум кодов за раз в форме добавления
     'max_bulk' => 20,
