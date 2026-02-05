@@ -104,7 +104,7 @@
                 <div class="footer__contact">
                     <div class="footer__contact-element">
                         <span>Address:</span>
-                        <p>91 Main St. New York, USA</p>
+                        <p>850 3rd Avenue, Brooklyn, NY, USA</p>
                     </div>
                     <div class="footer__contact-element">
                         <span>Phone:</span>

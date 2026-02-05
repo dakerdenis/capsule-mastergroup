@@ -34,14 +34,8 @@
                     </div>
 
                     <div class="cart__total__button">
-                        <!-- Сообщение об ошибке баланса -->
-                        <div id="cpsError" class="cart__total__notice" hidden aria-live="polite">
-                            Not enough CPS to place the order.
-                        </div>
                         <button id="btnPlaceOrder" disabled>PLACE ORDER</button>
                     </div>
-
-
                 </div>
             </div>
         </div>
