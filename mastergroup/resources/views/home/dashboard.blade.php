@@ -15,7 +15,7 @@
         <div class="dashboard__content">
             <!----dashboard desc----->
             <div class="dashboard__desc">
-                <h3>Welcome to Mastegroup Market </h3>
+                <h3>Welcome to Mastergroup Market </h3>
                 <p>Earn bonuses for every product you purchase. Exchange your bonuses for useful gifts to use with your
                     product.
                     Earn bonuses for every product you purchase. Exchange your bonuses for useful gifts to use with your
@@ -103,16 +103,17 @@
 
                 <div class="footer__contact">
                     <div class="footer__contact-element">
-                        <span>Address:</span>
-                        <p>850 3rd Avenue, Brooklyn, NY, USA</p>
+                        <p>Local Azerbaijan support:</p>
+                       <!--- <span>Address:</span>
+                        <p>850 3rd Avenue, Brooklyn, NY, USA</p> -->
                     </div>
                     <div class="footer__contact-element">
                         <span>Phone:</span>
-                        <p>+994 44 444 44 44</p>
+                        <p>+994 997 79 79 60</p>
                     </div>
                     <div class="footer__contact-element">
                         <span>Email:</span>
-                        <p>hello@capsule.com</p>
+                        <p>contact@capsuleppf.com</p>
                     </div>
                 </div>
             </div>
