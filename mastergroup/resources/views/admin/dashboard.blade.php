@@ -7,6 +7,26 @@
 @endpush
 
 @section('content')
+<style>
+    @media (max-width: 768px){
+  .filters{
+    gap:10px;
+  }
+  .filters select,
+  .filters input[type="text"]{
+    flex:1 1 160px;
+    min-width:140px;
+  }
+  .btn{
+    flex:0 0 auto;
+  }
+      .sidebar_car {
+        width: 156px;
+        height: 243px;
+      }
+}
+
+</style>
     <div class="admin-card" style="margin-bottom:16px">
         <h3 style="margin:0 0 10px">Auth activity</h3>
         <form method="GET" action="{{ route('admin.dashboard') }}" class="filters"

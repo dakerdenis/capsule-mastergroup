@@ -15,6 +15,28 @@
 </head>
 
 <body class="admin">
+    <style>
+        @media (max-width: 768px) {
+            .filters {
+                gap: 10px;
+            }
+
+            .filters select,
+            .filters input[type="text"] {
+                flex: 1 1 160px;
+                min-width: 140px;
+            }
+
+            .btn {
+                flex: 0 0 auto;
+            }
+
+            .sidebar_car {
+                width: 156px;
+                height: 243px;
+            }
+        }
+    </style>
     <div class="main__wrapper">
 
         {{-- === TOPBAR === --}}

@@ -209,4 +209,8 @@
   .btn{
     flex:0 0 auto;
   }
+      .sidebar_car {
+        width: 156px;
+        height: 243px;
+      }
 }

@@ -4,13 +4,14 @@
 
 @push('page-styles')
     <link rel="stylesheet"
-        href="{{ asset('css/market/dashboard.css') }}?v={{ filemtime(public_path('css/market/dashboard.css')) }}">
+        href="{{ asset('css/market/dashboard2.css') }}?v={{ filemtime(public_path('css/market/dashboard2.css')) }}">
     <link rel="stylesheet"
         href="{{ asset('css/market/catalog.css') }}?v={{ filemtime(public_path('css/market/catalog.css')) }}">
 @endpush
 
 
 @section('content')
+
     <div class="dashboard_wrapper">
         <div class="dashboard__content">
             <!----dashboard desc----->
