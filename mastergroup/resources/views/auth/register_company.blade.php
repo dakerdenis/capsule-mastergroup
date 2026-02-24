@@ -15,7 +15,26 @@
   line-height: 1.35;
   color: #dc2626; /* красный */
 }
+.input-error {
+    border-color: #dc2626 !important;
+}
+</style>
+<style>
+        @media only screen and (max-width: 1000px) {
+            .auth__form {
+                width: 100%;
+                height: 100vh;
+                min-height: 833px;
+            }
 
+            .auth__car {
+                display: none;
+                visibility: hidden;
+            }
+            .auth_page-container{
+                min-height: 833px;
+            }
+        }
 </style>
 <div class="auth_page-container">
     <div class="auth_page-wrapper">
@@ -199,6 +218,8 @@
                                         </ul>
                                     </div>
                                 </div>
+                                                                    <p style="margin-top: 4px;color: #d41414; font-size: 12px;margin-bottom: 4px;">
+                                        Password should be minimum 8 characters</p>
                                 <!-- Password -->
                                 <div class="register_user-input register_user-input2" id="pass1Blk">
                                     <div class="form-block form-block--with-eye">
@@ -236,7 +257,9 @@
   </div>
 
                                 <div class="form__controll2">
-                                    <button type="submit" class="form_submit">register</button>
+                                    <button type="submit" class="form_submit is-disabled" disabled aria-disabled="true">
+    register
+</button>
                                 </div>
                             </section>
                         </form>

@@ -5,6 +5,24 @@
     <link rel="stylesheet" href="{{ asset('css/auth/register.css') }}?v={{ filemtime(public_path('css/auth/login.css')) }}">
 @endpush
 @section('content')
+    <style>
+        @media only screen and (max-width: 1000px) {
+            .auth__form {
+                width: 100%;
+                height: 100vh;
+                min-height: 833px;
+            }
+
+            .auth__car {
+                display: none;
+                visibility: hidden;
+            }
+
+            .auth_page-container {
+                min-height: 750px;
+            }
+        }
+    </style>
     <div class="auth_page-container">
         <div class="auth_page-wrapper">
             <!--------FORM---->
@@ -93,51 +111,7 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const options = Array.from(document.querySelectorAll('.regitration__option'));
-            const nextLink = document.getElementById('regNext');
 
-            let selectedHref = null;
-
-            function setActive(option) {
-                // снять выделение со всех
-                options.forEach(o => o.classList.remove('is-selected'));
-
-                // поставить выделение на выбранную
-                option.classList.add('is-selected');
-
-                // прочитать маршрут из data-route
-                selectedHref = option.getAttribute('data-route') || '#';
-
-                // активировать NEXT
-                nextLink.href = selectedHref;
-                nextLink.classList.remove('is-disabled');
-                nextLink.removeAttribute('aria-disabled');
-            }
-
-            // клики по карточкам
-            options.forEach(o => {
-                o.addEventListener('click', () => setActive(o));
-
-                // немного доступности с клавы
-                o.tabIndex = 0;
-                o.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        setActive(o);
-                    }
-                });
-            });
-
-            // защита: если NEXT неактивна — не даём переходить
-            nextLink.addEventListener('click', (e) => {
-                if (nextLink.classList.contains('is-disabled')) {
-                    e.preventDefault();
-                }
-            });
-        });
-    </script>
 
 
 @endsection

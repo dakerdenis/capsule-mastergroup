@@ -6,16 +6,57 @@
     <link rel="stylesheet" href="{{ asset('css/pickaday.css') }}">
 @endpush
 @section('content')
-<style>
-    /* error text for file upload */
-.file-error{
-  margin-top: 6px;
-  font-size: 12px;
-  line-height: 1.35;
-  color: #dc2626; /* красный */
-}
+    <style>
+        /* error text for file upload */
+        .file-error {
+            margin-top: 6px;
+            font-size: 12px;
+            line-height: 1.35;
+            color: #dc2626;
+            /* красный */
+        }
 
-</style>
+        .field-error {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #dc2626;
+        }
+
+        .has-error input,
+        .has-error .file-dropzone,
+        .has-error .cselect-toggle {
+            border-color: #dc2626 !important;
+        }
+
+        .field-hint {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #d41414;
+        }
+    </style>
+    <style>
+        @media only screen and (max-width: 1000px) {
+            .auth__form {
+                width: 100%;
+                height: 100vh;
+                min-height: 833px;
+            }
+
+            .auth__car {
+                display: none;
+                visibility: hidden;
+            }
+
+            .auth_page-container {
+                min-height: 750px;
+            }
+
+            .register_user-inputs {
+                margin-bottom: 40px
+            }
+
+        }
+    </style>
     <div class="auth_page-container">
         <div class="auth_page-wrapper">
             <div class="auth__form">
@@ -173,6 +214,8 @@
                                             </ul>
                                         </div>
                                     </div>
+                                    <p style="margin-top: 4px;color: #d41414; font-size: 12px;margin-bottom: 4px;">
+                                        Password should be minimum 8 characters</p>
                                     <div class="register_user-input register_user-input2" id="pass1Blk">
                                         <div class="form-block form-block--with-eye">
                                             <input id="regPassword" type="password" name="password"
@@ -182,6 +225,7 @@
                                                 <span class="eye-icon" aria-hidden="true"></span>
                                             </button>
                                         </div>
+                                        <div class="field-hint" id="passwordHint">Minimum 8 characters</div>
                                     </div>
                                     <div class="register_user-input register_user-input2" id="pass2Blk">
                                         <div class="form-block form-block--with-eye">
@@ -208,7 +252,36 @@
                                         <button type="submit" class="form_submit is-disabled" disabled
                                             aria-disabled="true">register</button>
                                     </div>
+                                    @if ($errors->any())
+                                        <ul class="form-errors">
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
                                 </section>
+                                @if ($errors->any())
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', () => {
+                                            const form = document.getElementById('regForm');
+                                            if (!form) return;
+                                            const step1 = form.querySelector('[data-step="1"]');
+                                            const step2 = form.querySelector('[data-step="2"]');
+                                            if (!step1 || !step2) return;
+
+                                            // если ошибки по полям шага 2 — показать step2
+                                            const step2Fields = ['workplace', 'email', 'phone', 'country', 'password', 'password_confirmation',
+                                                'agree'
+                                            ];
+                                            const hasStep2Error = step2Fields.some(f => {!! json_encode($errors->keys()) !!}.includes(f));
+
+                                            if (hasStep2Error) {
+                                                step1.classList.add('is-hidden');
+                                                step2.classList.remove('is-hidden');
+                                            }
+                                        });
+                                    </script>
+                                @endif
                             </form>
                         </div>
                     </div>
